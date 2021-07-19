@@ -1,6 +1,4 @@
-import 'package:meta/meta.dart';
 import 'package:equatable/equatable.dart';
-
 
 abstract class WordEvent extends Equatable {
   WordEvent([List props = const []]) : super();
@@ -8,9 +6,9 @@ abstract class WordEvent extends Equatable {
 
 class FetchWord extends WordEvent {
   final String word;
+
   FetchWord({required this.word});
 
   @override
   List<Object?> get props => [word];
 }
-

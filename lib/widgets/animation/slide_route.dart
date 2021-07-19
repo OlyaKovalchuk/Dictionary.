@@ -1,4 +1,3 @@
-import 'package:Dictionary/views/start_view.dart';
 import 'package:flutter/material.dart';
 class AnimatedRoute extends PageRouteBuilder {
   final Widget widget;

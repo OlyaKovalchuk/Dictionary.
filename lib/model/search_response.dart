@@ -25,12 +25,8 @@ class SearchResponse {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['word'] = this.word;
-    if (this.phonetics != null) {
-      data['phonetics'] = this.phonetics.map((v) => v.toJson()).toList();
-    }
-    if (this.meanings != null) {
-      data['meanings'] = this.meanings.map((v) => v.toJson()).toList();
-    }
+    data['phonetics'] = this.phonetics.map((v) => v.toJson()).toList();
+    data['meanings'] = this.meanings.map((v) => v.toJson()).toList();
     return data;
   }
 }
@@ -73,9 +69,7 @@ class Meanings {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['partOfSpeech'] = this.partOfSpeech;
-    if (this.definitions != null) {
-      data['definitions'] = this.definitions.map((v) => v.toJson()).toList();
-    }
+    data['definitions'] = this.definitions.map((v) => v.toJson()).toList();
     return data;
   }
 }
