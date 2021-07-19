@@ -9,7 +9,7 @@ class WordBloc extends Bloc<WordEvent, WordState> {
 
   WordBloc({required this.dictionaryApi}) : super(WordEmpty());
 
- @override
+  @override
   Stream<WordState> mapEventToState(WordEvent event) async* {
     if (event is FetchWord) {
       yield WordLoading();
