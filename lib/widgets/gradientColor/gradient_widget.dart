@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 
-Container GradientLinear() => Container(
-    decoration: BoxDecoration(
-        gradient: gradientColor()));
+Container gradientLinear() =>
+    Container(decoration: BoxDecoration(gradient: gradientColor()));
 
 LinearGradient gradientColor() => LinearGradient(
     begin: Alignment.topCenter,

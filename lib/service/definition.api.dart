@@ -3,8 +3,8 @@ import 'dart:convert';
 import 'package:Dictionary/model/search_response.dart';
 import 'package:http/http.dart';
 
-class DictionaryApi {
-  DictionaryApi();
+class Repository {
+  Repository();
 
   Future<SearchResponse> search(String word) async {
 //https://api.dictionaryapi.dev/api/v2/entries/en_US/hello

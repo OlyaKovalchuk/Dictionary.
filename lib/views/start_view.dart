@@ -24,7 +24,7 @@ class _StartState extends State<Start> {
           setState(() {
             timer.cancel();
           });
-          Navigator.push(context, AnimatedRoute(Start_View()));
+          Navigator.push(context, AnimatedRoute(StartView()));
         } else {
           setState(() {
             _start--;
@@ -65,14 +65,14 @@ class _StartState extends State<Start> {
   }
 }
 
-class Start_View extends StatefulWidget {
-  const Start_View({Key? key}) : super(key: key);
+class StartView extends StatefulWidget {
+  const StartView({Key? key}) : super(key: key);
 
   @override
-  _Start_ViewState createState() => _Start_ViewState();
+  _StartViewState createState() => _StartViewState();
 }
 
-class _Start_ViewState extends State<Start_View> {
+class _StartViewState extends State<StartView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

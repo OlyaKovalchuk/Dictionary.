@@ -24,7 +24,7 @@ class LinearGradientMask extends StatelessWidget {
   }
 }
 
-Widget Icon_Gradient() => LinearGradientMask(
+Widget iconGradient() => LinearGradientMask(
         child: Icon(
       Icons.search,
       size: 20,

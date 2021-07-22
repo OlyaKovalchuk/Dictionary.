@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-BoxDecoration BoxDecoration_Container() => BoxDecoration(
+BoxDecoration boxDecorationContainer() => BoxDecoration(
     color: Colors.white,
     boxShadow: [
       BoxShadow(
