@@ -8,7 +8,6 @@ class DictionaryApi {
 
   Future<SearchResponse> search(String word) async {
 //https://api.dictionaryapi.dev/api/v2/entries/en_US/hello
-
     var url = Uri.http(
         'api.dictionaryapi.dev', 'api/v2/entries/en_US/${word.trim()}');
     Response response = await get(url);

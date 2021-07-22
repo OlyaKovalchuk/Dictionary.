@@ -76,25 +76,24 @@ class Meanings {
 
 class Definitions {
   late String definition;
-  late String example;
-  // late List<String> synonyms;
+  String? example;
+  List<String>? synonyms;
 
-  Definitions({required this.definition,
-    required this.example,
-    // required this.synonyms}
-  } );
+  Definitions({required this.definition, this.example, this.synonyms});
 
   Definitions.fromJson(Map<String, dynamic> json) {
     definition = json['definition'];
     example = json['example'];
-    // synonyms = json['synonyms'].cast<String>();
+    if (json['synonyms'] != null) {
+      synonyms = json['synonyms'].cast<String>();
+    }
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['definition'] = this.definition;
     data['example'] = this.example;
-    // data['synonyms'] = this.synonyms;
+    data['synonyms'] = this.synonyms;
     return data;
   }
 }

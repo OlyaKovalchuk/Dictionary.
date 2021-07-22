@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class LinearGradientMask extends StatelessWidget {
   LinearGradientMask({required this.child});
+
   final Widget child;
 
   @override
@@ -22,8 +23,9 @@ class LinearGradientMask extends StatelessWidget {
     );
   }
 }
+
 Widget Icon_Gradient() => LinearGradientMask(
-    child: Icon(
+        child: Icon(
       Icons.search,
       size: 20,
       color: Colors.white,

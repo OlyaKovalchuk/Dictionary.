@@ -3,7 +3,6 @@ import 'package:equatable/equatable.dart';
 
 abstract class WordState extends Equatable {
   WordState([List props = const []]) : super();
-
 }
 
 class WordEmpty extends WordState {
@@ -17,13 +16,11 @@ class WordLoading extends WordState {
 }
 
 class WordLoaded extends WordState {
-
   @override
   List<Object?> get props => [response];
   final SearchResponse response;
 
- WordLoaded({required this.response})
-      : super([response]);
+  WordLoaded({required this.response}) : super([response]);
 }
 
 class WordError extends WordState {

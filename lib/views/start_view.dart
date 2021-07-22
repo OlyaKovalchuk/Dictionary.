@@ -95,53 +95,50 @@ class _Start_ViewState extends State<Start_View> {
                       top: MediaQuery.of(context).size.height / 2),
                   width: double.maxFinite,
                   height: double.maxFinite,
-                  child: Column(
-                      //mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text("Hello",
+                  child: Column(children: [
+                    Text("Hello",
+                        style: TextStyle(
+                            fontFamily: ('Futura'),
+                            fontSize: 40,
+                            fontWeight: FontWeight.bold,
+                            foreground: Paint()
+                              ..shader = gradientColor().createShader(
+                                  Rect.fromLTWH(0.0, 0.0, 200.0, 70.0)))),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                        'We are Dictionary,\n here you will learn many interesting\n words, what they mean and how to\n use them in your vocabulary',
+                        textAlign: TextAlign.center,
+                        style: plainTextStyle()),
+                    Spacer(),
+                    Text(
+                      'Good Luck!',
+                      textAlign: TextAlign.center,
+                      style: plainTextStyle(),
+                    ),
+                    Spacer(),
+                    Container(
+                        height: 50,
+                        width: 160,
+                        decoration: BoxDecoration(
+                          gradient: gradientColor(),
+                          borderRadius: BorderRadius.all(Radius.circular(30.0)),
+                        ),
+                        child: TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pushNamed('/dictionary');
+                          },
+                          child: Text(
+                            "Let's start",
                             style: TextStyle(
                                 fontFamily: ('Futura'),
-                                fontSize: 40,
+                                fontSize: 20,
                                 fontWeight: FontWeight.bold,
-                                foreground: Paint()
-                                  ..shader = gradientColor().createShader(
-                                      Rect.fromLTWH(0.0, 0.0, 200.0, 70.0)))),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Text(
-                            'We are Dictionary,\n here you will learn many interesting\n words, what they mean and how to\n use them in your vocabulary',
-                            textAlign: TextAlign.center,
-                            style: plainTextStyle()),
-                        Spacer(),
-                        Text(
-                          'Good Luck!',
-                          textAlign: TextAlign.center,
-                          style: plainTextStyle(),
-                        ),
-                        Spacer(),
-                        Container(
-                            height: 50,
-                            width: 160,
-                            decoration: BoxDecoration(
-                              gradient: gradientColor(),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(30.0)),
-                            ),
-                            child: TextButton(
-                              onPressed: () {
-                                Navigator.of(context).pushNamed('/dictionary');
-                              },
-                              child: Text(
-                                "Let's start",
-                                style: TextStyle(
-                                    fontFamily: ('Futura'),
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white),
-                              ),
-                            ))
-                      ])),
+                                color: Colors.white),
+                          ),
+                        ))
+                  ])),
             )));
   }
 }

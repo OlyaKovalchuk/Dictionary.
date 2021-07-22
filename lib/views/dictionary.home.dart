@@ -23,7 +23,6 @@ class DictionaryHome extends StatefulWidget {
 
 class _DictionaryHomeState extends State<DictionaryHome> {
   late WordBloc _wordBloc;
-
   @override
   void initState() {
     super.initState();
@@ -93,7 +92,7 @@ class _DictionaryHomeState extends State<DictionaryHome> {
   }
 
   String RandomWord() {
-    String w = generateNoun().take(1).join('()').toString();
-    return w;
+    String word = generateNoun().take(1).join('()').toString();
+    return word;
   }
 }
