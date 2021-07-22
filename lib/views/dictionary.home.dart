@@ -23,10 +23,11 @@ class DictionaryHome extends StatefulWidget {
 
 class _DictionaryHomeState extends State<DictionaryHome> {
   late WordBloc _wordBloc;
+
   @override
   void initState() {
     super.initState();
-    _wordBloc = WordBloc(dictionaryApi: DictionaryApi());
+    _wordBloc = WordBloc(repository: Repository());
     _wordBloc.add(FetchWord(word: word));
   }
 
@@ -52,7 +53,7 @@ class _DictionaryHomeState extends State<DictionaryHome> {
                 },
                 icon: Icon(Icons.search))
           ],
-          flexibleSpace: GradientLinear(),
+          flexibleSpace: gradientLinear(),
         ),
         body: BlocBuilder(
             bloc: _wordBloc,

@@ -5,16 +5,16 @@ import 'package:bloc/bloc.dart';
 import 'FetchWordEvent.dart';
 
 class WordBloc extends Bloc<WordEvent, WordState> {
-  final DictionaryApi dictionaryApi;
+  final Repository repository;
 
-  WordBloc({required this.dictionaryApi}) : super(WordEmpty());
+  WordBloc({required this.repository}) : super(WordEmpty());
 
   @override
   Stream<WordState> mapEventToState(WordEvent event) async* {
     if (event is FetchWord) {
       yield WordLoading();
       try {
-        final SearchResponse response = await dictionaryApi.search(event.word);
+        final SearchResponse response = await repository.search(event.word);
         yield WordLoaded(response: response);
       } catch (exception) {
         yield WordError();

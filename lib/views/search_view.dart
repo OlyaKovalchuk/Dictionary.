@@ -4,36 +4,40 @@ import 'package:Dictionary/bloc/word_states.dart';
 import 'package:Dictionary/bloc/blocView/empty_view.dart';
 import 'package:Dictionary/bloc/blocView/error_view.dart';
 import 'package:Dictionary/bloc/blocView/listBuilder_info.dart';
+import 'package:Dictionary/widgets/border/border_radius.dart';
 import 'package:Dictionary/widgets/cardDecoration/indicator_decoration.dart';
+import 'package:Dictionary/widgets/colors/grey_color.dart';
+import 'package:Dictionary/widgets/colors/grey_light_color.dart';
+import 'package:Dictionary/widgets/colors/red_color.dart';
 import 'package:Dictionary/widgets/gradientColor/gradient_widget.dart';
 import 'package:Dictionary/widgets/gradientColor/icon_gradient.dart';
 import 'package:flutter/material.dart';
 import 'package:Dictionary/service/definition.api.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class Search_Page extends StatefulWidget {
-  const Search_Page({Key? key}) : super(key: key);
+class SearchPage extends StatefulWidget {
+  const SearchPage({Key? key}) : super(key: key);
 
   @override
-  _Search_PageState createState() => _Search_PageState();
+  _SearchPageState createState() => _SearchPageState();
 }
 
-class _Search_PageState extends State<Search_Page> {
+class _SearchPageState extends State<SearchPage> {
   GlobalKey _key = GlobalKey();
   TextEditingController _controller = TextEditingController();
-  late WordBloc _wordBloc = WordBloc(dictionaryApi: DictionaryApi());
+  late WordBloc _wordBloc = WordBloc(repository: Repository());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-            flexibleSpace: GradientLinear(),
+            flexibleSpace: gradientLinear(),
             //centerTitle: true,
             title: PreferredSize(
               preferredSize: Size.fromHeight(40.0),
               child: Container(
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(40),
+                    borderRadius: borderRadius(),
                     color: Colors.white,
                   ),
                   height: 40,
@@ -43,20 +47,19 @@ class _Search_PageState extends State<Search_Page> {
                         borderSide: BorderSide(
                           color: Colors.white,
                         ),
-                        borderRadius: BorderRadius.circular(40),
+                        borderRadius: borderRadius(),
                       ),
                       enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(40),
+                        borderRadius: borderRadius(),
                         borderSide: BorderSide(
                           color: Colors.white,
                         ),
                       ),
                       contentPadding: EdgeInsets.only(left: 15),
                       hintText: 'Enter a word',
-                      hintStyle:
-                          TextStyle(color: Color.fromRGBO(223, 223, 223, 1)),
+                      hintStyle: TextStyle(color: greyLightColor()),
                       suffixIcon: IconButton(
-                          icon: Icon_Gradient(),
+                          icon: iconGradient(),
                           onPressed: () {
                             _wordBloc.add(FetchWord(word: _controller.text));
                           }),
@@ -64,7 +67,7 @@ class _Search_PageState extends State<Search_Page> {
                     autocorrect: true,
                     maxLines: 1,
                     enableSuggestions: true,
-                    cursorColor: Color.fromRGBO(222, 77, 79, 1),
+                    cursorColor: redColor(),
                     autofocus: true,
                     style: TextStyle(
                       fontSize: 15,
@@ -95,7 +98,7 @@ class _Search_PageState extends State<Search_Page> {
                       style: TextStyle(
                           fontFamily: 'Futura',
                           fontSize: 35,
-                          color: Color.fromRGBO(91, 91, 91, 1)),
+                          color: greyColor()),
                       textAlign: TextAlign.center,
                     ),
                   ),

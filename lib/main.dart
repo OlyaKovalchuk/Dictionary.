@@ -7,9 +7,9 @@ void main() {
   runApp(MaterialApp(
       debugShowCheckedModeBanner: false,
       routes: <String, WidgetBuilder>{
-        '/search': (BuildContext context) => new Search_Page(),
+        '/search': (BuildContext context) => new SearchPage(),
         '/dictionary': (BuildContext context) => DictionaryHome(),
-        '/start': (BuildContext context) => Start_View(),
+        '/start': (BuildContext context) => StartView(),
       },
       home: Start()));
 }
