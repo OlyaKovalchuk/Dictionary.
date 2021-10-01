@@ -104,3 +104,7 @@ List<Widget> synonymChips(List<String> synonyms) => synonyms
           ),
         )))
     .toList();
+
+// IconButton _isFavoriteButton(bool isFavorite) => IconButton(onPressed: (){
+//   Navigator.push(context, MaterialPageRoute(builder: (context)))
+// }, icon: icon)

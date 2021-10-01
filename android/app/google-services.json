@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "471220369467",
+    "project_id": "dictionary-373ae",
+    "storage_bucket": "dictionary-373ae.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:471220369467:android:e083ce3476e8ad69efc41e",
+        "android_client_info": {
+          "package_name": "com.olya.Dictionary"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "471220369467-mnq0adqcjkjjkfi5r19ia9f36jr98rjp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA15SnG2SRHr7V791Hwx9uHxAGYLBDGR0U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "471220369467-mnq0adqcjkjjkfi5r19ia9f36jr98rjp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

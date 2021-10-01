@@ -1,4 +1,4 @@
-package com.example.untitled
+package com.olya.Dictionary
 
 import io.flutter.embedding.android.FlutterActivity
 
