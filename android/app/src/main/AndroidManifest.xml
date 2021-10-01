@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.untitled">
+    package="com.olya.Dictionary">
    <application
-        android:label="untitled"
+        android:label="Dictionary"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
