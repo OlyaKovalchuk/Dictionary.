@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:Dictionary/bloc/FetchWordEvent.dart';
 import 'package:Dictionary/bloc/blocView/empty_view.dart';
 import 'package:Dictionary/bloc/word_bloc.dart';
@@ -6,13 +8,13 @@ import 'package:Dictionary/bloc/blocView/error_view.dart';
 import 'package:Dictionary/bloc/blocView/loaded_view.dart';
 import 'package:Dictionary/bloc/blocView/loading_view.dart';
 import 'package:Dictionary/widgets/gradientColor/gradient_widget.dart';
+import 'package:english_words/english_words.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:random_words/random_words.dart';
-import 'package:swipedetector/swipedetector.dart';
 import 'package:Dictionary/service/definition.api.dart';
+import 'package:simple_gesture_detector/simple_gesture_detector.dart';
 
 class DictionaryHome extends StatefulWidget {
   const DictionaryHome({Key? key}) : super(key: key);
@@ -23,15 +25,21 @@ class DictionaryHome extends StatefulWidget {
 
 class _DictionaryHomeState extends State<DictionaryHome> {
   late WordBloc _wordBloc;
+  var random;
+ late int index;
 
   @override
   void initState() {
     super.initState();
+     random = Random();
+    index = random.nextInt(nouns.length);
     _wordBloc = WordBloc(repository: Repository());
     _wordBloc.add(FetchWord(word: word));
   }
 
-  late String word = RandomWord();
+
+  late String word = RandomWord(index);
+
 
   @override
   Widget build(BuildContext context) {
@@ -65,25 +73,19 @@ class _DictionaryHomeState extends State<DictionaryHome> {
                 return loadingView();
               }
               if (state is WordLoaded) {
-                return SwipeDetector(
-                  child: loadedView(
-                    state.response,
-                    _wordBloc,
-                    word,
+                return SimpleGestureDetector(
+
+                  onHorizontalSwipe: _onHorizontalSwipe,
+
+                  swipeConfig: SimpleSwipeConfig(
+                    verticalThreshold: 40.0,
+                    horizontalThreshold: 40.0,
+                    swipeDetectionBehavior: SwipeDetectionBehavior.continuousDistinct,
                   ),
-                  onSwipeLeft: () {
-                    setState(() {
-                      word = RandomWord();
-                      _wordBloc.add(FetchWord(word: word));
-                    });
-                  },
-                  onSwipeRight: () {
-                    setState(() {
-                      word = RandomWord();
-                      _wordBloc.add(FetchWord(word: word));
-                    });
-                  },
+                  child: loadedView(state.response, _wordBloc, state.response.word),
                 );
+
+
               }
               if (state is WordEmpty) {
                 return emptyView();
@@ -92,8 +94,30 @@ class _DictionaryHomeState extends State<DictionaryHome> {
             }));
   }
 
-  String RandomWord() {
-    String word = generateNoun().take(1).join('()').toString();
+  String RandomWord(int ind) {
+    String word = nouns[ind].toString();
     return word;
+   }
+
+   updateWord(){
+    index++;
+    return RandomWord(index);
+   }
+  void _onHorizontalSwipe(SwipeDirection direction) {
+    setState(() {
+      if (direction == SwipeDirection.left) {
+        word = updateWord();
+        _wordBloc.add(FetchWord(word: word));
+
+      } else {
+        if(index != 0) {
+          index--;
+          word = RandomWord(index);
+          _wordBloc.add(FetchWord(word: word));
+        }else if(index <= nouns.length){
+          word = RandomWord(index);
+          _wordBloc.add(FetchWord(word: word));
+        }
+    }});
   }
 }

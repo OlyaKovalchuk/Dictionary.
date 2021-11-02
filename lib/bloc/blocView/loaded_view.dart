@@ -1,3 +1,4 @@
+import 'package:Dictionary/bloc/FetchWordEvent.dart';
 import 'package:Dictionary/bloc/word_bloc.dart';
 import 'package:Dictionary/model/search_response.dart';
 import 'package:Dictionary/widgets/cardDecoration/card_decoration.dart';
@@ -57,7 +58,7 @@ Widget loadedView(SearchResponse response, WordBloc wordBloc, String word) =>
                             ),
                             synonymsView(
                                 response.meanings[0].definitions[0].synonyms ??
-                                    []),
+                                    [],  wordBloc, word),
                           ]))),
               back: cardDecoration(
                   child: Column(children: [
@@ -74,7 +75,7 @@ Widget loadedView(SearchResponse response, WordBloc wordBloc, String word) =>
               ]))),
         ]));
 
-Widget synonymsView(List<String> synonyms) => Visibility(
+Widget synonymsView(List<String> synonyms, WordBloc wordBloc, String word) => Visibility(
     visible: synonyms.isNotEmpty,
     child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -87,22 +88,31 @@ Widget synonymsView(List<String> synonyms) => Visibility(
           Wrap(
             spacing: 8.0,
             runSpacing: 4.0,
-            children: synonymChips(synonyms),
+            children: synonymChips(synonyms, wordBloc, word ),
           )
         ]));
 
-List<Widget> synonymChips(List<String> synonyms) => synonyms
+List<Widget> synonymChips(List<String> synonyms, WordBloc wordBloc, String word) => synonyms
     .take(5)
-    .map((synonym) => Chip(
-        backgroundColor: Colors.white,
-        side: BorderSide(color: redColor()),
-        label: Text(
-          synonym,
-          style: TextStyle(
-            fontSize: 15,
-            color: redColor(),
-          ),
-        )))
+    .map((synonym) => GestureDetector(
+  onTap: (){
+    var syn = synonym.split(' ');
+    print(syn);
+    if(syn.length < 2){
+    word = synonym;
+    wordBloc.add(FetchWord(word: word));}
+  },
+      child: Chip(
+          backgroundColor: Colors.white,
+          side: BorderSide(color: redColor()),
+          label: Text(
+            synonym,
+            style: TextStyle(
+              fontSize: 15,
+              color: redColor(),
+            ),
+          )),
+    ))
     .toList();
 
 // IconButton _isFavoriteButton(bool isFavorite) => IconButton(onPressed: (){
