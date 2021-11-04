@@ -19,7 +19,7 @@ Widget loadedView(SearchResponse response, WordBloc wordBloc, String word) =>
               front: cardDecoration(
                   child: Padding(
                       padding: EdgeInsets.only(
-                          left: 10, right: 10, top: 30, bottom: 30),
+                          left: 20, right: 20, top: 30, bottom: 30),
                       child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -39,10 +39,11 @@ Widget loadedView(SearchResponse response, WordBloc wordBloc, String word) =>
                                         size: 20,
                                         color: greyColor(),
                                       )),
-                                  Text(
-                                    '[ ' + response.phonetics[0].text + ' ]',
+                                  response.phonetics != null ? Text('')
+                                  : Text(
+                                    '[ ' + response.phonetics![0].text+ ' ]',
                                     style: plainTextStyle(),
-                                  ),
+                                  )
                                 ],
                               )
                             ]),

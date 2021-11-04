@@ -73,18 +73,18 @@ class _DictionaryHomeState extends State<DictionaryHome> {
                 return loadingView();
               }
               if (state is WordLoaded) {
+              //  print(nouns.length); = 2537
                 return SimpleGestureDetector(
 
                   onHorizontalSwipe: _onHorizontalSwipe,
 
                   swipeConfig: SimpleSwipeConfig(
-                    verticalThreshold: 40.0,
+
                     horizontalThreshold: 40.0,
                     swipeDetectionBehavior: SwipeDetectionBehavior.continuousDistinct,
                   ),
                   child: loadedView(state.response, _wordBloc, state.response.word),
                 );
-
 
               }
               if (state is WordEmpty) {
@@ -95,29 +95,34 @@ class _DictionaryHomeState extends State<DictionaryHome> {
   }
 
   String RandomWord(int ind) {
-    String word = nouns[ind].toString();
-    return word;
-   }
+if(ind >= 2536) {
+  ind = random.nextInt(nouns.length);
+ index = ind;
+      String word = nouns[ind].toString();
+  return word;
+    }else{
+  String word = nouns[ind].toString();
+  return word;
+}
+  }
 
-   updateWord(){
-    index++;
-    return RandomWord(index);
-   }
   void _onHorizontalSwipe(SwipeDirection direction) {
     setState(() {
+      print(index);
       if (direction == SwipeDirection.left) {
-        word = updateWord();
-        _wordBloc.add(FetchWord(word: word));
+        print(word);
+        index++;
+         word = RandomWord(index);
+          _wordBloc.add(FetchWord(word: word));
 
-      } else {
-        if(index != 0) {
-          index--;
-          word = RandomWord(index);
-          _wordBloc.add(FetchWord(word: word));
-        }else if(index <= nouns.length){
-          word = RandomWord(index);
-          _wordBloc.add(FetchWord(word: word));
+      }
+        if(direction == SwipeDirection.right){
+          if(index > 0) {
+            index--;
+            word = RandomWord(index);
+            _wordBloc.add(FetchWord(word: word));
         }
+
     }});
   }
 }

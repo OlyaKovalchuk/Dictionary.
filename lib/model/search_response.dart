@@ -1,6 +1,6 @@
 class SearchResponse {
   late String word;
-  late List<Phonetics> phonetics;
+  late List<Phonetics>? phonetics;
   late List<Meanings> meanings;
 
   SearchResponse(
@@ -11,7 +11,7 @@ class SearchResponse {
     if (json['phonetics'] != null) {
       phonetics = <Phonetics>[];
       json['phonetics'].forEach((v) {
-        phonetics.add(new Phonetics.fromJson(v));
+        phonetics?.add(new Phonetics.fromJson(v));
       });
     }
     if (json['meanings'] != null) {
@@ -25,7 +25,7 @@ class SearchResponse {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['word'] = this.word;
-    data['phonetics'] = this.phonetics.map((v) => v.toJson()).toList();
+    data['phonetics'] = this.phonetics?.map((v) => v.toJson()).toList();
     data['meanings'] = this.meanings.map((v) => v.toJson()).toList();
     return data;
   }

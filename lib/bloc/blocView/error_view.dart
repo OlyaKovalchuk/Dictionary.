@@ -1,5 +1,12 @@
 import 'package:flutter/cupertino.dart';
 
-Widget errorView() => Center(
+ errorView() {
+  try{
+    return Center(
       child: Text('Error'),
     );
+  }catch(e){
+    print(e);
+  }
+
+}
