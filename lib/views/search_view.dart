@@ -61,7 +61,7 @@ class _SearchPageState extends State<SearchPage> {
                       suffixIcon: IconButton(
                           icon: iconGradient(),
                           onPressed: () {
-                            _wordBloc.add(FetchWord(word: _controller.text));
+                            _wordBloc.add(RequestWord(word: _controller.text));
                           }),
                     ),
                     autocorrect: true,
@@ -103,7 +103,7 @@ class _SearchPageState extends State<SearchPage> {
                     ),
                   ),
                   Expanded(
-                    child: infoListBuilder(state.response),
+                    child: infoListBuilder(state.response[0]),
                   ),
                 ]);
               }

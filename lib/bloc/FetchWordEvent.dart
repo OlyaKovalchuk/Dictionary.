@@ -4,11 +4,11 @@ abstract class WordEvent extends Equatable {
   WordEvent([List props = const []]) : super();
 }
 
-class FetchWord extends WordEvent {
-  final String word;
+ class RequestWord extends WordEvent {
+  String? word;
 
-  FetchWord({required this.word});
+  RequestWord({this.word});
 
   @override
-  List<Object?> get props => [word];
+  List<Object?> get props => [];
 }

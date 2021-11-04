@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:Dictionary/bloc/FetchWordEvent.dart';
 import 'package:Dictionary/bloc/blocView/empty_view.dart';
 import 'package:Dictionary/bloc/word_bloc.dart';
@@ -8,13 +6,12 @@ import 'package:Dictionary/bloc/blocView/error_view.dart';
 import 'package:Dictionary/bloc/blocView/loaded_view.dart';
 import 'package:Dictionary/bloc/blocView/loading_view.dart';
 import 'package:Dictionary/widgets/gradientColor/gradient_widget.dart';
-import 'package:english_words/english_words.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:Dictionary/service/definition.api.dart';
-import 'package:simple_gesture_detector/simple_gesture_detector.dart';
+import 'package:swipable_stack/swipable_stack.dart';
 
 class DictionaryHome extends StatefulWidget {
   const DictionaryHome({Key? key}) : super(key: key);
@@ -24,22 +21,15 @@ class DictionaryHome extends StatefulWidget {
 }
 
 class _DictionaryHomeState extends State<DictionaryHome> {
-  late WordBloc _wordBloc;
-  var random;
- late int index;
+  late SwipableStackController _controller;
+  WordBloc wordBloc = WordBloc(repository: Repository());
 
   @override
   void initState() {
     super.initState();
-     random = Random();
-    index = random.nextInt(nouns.length);
-    _wordBloc = WordBloc(repository: Repository());
-    _wordBloc.add(FetchWord(word: word));
+    _controller = SwipableStackController();
+    wordBloc.add(RequestWord());
   }
-
-
-  late String word = RandomWord(index);
-
 
   @override
   Widget build(BuildContext context) {
@@ -63,66 +53,38 @@ class _DictionaryHomeState extends State<DictionaryHome> {
           ],
           flexibleSpace: gradientLinear(),
         ),
-        body: BlocBuilder(
-            bloc: _wordBloc,
-            builder: (_, WordState state) {
-              if (state is WordError) {
-                return errorView();
-              }
-              if (state is WordLoading) {
+        body: SwipableStack(
+          controller: _controller,
+          stackClipBehaviour: Clip.none,
+          onSwipeCompleted: (index, direction) {
+            wordBloc.add(RequestWord());
+          },
+          builder:
+              (BuildContext context, int index, BoxConstraints constraints) {
+            print('1');
+            return BlocBuilder<WordBloc, WordState>(
+              bloc: wordBloc,
+              builder: (_, wordState) {
+                if (wordState is WordError) {
+                  return errorView();
+                }
+                if (wordState is WordLoading) {
+                  return loadingView();
+                }
+                if (wordState is WordLoaded) {
+                  if (index >= wordState.response.length) {
+                    return loadingView();
+                  } else {
+                    return loadedView(wordState.response[index], wordBloc);
+                  }
+                }
+                if (wordState is WordEmpty) {
+                  return emptyView();
+                }
                 return loadingView();
-              }
-              if (state is WordLoaded) {
-              //  print(nouns.length); = 2537
-                return SimpleGestureDetector(
-
-                  onHorizontalSwipe: _onHorizontalSwipe,
-
-                  swipeConfig: SimpleSwipeConfig(
-
-                    horizontalThreshold: 40.0,
-                    swipeDetectionBehavior: SwipeDetectionBehavior.continuousDistinct,
-                  ),
-                  child: loadedView(state.response, _wordBloc, state.response.word),
-                );
-
-              }
-              if (state is WordEmpty) {
-                return emptyView();
-              }
-              return errorView();
-            }));
-  }
-
-  String RandomWord(int ind) {
-if(ind >= 2536) {
-  ind = random.nextInt(nouns.length);
- index = ind;
-      String word = nouns[ind].toString();
-  return word;
-    }else{
-  String word = nouns[ind].toString();
-  return word;
-}
-  }
-
-  void _onHorizontalSwipe(SwipeDirection direction) {
-    setState(() {
-      print(index);
-      if (direction == SwipeDirection.left) {
-        print(word);
-        index++;
-         word = RandomWord(index);
-          _wordBloc.add(FetchWord(word: word));
-
-      }
-        if(direction == SwipeDirection.right){
-          if(index > 0) {
-            index--;
-            word = RandomWord(index);
-            _wordBloc.add(FetchWord(word: word));
-        }
-
-    }});
+              },
+            );
+          },
+        ));
   }
 }

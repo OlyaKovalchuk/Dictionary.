@@ -317,13 +317,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "6.0.1"
-  simple_gesture_detector:
-    dependency: "direct main"
-    description:
-      name: simple_gesture_detector
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.2.0"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -364,6 +357,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.0"
+  swipable_stack:
+    dependency: "direct main"
+    description:
+      name: swipable_stack
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.7.1"
   swipe_to:
     dependency: "direct main"
     description:

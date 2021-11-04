@@ -18,7 +18,8 @@ class WordLoading extends WordState {
 class WordLoaded extends WordState {
   @override
   List<Object?> get props => [response];
-  final SearchResponse response;
+
+  final List<SearchResponse> response;
 
   WordLoaded({required this.response}) : super([response]);
 }

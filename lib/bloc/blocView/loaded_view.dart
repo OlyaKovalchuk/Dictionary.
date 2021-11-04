@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'listBuilder_info.dart';
 
-Widget loadedView(SearchResponse response, WordBloc wordBloc, String word) =>
+Widget loadedView(SearchResponse response, WordBloc wordBloc) =>
     Padding(
         padding: EdgeInsets.all(35),
         child: Column(children: [
@@ -25,7 +25,7 @@ Widget loadedView(SearchResponse response, WordBloc wordBloc, String word) =>
                           children: [
                             Column(children: [
                               Text(
-                                word,
+                                response.word,
                                 style: titleTextStyle(),
                               ),
                               Row(
@@ -41,7 +41,7 @@ Widget loadedView(SearchResponse response, WordBloc wordBloc, String word) =>
                                       )),
                                   response.phonetics != null ? Text('')
                                   : Text(
-                                    '[ ' + response.phonetics![0].text+ ' ]',
+                                    '[ ' + response.phonetics![0]!.text!+ ' ]',
                                     style: plainTextStyle(),
                                   )
                                 ],
@@ -59,7 +59,7 @@ Widget loadedView(SearchResponse response, WordBloc wordBloc, String word) =>
                             ),
                             synonymsView(
                                 response.meanings[0].definitions[0].synonyms ??
-                                    [],  wordBloc, word),
+                                    [],  wordBloc, response.word),
                           ]))),
               back: cardDecoration(
                   child: Column(children: [
@@ -68,7 +68,7 @@ Widget loadedView(SearchResponse response, WordBloc wordBloc, String word) =>
                     top: 30,
                   ),
                   child: Text(
-                    word,
+                    response.word,
                     style: titleTextStyle(),
                   ),
                 ),
@@ -101,7 +101,7 @@ List<Widget> synonymChips(List<String> synonyms, WordBloc wordBloc, String word)
     print(syn);
     if(syn.length < 2){
     word = synonym;
-    wordBloc.add(FetchWord(word: word));}
+    wordBloc.add(RequestWord(word: word));}
   },
       child: Chip(
           backgroundColor: Colors.white,
