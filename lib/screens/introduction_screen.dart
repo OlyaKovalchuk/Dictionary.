@@ -1,78 +1,15 @@
-import 'dart:async';
 import 'package:Dictionary/widgets/gradientColor/gradient_widget.dart';
 import 'package:Dictionary/widgets/textDecoration/text_styles.dart';
 import 'package:flutter/material.dart';
-import 'package:Dictionary/widgets/animation/slide_route.dart';
 
-class Start extends StatefulWidget {
-  const Start({Key? key}) : super(key: key);
+class IntroductionScreen extends StatefulWidget {
+  const IntroductionScreen({Key? key}) : super(key: key);
 
   @override
-  _StartState createState() => _StartState();
+  _IntroductionScreenState createState() => _IntroductionScreenState();
 }
 
-class _StartState extends State<Start> {
-  late Timer _timer;
-  int _start = 3;
-
-  void startTimer() {
-    const oneSec = const Duration(seconds: 1);
-    _timer = new Timer.periodic(
-      oneSec,
-      (Timer timer) {
-        if (_start == 0) {
-          setState(() {
-            timer.cancel();
-          });
-          Navigator.push(context, AnimatedRoute(StartView()));
-        } else {
-          setState(() {
-            _start--;
-          });
-        }
-      },
-    );
-  }
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    startTimer();
-  }
-
-  @override
-  void dispose() {
-    _timer.cancel();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-          width: double.maxFinite,
-          height: double.maxFinite,
-          decoration: BoxDecoration(gradient: gradientColor()),
-          child: Center(
-              child: Text('Dictionary.',
-                  style: TextStyle(
-                      fontFamily: ('Futura'),
-                      fontSize: 50,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white)))),
-    );
-  }
-}
-
-class StartView extends StatefulWidget {
-  const StartView({Key? key}) : super(key: key);
-
-  @override
-  _StartViewState createState() => _StartViewState();
-}
-
-class _StartViewState extends State<StartView> {
+class _IntroductionScreenState extends State<IntroductionScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -127,7 +64,7 @@ class _StartViewState extends State<StartView> {
                         ),
                         child: TextButton(
                           onPressed: () {
-                            Navigator.of(context).pushNamed('/dictionary');
+                            Navigator.of(context).pushNamedAndRemoveUntil('/cardScreen', (Route<dynamic> route) => false);
                           },
                           child: Text(
                             "Let's start",

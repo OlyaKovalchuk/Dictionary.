@@ -1,29 +1,28 @@
 import 'dart:math';
 
-import 'package:Dictionary/bloc/word_states.dart';
+import 'package:Dictionary/bloc/card_bloc/word_card_states.dart';
 import 'package:Dictionary/model/search_response.dart';
 import 'package:Dictionary/service/definition.api.dart';
 import 'package:bloc/bloc.dart';
 import 'package:english_words/english_words.dart';
-import 'FetchWordEvent.dart';
+import '../request_word.dart';
 
-class WordBloc extends Bloc<WordEvent, WordState> {
+class WordCardBloc extends Bloc<WordEvent, WordCardState> {
   final Repository repository;
   List<SearchResponse> responses =[];
 
-  WordBloc({required this.repository}) : super(WordEmpty());
+  WordCardBloc({required this.repository}) : super(WordCardEmpty());
 
   @override
-  Stream<WordState> mapEventToState(WordEvent event) async* {
+  Stream<WordCardState> mapEventToState(WordEvent event) async* {
     if (event is RequestWord) {
-      yield WordLoading();
       try {
         final word = _randomWord();
         final SearchResponse response = await repository.search(word);
         responses.add(response);
-        yield WordLoaded(response: responses);
+        yield WordCardLoaded(wordList: responses);
       } catch (exception) {
-        yield WordError();
+        yield WordCardError();
       }
     }
   }

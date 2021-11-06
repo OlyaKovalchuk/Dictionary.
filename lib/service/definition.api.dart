@@ -5,7 +5,6 @@ import 'package:http/http.dart';
 
 class Repository {
   Repository();
-
   search(String word) async {
 //https://api.dictionaryapi.dev/api/v2/entries/en_US/hello
    try {

@@ -1,10 +1,10 @@
-import 'package:Dictionary/bloc/FetchWordEvent.dart';
-import 'package:Dictionary/bloc/blocView/empty_view.dart';
-import 'package:Dictionary/bloc/word_bloc.dart';
-import 'package:Dictionary/bloc/word_states.dart';
-import 'package:Dictionary/bloc/blocView/error_view.dart';
-import 'package:Dictionary/bloc/blocView/loaded_view.dart';
-import 'package:Dictionary/bloc/blocView/loading_view.dart';
+import 'package:Dictionary/bloc/request_word.dart';
+import 'package:Dictionary/bloc/card_bloc/word_card_bloc.dart';
+import 'package:Dictionary/bloc/card_bloc/word_card_states.dart';
+import 'package:Dictionary/views/empty_view.dart';
+import 'package:Dictionary/views/error_view.dart';
+import 'package:Dictionary/views/loaded_view.dart';
+import 'package:Dictionary/views/loading_view.dart';
 import 'package:Dictionary/widgets/gradientColor/gradient_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -13,21 +13,22 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:Dictionary/service/definition.api.dart';
 import 'package:swipable_stack/swipable_stack.dart';
 
-class DictionaryHome extends StatefulWidget {
-  const DictionaryHome({Key? key}) : super(key: key);
+class CardScreen extends StatefulWidget {
+  const CardScreen({Key? key}) : super(key: key);
 
   @override
-  _DictionaryHomeState createState() => _DictionaryHomeState();
+  _CardScreenState createState() => _CardScreenState();
 }
 
-class _DictionaryHomeState extends State<DictionaryHome> {
+class _CardScreenState extends State<CardScreen> {
   late SwipableStackController _controller;
-  WordBloc wordBloc = WordBloc(repository: Repository());
+  WordCardBloc wordBloc = WordCardBloc(repository: Repository());
 
   @override
   void initState() {
     super.initState();
     _controller = SwipableStackController();
+    wordBloc.add(RequestWord());
     wordBloc.add(RequestWord());
   }
 
@@ -47,7 +48,7 @@ class _DictionaryHomeState extends State<DictionaryHome> {
           actions: [
             IconButton(
                 onPressed: () {
-                  Navigator.of(context).pushNamed('/search');
+                  Navigator.of(context).pushNamed('/searchScreen');
                 },
                 icon: Icon(Icons.search))
           ],
@@ -61,29 +62,29 @@ class _DictionaryHomeState extends State<DictionaryHome> {
           },
           builder:
               (BuildContext context, int index, BoxConstraints constraints) {
-            print('1');
-            return BlocBuilder<WordBloc, WordState>(
+            return BlocBuilder<WordCardBloc, WordCardState>(
               bloc: wordBloc,
               builder: (_, wordState) {
-                if (wordState is WordError) {
+                if (wordState is WordCardError) {
                   return errorView();
                 }
-                if (wordState is WordLoading) {
+                if (wordState is WordCardLoading) {
                   return loadingView();
                 }
-                if (wordState is WordLoaded) {
-                  if (index >= wordState.response.length) {
+                if (wordState is WordCardLoaded) {
+                  if (index >= wordState.wordList.length) {
                     return loadingView();
                   } else {
-                    return loadedView(wordState.response[index], wordBloc);
+                    return loadedView(wordState.wordList[index], wordBloc);
                   }
                 }
-                if (wordState is WordEmpty) {
+                if (wordState is WordCardEmpty) {
                   return emptyView();
                 }
                 return loadingView();
               },
             );
+
           },
         ));
   }
