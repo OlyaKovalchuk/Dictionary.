@@ -4,10 +4,18 @@ abstract class WordEvent extends Equatable {
   WordEvent([List props = const []]) : super();
 }
 
- class RequestWord extends WordEvent {
-  String? word;
+class WordSwipe extends WordEvent {
+  final String? word;
 
-  RequestWord({this.word});
+  WordSwipe({this.word});
+
+  @override
+  List<Object?> get props => [];
+}
+
+class InitView extends WordEvent {
+
+  InitView();
 
   @override
   List<Object?> get props => [];

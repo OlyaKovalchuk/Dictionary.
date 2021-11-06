@@ -11,7 +11,7 @@ class WordSearchBloc extends Bloc<WordEvent, WordSearchState>{
 
   @override
   Stream<WordSearchState> mapEventToState(WordEvent event) async* {
-    if (event is RequestWord) {
+    if (event is WordSwipe) {
       yield WordSearchLoading();
       try {
         final SearchResponse response = await repository.search(event.word!);

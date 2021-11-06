@@ -28,8 +28,7 @@ class _CardScreenState extends State<CardScreen> {
   void initState() {
     super.initState();
     _controller = SwipableStackController();
-    wordBloc.add(RequestWord());
-    wordBloc.add(RequestWord());
+    wordBloc.add(InitView());
   }
 
   @override
@@ -58,7 +57,7 @@ class _CardScreenState extends State<CardScreen> {
           controller: _controller,
           stackClipBehaviour: Clip.none,
           onSwipeCompleted: (index, direction) {
-            wordBloc.add(RequestWord());
+            wordBloc.add(WordSwipe());
           },
           builder:
               (BuildContext context, int index, BoxConstraints constraints) {

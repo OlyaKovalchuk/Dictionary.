@@ -83,7 +83,7 @@ class _SearchScreenState extends State<SearchScreen> {
             onSubmitted: (word) {
               _focusNode.consumeKeyboardToken();
               if (word != '') {
-                _wordBloc.add(RequestWord(word: word));
+                _wordBloc.add(WordSwipe(word: word));
               }
             },
             decoration: InputDecoration(
@@ -105,7 +105,7 @@ class _SearchScreenState extends State<SearchScreen> {
               suffixIcon: IconButton(
                   icon: iconGradient(),
                   onPressed: () {
-                    _wordBloc.add(RequestWord(word: _controller.text));
+                    _wordBloc.add(WordSwipe(word: _controller.text));
                   }),
             ),
             autocorrect: true,

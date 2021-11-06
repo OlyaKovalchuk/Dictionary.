@@ -20,121 +20,120 @@ Widget loadedView(SearchResponse response, WordCardBloc wordBloc) {
             direction: FlipDirection.HORIZONTAL,
             front: cardDecoration(
                 child: Padding(
-                  padding: EdgeInsets.only(
-                      left: 20, right: 20, top: 30, bottom: 30),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Column(children: [
-                        _buildWord(response.word),
-                        _buildPhonetics(response),
-                      ]),
-                      SizedBox(
-                        height: 30,
-                      ),
-                      Visibility(
-                        visible: response.meanings[0].definitions[0].example !=
-                            null,
-                        child: _buildVisibilityExample(
-                            response.meanings[0].definitions[0].example ?? ''),
-                      ),
-                      Spacer(),
-                      synonymsView(
-                          wordBloc,
-                          response.meanings[0].definitions[0].synonyms ?? [],
-                          response),
-                    ],
+              padding:
+                  EdgeInsets.only(left: 20, right: 20, top: 30, bottom: 30),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Column(children: [
+                    _buildWord(response.word),
+                    Visibility(
+                      visible: response.phonetics != null &&
+                          response.phonetics!.isNotEmpty,
+                      child: _buildPhonetics(response.phonetics ?? []),
+                    )
+                  ]),
+                  SizedBox(
+                    height: 30,
                   ),
-                )),
+                  Visibility(
+                    visible:
+                        response.meanings[0].definitions[0].example != null,
+                    child: _buildVisibilityExample(
+                        response.meanings[0].definitions[0].example ?? ''),
+                  ),
+                  Spacer(),
+                  synonymsView(
+                      wordBloc,
+                      response.meanings[0].definitions[0].synonyms ?? [],
+                      response),
+                ],
+              ),
+            )),
             back: cardDecoration(
                 child: Column(children: [
-                  Padding(
-                    padding: EdgeInsets.only(
-                      top: 30,
-                    ),
-                    child: _buildWord(response.word),
-                  ),
-                  Expanded(child: wordInfo(response))
-                ]))),
+              Padding(
+                padding: EdgeInsets.only(
+                  top: 30,
+                ),
+                child: _buildWord(response.word),
+              ),
+              Expanded(child: wordInfo(response))
+            ]))),
       ]));
 }
-  Widget synonymsView(WordCardBloc wordBloc, List<String> synonyms,
-      SearchResponse response) =>
-      Visibility(
-          visible: synonyms.isNotEmpty,
-          child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Text(
-              'synonyms: ',
-              style: GoogleFonts.roboto(
-                fontSize: 12,
-                color: redColor(),
-              ),
+
+Widget synonymsView(WordCardBloc wordBloc, List<String> synonyms,
+        SearchResponse response) =>
+    Visibility(
+        visible: synonyms.isNotEmpty,
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Text(
+            'synonyms: ',
+            style: GoogleFonts.roboto(
+              fontSize: 12,
+              color: redColor(),
             ),
-            Wrap(
-              spacing: 5.0,
-              // runSpacing: 4.0,
-              children: synonymChips(wordBloc, response, synonyms),
-            )
-          ]));
-
-  List<Widget> synonymChips(WordCardBloc wordBloc, SearchResponse response,
-      List<String> synonyms) =>
-      synonyms
-          .take(4)
-          .map((synonym) =>
-          GestureDetector(
-            onTap: () {
-              if (isSingleWord(synonym)) {
-                response.word = synonym;
-                wordBloc.add(RequestWord(word: synonym));
-              }
-            },
-            child: Chip(
-                backgroundColor: Colors.white,
-                side: BorderSide(color: redColor()),
-                label: Text(
-                  synonym,
-                  style: TextStyle(
-                    fontSize: 15,
-                    color: redColor(),
-                  ),
-                )),
-          ))
-          .toList();
-
-  Widget _buildWord(String word) =>
-      Text(
-        word,
-        style: titleTextStyle(),
-      );
-
-  Widget _buildPhonetics(SearchResponse response) =>
-      Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          IconButton(
-              onPressed: () {
-            },
-              icon: Icon(
-                Icons.volume_up,
-                size: 20,
-                color: greyColor(),
-              )),
-          response.phonetics != []
-              ? Text(
-            '[ ' + response.phonetics![0]!.text! + ' ]',
-            style: plainTextStyle(),
+          ),
+          Wrap(
+            spacing: 5.0,
+            // runSpacing: 4.0,
+            children: synonymChips(wordBloc, response, synonyms),
           )
-              : Text('')
-        ],
-      );
+        ]));
 
-  _buildVisibilityExample(String? example) =>
-      Center(
-        child: Text(
-          toBeginningOfSentenceCase(example)!,
-          style: plainTextStyle(),
-        ),
-      );
+List<Widget> synonymChips(WordCardBloc wordBloc, SearchResponse response,
+        List<String> synonyms) =>
+    synonyms
+        .take(4)
+        .map((synonym) => GestureDetector(
+              onTap: () {
+                if (isSingleWord(synonym)) {
+                  response.word = synonym;
+                  wordBloc.add(WordSwipe(word: synonym));
+                }
+              },
+              child: Chip(
+                  backgroundColor: Colors.white,
+                  side: BorderSide(color: redColor()),
+                  label: Text(
+                    synonym,
+                    style: TextStyle(
+                      fontSize: 15,
+                      color: redColor(),
+                    ),
+                  )),
+            ))
+        .toList();
+
+Widget _buildWord(String word) => Text(
+      word,
+      style: titleTextStyle(),
+    );
+
+Widget _buildPhonetics(List<Phonetics> phonetics) => Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisSize: MainAxisSize.max,
+      children: [
+        IconButton(
+            onPressed: () {},
+            icon: Icon(
+              Icons.volume_up,
+              size: 20,
+              color: greyColor(),
+            )),
+        Visibility(
+            visible: phonetics[0].text != null,
+            child: Text(
+              '[ ' + phonetics[0].text! + ' ]',
+              style: plainTextStyle(),
+            ))
+      ],
+    );
+
+_buildVisibilityExample(String? example) => Center(
+      child: Text(
+        toBeginningOfSentenceCase(example)!,
+        style: plainTextStyle(),
+      ),
+    );
