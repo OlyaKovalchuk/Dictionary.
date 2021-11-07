@@ -1,4 +1,3 @@
-import 'package:Dictionary/bloc/request_word.dart';
 import 'package:Dictionary/bloc/card_bloc/word_card_bloc.dart';
 import 'package:Dictionary/model/search_response.dart';
 import 'package:Dictionary/utils/string_utils.dart';
@@ -25,14 +24,8 @@ Widget loadedView(SearchResponse response, WordCardBloc wordBloc) {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Column(children: [
-                    _buildWord(response.word),
-                    Visibility(
-                      visible: response.phonetics != null &&
-                          response.phonetics!.isNotEmpty,
-                      child: _buildPhonetics(response.phonetics ?? []),
-                    )
-                  ]),
+                  _buildWord(response.word),
+                  _buildPhonetics(response.phonetics ?? []),
                   SizedBox(
                     height: 30,
                   ),
@@ -89,8 +82,7 @@ List<Widget> synonymChips(WordCardBloc wordBloc, SearchResponse response,
         .map((synonym) => GestureDetector(
               onTap: () {
                 if (isSingleWord(synonym)) {
-                  response.word = synonym;
-                  wordBloc.add(WordSwipe(word: synonym));
+               //   wordBloc.add(SynonymTapped(synonym: synonym));
                 }
               },
               child: Chip(
@@ -106,30 +98,44 @@ List<Widget> synonymChips(WordCardBloc wordBloc, SearchResponse response,
             ))
         .toList();
 
-Widget _buildWord(String word) => Text(
-      word,
-      style: titleTextStyle(),
+Widget _buildWord(String word) => Center(
+      child: Text(
+        word,
+        style: titleTextStyle(),
+      ),
     );
 
-Widget _buildPhonetics(List<Phonetics> phonetics) => Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      mainAxisSize: MainAxisSize.max,
-      children: [
-        IconButton(
-            onPressed: () {},
-            icon: Icon(
-              Icons.volume_up,
-              size: 20,
-              color: greyColor(),
-            )),
-        Visibility(
-            visible: phonetics[0].text != null,
-            child: Text(
-              '[ ' + phonetics[0].text! + ' ]',
-              style: plainTextStyle(),
-            ))
-      ],
-    );
+Widget _buildPhonetics(List<Phonetics> phonetics) {
+  String? audio;
+  String? text;
+
+  if (phonetics.isNotEmpty) {
+    audio = phonetics.first.audio;
+    text = phonetics.first.text;
+  }
+
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.center,
+    mainAxisSize: MainAxisSize.max,
+    children: [
+      Visibility(
+          visible: audio != null,
+          child: IconButton(
+              onPressed: () {},
+              icon: Icon(
+                Icons.volume_up,
+                size: 20,
+                color: greyColor(),
+              ))),
+      Visibility(
+          visible: text != null,
+          child: Text(
+            '[ ' + (text ?? ' ') + ' ]',
+            style: plainTextStyle(),
+          ))
+    ],
+  );
+}
 
 _buildVisibilityExample(String? example) => Center(
       child: Text(
