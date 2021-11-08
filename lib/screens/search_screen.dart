@@ -63,9 +63,6 @@ class _SearchScreenState extends State<SearchScreen> {
                   ),
                 ]);
               }
-              if (state is WordCardEmpty) {
-                return emptyView();
-              }
               return emptyView();
             }));
   }

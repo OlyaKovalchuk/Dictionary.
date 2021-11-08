@@ -1,30 +1,34 @@
 import 'package:Dictionary/model/search_response.dart';
 import 'package:equatable/equatable.dart';
 
+class WordCardStackState extends Equatable {
+  final List<WordCardState> wordCardStates;
+
+  WordCardStackState({required this.wordCardStates}) : super();
+
+  @override
+  List<Object?> get props => [wordCardStates];
+}
+
 abstract class WordCardState extends Equatable {
   WordCardState([List props = const []]) : super();
 }
 
-class WordCardEmpty extends WordCardState {
+class Loading extends WordCardState {
   @override
   List<Object?> get props => [];
 }
 
-class WordCardLoading extends WordCardState {
+class Ready extends WordCardState {
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [word];
+
+  final SearchResponse word;
+
+  Ready({required this.word}) : super([word]);
 }
 
-class WordCardLoaded extends WordCardState {
-  @override
-  List<Object?> get props => [wordList];
-
-  final List<SearchResponse> wordList;
-
-  WordCardLoaded({required this.wordList}) : super([wordList]);
-}
-
-class WordCardError extends WordCardState {
+class Error extends WordCardState {
   @override
   List<Object?> get props => [];
 }

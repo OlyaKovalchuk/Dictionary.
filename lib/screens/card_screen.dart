@@ -29,10 +29,13 @@ class _CardScreenState extends State<CardScreen> {
     super.initState();
     _controller = SwipableStackController();
     wordBloc.add(InitView());
+
+
   }
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
@@ -61,30 +64,28 @@ class _CardScreenState extends State<CardScreen> {
           },
           builder:
               (BuildContext context, int index, BoxConstraints constraints) {
-            return BlocBuilder<WordCardBloc, WordCardState>(
+            return BlocBuilder<WordCardBloc, WordCardStackState>(
               bloc: wordBloc,
-              builder: (_, wordState) {
-                if (wordState is WordCardError) {
+              builder: (_, wordStackState) {
+                if (index >= wordStackState.wordCardStates.length) {
+                  return  loadingView();
+                }
+                WordCardState wordState = wordStackState.wordCardStates[index];
+
+                if (wordState is Error) {
                   return errorView();
                 }
-                if (wordState is WordCardLoading) {
+                if (wordState is Loading) {
                   return loadingView();
                 }
-                if (wordState is WordCardLoaded) {
-                  if (index >= wordState.wordList.length) {
-                    return loadingView();
-                  } else {
-                    return loadedView(wordState.wordList[index], wordBloc);
-                  }
-                }
-                if (wordState is WordCardEmpty) {
-                  return emptyView();
+                if (wordState is Ready) {
+                 return loadedView(wordState.word, wordBloc);
                 }
                 return loadingView();
-              },
+              }
             );
-
           },
+
         ));
   }
 }

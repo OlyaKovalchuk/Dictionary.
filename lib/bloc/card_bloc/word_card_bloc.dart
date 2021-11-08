@@ -7,14 +7,15 @@ import 'package:bloc/bloc.dart';
 import 'package:english_words/english_words.dart';
 import '../request_word.dart';
 
-class WordCardBloc extends Bloc<WordEvent, WordCardState> {
+class WordCardBloc extends Bloc<WordEvent, WordCardStackState> {
   final Repository repository;
-  List<SearchResponse> responses = [];
+  List<WordCardState> cardStates = [];
 
-  WordCardBloc({required this.repository}) : super(WordCardEmpty());
+  WordCardBloc({required this.repository})
+      : super(WordCardStackState(wordCardStates: []));
 
   @override
-  Stream<WordCardState> mapEventToState(WordEvent event) async* {
+  Stream<WordCardStackState> mapEventToState(WordEvent event) async* {
     if (event is WordSwipe) {
       yield* fetchWord();
     } else if (event is InitView) {
@@ -24,14 +25,15 @@ class WordCardBloc extends Bloc<WordEvent, WordCardState> {
     }
   }
 
-  Stream<WordCardState> fetchWord() async* {
+  Stream<WordCardStackState> fetchWord() async* {
     try {
       final word = _randomWord();
       final SearchResponse response = await repository.search(word);
-      responses.add(response);
-      yield WordCardLoaded(wordList: responses);
+      cardStates.add(Ready(word: response));
+      yield WordCardStackState(wordCardStates: cardStates);
     } catch (exception) {
-      yield WordCardError();
+      cardStates.add(Error());
+      yield WordCardStackState(wordCardStates: cardStates);
     }
   }
 
