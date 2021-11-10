@@ -134,7 +134,7 @@ Widget _buildPhonetics(List<Phonetics> phonetics) {
           visible: text != null,
           child: Text(
             '[ ' + (text ?? ' ') + ' ]',
-            style: plainTextStyle(),
+            style: TextStyle(fontSize: 15, color: greyColor()),
           ))
     ],
   );
