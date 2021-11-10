@@ -22,7 +22,7 @@ void main() {
       navigateRoute: IntroductionScreen() ,
       duration: 3,
       text:
-      'Dictionary',
+      'Dictionary.',
       textStyle: TextStyle(
           fontFamily: ('Futura'),
           fontSize: 50,

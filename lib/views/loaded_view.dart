@@ -12,13 +12,14 @@ import 'package:intl/intl.dart';
 import 'package:just_audio/just_audio.dart';
 import 'word_info_view.dart';
 
-Widget loadedView(SearchResponse response, WordCardBloc wordBloc) {
+Widget loadedView(SearchResponse response, WordCardBloc wordBloc, BuildContext context) {
   return Padding(
       padding: EdgeInsets.all(35),
       child: Column(children: [
         FlipCard(
             direction: FlipDirection.HORIZONTAL,
             front: cardDecoration(
+              context: context,
                 child: Padding(
               padding:
                   EdgeInsets.only(left: 20, right: 20, top: 30, bottom: 30),
@@ -45,6 +46,7 @@ Widget loadedView(SearchResponse response, WordCardBloc wordBloc) {
               ),
             )),
             back: cardDecoration(
+                context: context,
                 child: Column(children: [
               Padding(
                 padding: EdgeInsets.only(

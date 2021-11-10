@@ -1,5 +1,4 @@
 import 'package:Dictionary/bloc/request_word.dart';
-import 'package:Dictionary/bloc/card_bloc/word_card_states.dart';
 import 'package:Dictionary/views/empty_view.dart';
 import 'package:Dictionary/views/error_view.dart';
 import 'package:Dictionary/views/word_info_view.dart';

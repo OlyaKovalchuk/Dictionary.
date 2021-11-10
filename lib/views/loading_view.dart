@@ -2,7 +2,7 @@ import 'package:Dictionary/widgets/cardDecoration/card_decoration.dart';
 import 'package:Dictionary/widgets/cardDecoration/indicator_decoration.dart';
 import 'package:flutter/cupertino.dart';
 
-Widget loadingView() {
+Widget loadingView(BuildContext context) {
   return Padding(
     padding: EdgeInsets.all(35),
-    child: cardDecoration(child: indicatorCircular()));}
+    child: cardDecoration( context: context,child: indicatorCircular()));}

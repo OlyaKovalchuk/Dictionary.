@@ -1,7 +1,6 @@
 import 'package:Dictionary/bloc/request_word.dart';
 import 'package:Dictionary/bloc/card_bloc/word_card_bloc.dart';
 import 'package:Dictionary/bloc/card_bloc/word_card_states.dart';
-import 'package:Dictionary/views/empty_view.dart';
 import 'package:Dictionary/views/error_view.dart';
 import 'package:Dictionary/views/loaded_view.dart';
 import 'package:Dictionary/views/loading_view.dart';
@@ -68,7 +67,7 @@ class _CardScreenState extends State<CardScreen> {
               bloc: wordBloc,
               builder: (_, wordStackState) {
                 if (index >= wordStackState.wordCardStates.length) {
-                  return  loadingView();
+                  return  loadingView(context);
                 }
                 WordCardState wordState = wordStackState.wordCardStates[index];
 
@@ -76,12 +75,12 @@ class _CardScreenState extends State<CardScreen> {
                   return errorView();
                 }
                 if (wordState is Loading) {
-                  return loadingView();
+                  return loadingView(context);
                 }
                 if (wordState is Ready) {
-                 return loadedView(wordState.word, wordBloc);
+                 return loadedView(wordState.word, wordBloc, context);
                 }
-                return loadingView();
+                return loadingView(context);
               }
             );
           },
