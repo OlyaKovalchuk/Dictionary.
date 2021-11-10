@@ -22,6 +22,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.8.1"
+  audioplayers:
+    dependency: "direct main"
+    description:
+      name: audioplayers
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.20.1"
   bloc:
     dependency: transitive
     description:
@@ -371,13 +378,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.7.1"
-  swipe_to:
-    dependency: "direct main"
-    description:
-      name: swipe_to
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.0.1+8"
   term_glyph:
     dependency: transitive
     description:
@@ -406,6 +406,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.4"
+  uuid:
+    dependency: transitive
+    description:
+      name: uuid
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.0.5"
   vector_math:
     dependency: transitive
     description:

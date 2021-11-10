@@ -5,6 +5,7 @@ import 'package:Dictionary/widgets/cardDecoration/card_decoration.dart';
 import 'package:Dictionary/widgets/colors/grey_color.dart';
 import 'package:Dictionary/widgets/colors/red_color.dart';
 import 'package:Dictionary/widgets/textDecoration/text_styles.dart';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -82,7 +83,7 @@ List<Widget> synonymChips(WordCardBloc wordBloc, SearchResponse response,
         .map((synonym) => GestureDetector(
               onTap: () {
                 if (isSingleWord(synonym)) {
-               //   wordBloc.add(SynonymTapped(synonym: synonym));
+                  //   wordBloc.add(SynonymTapped(synonym: synonym));
                 }
               },
               child: Chip(
@@ -121,7 +122,9 @@ Widget _buildPhonetics(List<Phonetics> phonetics) {
       Visibility(
           visible: audio != null,
           child: IconButton(
-              onPressed: () {},
+              onPressed: () {
+                getAudio(audio);
+              },
               icon: Icon(
                 Icons.volume_up,
                 size: 20,
@@ -135,6 +138,16 @@ Widget _buildPhonetics(List<Phonetics> phonetics) {
           ))
     ],
   );
+}
+
+void getAudio(url) async {
+  try {
+    AudioPlayer audioPlayer = AudioPlayer();
+    await audioPlayer.play('http:$url', isLocal: false);
+    print('http:$url');
+  } catch (e) {
+    print(e);
+  }
 }
 
 _buildVisibilityExample(String? example) => Center(
