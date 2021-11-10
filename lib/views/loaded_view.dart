@@ -5,11 +5,11 @@ import 'package:Dictionary/widgets/cardDecoration/card_decoration.dart';
 import 'package:Dictionary/widgets/colors/grey_color.dart';
 import 'package:Dictionary/widgets/colors/red_color.dart';
 import 'package:Dictionary/widgets/textDecoration/text_styles.dart';
-import 'package:audioplayers/audioplayers.dart';
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:just_audio/just_audio.dart';
 import 'word_info_view.dart';
 
 Widget loadedView(SearchResponse response, WordCardBloc wordBloc) {
@@ -122,7 +122,7 @@ Widget _buildPhonetics(List<Phonetics> phonetics) {
       Visibility(
           visible: audio != null,
           child: IconButton(
-              onPressed: () {
+              onPressed: ()  {
                 getAudio(audio);
               },
               icon: Icon(
@@ -143,7 +143,8 @@ Widget _buildPhonetics(List<Phonetics> phonetics) {
 void getAudio(url) async {
   try {
     AudioPlayer audioPlayer = AudioPlayer();
-    await audioPlayer.play('http:$url', isLocal: false);
+    await audioPlayer.setUrl('https:$url');
+    audioPlayer.play();
     print('http:$url');
   } catch (e) {
     print(e);
