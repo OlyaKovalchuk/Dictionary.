@@ -1,9 +1,9 @@
-import 'package:Dictionary/bloc/request_word.dart';
+import 'package:Dictionary/blocs/request_word.dart';
 import 'package:Dictionary/views/empty_view.dart';
 import 'package:Dictionary/views/error_view.dart';
 import 'package:Dictionary/views/word_info_view.dart';
-import 'package:Dictionary/bloc/search_bloc/word_search_bloc.dart';
-import 'package:Dictionary/bloc/search_bloc/word_search_states.dart';
+import 'package:Dictionary/blocs/search_bloc/word_search_bloc.dart';
+import 'package:Dictionary/blocs/search_bloc/word_search_states.dart';
 import 'package:Dictionary/widgets/border/border_radius.dart';
 import 'package:Dictionary/widgets/cardDecoration/indicator_decoration.dart';
 import 'package:Dictionary/widgets/colors/grey_color.dart';

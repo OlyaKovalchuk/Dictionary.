@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:Dictionary/bloc/card_bloc/word_card_states.dart';
+import 'package:Dictionary/blocs/card_bloc/word_card_states.dart';
 import 'package:Dictionary/model/search_response.dart';
 import 'package:Dictionary/service/definition.api.dart';
 import 'package:bloc/bloc.dart';
@@ -8,10 +8,10 @@ import 'package:english_words/english_words.dart';
 import '../request_word.dart';
 
 class WordCardBloc extends Bloc<WordEvent, WordCardStackState> {
-  final Repository repository;
+  final Repository? repository;
   List<WordCardState> cardStates = [];
 
-  WordCardBloc({required this.repository})
+  WordCardBloc({this.repository})
       : super(WordCardStackState(wordCardStates: []));
 
   @override
@@ -28,7 +28,7 @@ class WordCardBloc extends Bloc<WordEvent, WordCardStackState> {
   Stream<WordCardStackState> fetchWord() async* {
     try {
       final word = _randomWord();
-      final SearchResponse response = await repository.search(word);
+      final SearchResponse response = await repository!.search(word);
       cardStates.add(Ready(word: response));
       yield WordCardStackState(wordCardStates: cardStates);
     } catch (exception) {

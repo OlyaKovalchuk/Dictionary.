@@ -1,10 +1,11 @@
-import 'package:Dictionary/bloc/request_word.dart';
-import 'package:Dictionary/bloc/card_bloc/word_card_bloc.dart';
-import 'package:Dictionary/bloc/card_bloc/word_card_states.dart';
+import 'package:Dictionary/blocs/request_word.dart';
+import 'package:Dictionary/blocs/card_bloc/word_card_bloc.dart';
+import 'package:Dictionary/blocs/card_bloc/word_card_states.dart';
 import 'package:Dictionary/views/error_view.dart';
 import 'package:Dictionary/views/loaded_view.dart';
 import 'package:Dictionary/views/loading_view.dart';
 import 'package:Dictionary/widgets/gradientColor/gradient_widget.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -13,7 +14,8 @@ import 'package:Dictionary/service/definition.api.dart';
 import 'package:swipable_stack/swipable_stack.dart';
 
 class CardScreen extends StatefulWidget {
-  const CardScreen({Key? key}) : super(key: key);
+ final User? user;
+   CardScreen({Key? key,  this.user}) : super(key: key);
 
   @override
   _CardScreenState createState() => _CardScreenState();
