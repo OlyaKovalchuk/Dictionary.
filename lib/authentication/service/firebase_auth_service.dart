@@ -1,6 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 
 class UserRepository {
+
+  static const ERROR_WEAK_PASSWORD = 'weak-password';
+  static const ERROR_EMAIL_ALREADY_IN_USE = 'email-already-in-use';
+
+
   FirebaseAuth? _firebaseAuth;
 
   UserRepository({FirebaseAuth? firebaseAuth})
@@ -26,9 +31,9 @@ class UserRepository {
           .createUserWithEmailAndPassword(email: email, password: password);
       print(userCredential);
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'weak-password') {
+      if (e.code == ERROR_WEAK_PASSWORD) {
         print('The password provided is too weak.');
-      } else if (e.code == 'email-already-in-use') {
+      } else if (e.code == ERROR_EMAIL_ALREADY_IN_USE) {
         print('The account already exists for that email.');
       }
       return Future.error(e);

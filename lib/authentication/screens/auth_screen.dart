@@ -1,15 +1,15 @@
 import 'package:Dictionary/authentication/service/firebase_auth_service.dart';
 import 'package:flutter/material.dart';
 
-class AuthScreen extends StatefulWidget {
+class LoginScreen extends StatefulWidget {
  final UserRepository userRepository;
-   AuthScreen({required this.userRepository});
+   LoginScreen({required this.userRepository});
 
   @override
-  _AuthScreenState createState() => _AuthScreenState();
+  _LoginScreenState createState() => _LoginScreenState();
 }
 
-class _AuthScreenState extends State<AuthScreen> {
+class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

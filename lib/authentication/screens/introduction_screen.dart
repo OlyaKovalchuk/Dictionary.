@@ -86,15 +86,20 @@ class _IntroductionScreenState extends State<IntroductionScreen> {
                             SizedBox(
                               height: 50,
                             ),
-                            Text(
-                              " Sign in",
-                              style: TextStyle(
-                                  fontFamily: ('Futura'),
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.bold,
-                                  foreground: Paint()
-                                    ..shader = gradientColor().createShader(
-                                        Rect.fromLTWH(0.0, 0.0, 200.0, 70.0))),
+                            GestureDetector(
+                              onTap: () =>
+                                  Navigator.pushNamed(context, '/loginScreen'),
+                              child: Text(
+                                " Sign in",
+                                style: TextStyle(
+                                    fontFamily: ('Futura'),
+                                    fontSize: 17,
+                                    fontWeight: FontWeight.bold,
+                                    foreground: Paint()
+                                      ..shader = gradientColor().createShader(
+                                          Rect.fromLTWH(
+                                              0.0, 0.0, 200.0, 70.0))),
+                              ),
                             ),
                           ],
                         ),

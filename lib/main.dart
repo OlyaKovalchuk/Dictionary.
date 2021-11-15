@@ -1,4 +1,5 @@
 import 'package:Dictionary/authentication/bloc/simple_bloc_observer.dart';
+import 'package:Dictionary/authentication/screens/auth_screen.dart';
 import 'package:Dictionary/authentication/screens/register_screen.dart';
 import 'package:Dictionary/cards/card_screen.dart';
 import 'package:Dictionary/authentication/screens/introduction_screen.dart';
@@ -39,6 +40,7 @@ class SplashScreen extends StatelessWidget {
           '/cardScreen': (BuildContext context) => CardScreen(),
           '/introductionScreen': (BuildContext context) => IntroductionScreen(),
           '/registerScreen': (BuildContext context) => RegisterScreen(),
+          '/loginScreen': (BuildContext context) => LoginScreen(userRepository: _userRepository,)
         },
         home: SplashScreenView(
             navigateRoute: HomeScreen(

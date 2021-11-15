@@ -1,5 +1,6 @@
 import 'package:Dictionary/authentication/bloc/registration_bloc/reg_bloc.dart';
 import 'package:Dictionary/authentication/bloc/registration_bloc/reg_event.dart';
+import 'package:Dictionary/authentication/bloc/registration_bloc/reg_states.dart';
 import 'package:Dictionary/authentication/model/user_data_model.dart';
 import 'package:Dictionary/authentication/service/firebase_auth_service.dart';
 import 'package:Dictionary/widgets/border/border_radius.dart';
@@ -46,53 +47,71 @@ class _RegisterScreenState extends State<RegisterScreen> {
             ),
           ),
         ),
-        body: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
-          child: Align(
-            alignment: Alignment.topCenter,
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  'Create a new account',
-                  style: TextStyle(
-                    fontFamily: ('Futura'),
-                    fontSize: 30,
-                    fontWeight: FontWeight.normal,
-                    foreground: Paint()
-                      ..shader = gradientColor()
-                          .createShader(Rect.fromLTWH(0.0, 0.0, 200.0, 70.0)),
-                  ),
-                ),
-                Form(
-                  key: _key,
-                  child: Column(
-                    children: [
-                      _textFieldName(),
-                      SizedBox(
-                        height: 10,
+        body: BlocBuilder<RegBloc, RegState>(
+          bloc: _regBloc,
+          builder: (_, state) {
+            return Padding(
+              padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
+              child: Align(
+                alignment: Alignment.topCenter,
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Create a new account',
+                      style: TextStyle(
+                        fontFamily: ('Futura'),
+                        fontSize: 30,
+                        fontWeight: FontWeight.normal,
+                        foreground: Paint()
+                          ..shader = gradientColor().createShader(
+                              Rect.fromLTWH(0.0, 0.0, 200.0, 70.0)),
                       ),
-                      _textFieldPassword(),
-                      SizedBox(
-                        height: 10,
+                    ),
+                    Form(
+                      key: _key,
+                      child: Column(
+                        children: [
+                          _textFieldName(),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          _textFieldPassword(),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          textFieldEmail(isValid: state.isEmailValid, errorText: state.emailErrorText),
+                        ],
                       ),
-                      textFieldEmail(),
-                    ],
-                  ),
+                    ),
+                    Align(
+                        alignment: Alignment.bottomCenter,
+                        child: GestureDetector(
+                            onTap: () {
+                              _regBloc.add(RegWithCredentialsPressed(
+                                  email: _controllerEmail.text,
+                                  password: _controllerPassword.text,
+                                  userData: UserData(
+                                      email: _controllerEmail.text,
+                                      name: _controllerName.text,
+                                      favoriteWord: null)));
+                              // Navigator.pushNamedAndRemoveUntil(context,
+                              //     '/cardScreen', ModalRoute.withName('/'));
+                              //
+                            },
+                            child: BlocBuilder(
+                              bloc: _regBloc,
+                              builder: (context, state) {
+                                return _buttonCreate();
+                              },
+                            )))
+                  ],
                 ),
-                Align(
-                    alignment: Alignment.bottomCenter,
-                    child: BlocBuilder(
-                      bloc: _regBloc,
-                      builder: (context, state) {
-                        return _buttonCreate();
-                      },
-                    ))
-              ],
-            ),
-          ),
+              ),
+            );
+          },
         ));
   }
 
@@ -103,13 +122,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
-  _buttonCreate() => GestureDetector(
-      onTap: () {
-        _regBloc.add(RegWithCredentialsPressed(
-            email: _controllerEmail.text,
-            password: _controllerPassword.text, userData: UserData(email: _controllerEmail.text, name:  _controllerName.text, favoriteWord: null )));
-      },
-      child: Container(
+  _buttonCreate() => Container(
         alignment: Alignment.center,
         height: 60,
         width: 200,
@@ -125,7 +138,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               fontWeight: FontWeight.bold,
               color: Colors.white),
         ),
-      ));
+      );
 
   _textFieldName() => TextField(
         autofocus: true,
@@ -177,18 +190,28 @@ class _RegisterScreenState extends State<RegisterScreen> {
         controller: _controllerPassword,
       );
 
-  textFieldEmail() => TextField(
-        //focusNode: _focusNode,
+  textFieldEmail({required bool isValid,  String? errorText}) =>
+      TextField(
         onSubmitted: (email) {
-          // _focusNode.nextFocus();
           _focusNode.consumeKeyboardToken();
+          // _regBloc.add(RegWithCredentialsPressed(
+          //     email: _controllerEmail.text,
+          //     password: _controllerPassword.text,
+          //     userData: UserData(
+          //         email: _controllerEmail.text,
+          //         name: _controllerName.text,
+          //         favoriteWord: null)));
         },
         decoration: InputDecoration(
           focusedBorder: outlineInputDecor(redColor()),
-          enabledBorder: outlineInputDecor(greyLightColor()),
+          enabledBorder:
+              outlineInputDecor(isValid ? greyLightColor() : Colors.red),
           contentPadding: EdgeInsets.only(left: 15),
           hintText: 'Email',
           hintStyle: TextStyle(color: greyLightColor()),
+          focusedErrorBorder:  outlineInputDecor(isValid ? greyLightColor() : Colors.red),
+          errorBorder:  outlineInputDecor(isValid ? greyLightColor() : Colors.red),
+          errorText: errorText
         ),
         autocorrect: true,
         maxLines: 1,

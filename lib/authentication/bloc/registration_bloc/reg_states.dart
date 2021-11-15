@@ -1,5 +1,6 @@
-class RegState {
+ class RegState {
   final bool isEmailValid;
+  final String? emailErrorText;
   final bool isPasswordValid;
   final bool isSubmitting;
   final bool isSuccess;
@@ -9,6 +10,7 @@ class RegState {
 
   RegState(
       {required this.isEmailValid,
+        required this.emailErrorText,
         required this.isFailure,
         required this.isPasswordValid,
         required this.isSubmitting,
@@ -17,6 +19,7 @@ class RegState {
   factory RegState.failure() {
     return RegState(
         isEmailValid: true,
+        emailErrorText: null,
         isFailure: true,
         isPasswordValid: true,
         isSubmitting: false,
@@ -26,6 +29,7 @@ class RegState {
   factory RegState.loading() {
     return RegState(
         isEmailValid: true,
+        emailErrorText: null,
         isFailure: false,
         isPasswordValid: true,
         isSubmitting: true,
@@ -34,6 +38,7 @@ class RegState {
   factory RegState.initial() {
     return RegState(
         isEmailValid: true,
+        emailErrorText: null,
         isFailure: false,
         isPasswordValid: true,
         isSubmitting: false,
@@ -43,6 +48,7 @@ class RegState {
   factory RegState.success() {
     return RegState(
         isEmailValid: true,
+        emailErrorText: null,
         isFailure: false,
         isPasswordValid: true,
         isSubmitting: false,
@@ -56,12 +62,14 @@ class RegState {
 
   RegState copyWith(
       { bool? isEmailValid,
+        String? emailErrorText,
         bool? isPasswordValid,
         bool? isSubmitting,
         bool? isSuccess,
         bool? isFailure}) {
     return RegState(
         isEmailValid: isEmailValid ?? this.isEmailValid,
+        emailErrorText: emailErrorText ?? this.emailErrorText,
         isFailure: isFailure ?? this.isFailure,
         isPasswordValid: isPasswordValid ?? this.isPasswordValid,
         isSubmitting: isSubmitting ?? this.isSubmitting,
