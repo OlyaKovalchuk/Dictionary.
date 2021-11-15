@@ -1,9 +1,10 @@
-import 'package:Dictionary/blocs/simple_bloc_observer.dart';
-import 'package:Dictionary/screens/card_screen.dart';
-import 'package:Dictionary/screens/introduction_screen.dart';
-import 'package:Dictionary/screens/main_screen.dart';
-import 'package:Dictionary/screens/search_screen.dart';
-import 'package:Dictionary/service/firebase_auth_service.dart';
+import 'package:Dictionary/authentication/bloc/simple_bloc_observer.dart';
+import 'package:Dictionary/authentication/screens/register_screen.dart';
+import 'package:Dictionary/cards/card_screen.dart';
+import 'package:Dictionary/authentication/screens/introduction_screen.dart';
+import 'package:Dictionary/authentication/screens/main_screen.dart';
+import 'package:Dictionary/search/search_screen.dart';
+import 'package:Dictionary/authentication/service/firebase_auth_service.dart';
 import 'package:Dictionary/widgets/gradientColor/gradient_widget.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -37,6 +38,7 @@ class SplashScreen extends StatelessWidget {
           '/searchScreen': (BuildContext context) => SearchScreen(),
           '/cardScreen': (BuildContext context) => CardScreen(),
           '/introductionScreen': (BuildContext context) => IntroductionScreen(),
+          '/registerScreen': (BuildContext context) => RegisterScreen(),
         },
         home: SplashScreenView(
             navigateRoute: HomeScreen(

@@ -1,5 +1,5 @@
-import 'package:Dictionary/blocs/card_bloc/word_card_bloc.dart';
-import 'package:Dictionary/model/search_response.dart';
+import 'package:Dictionary/cards/card_bloc/word_card_bloc.dart';
+import 'package:Dictionary/cards/model/search_response.dart';
 import 'package:Dictionary/utils/string_utils.dart';
 import 'package:Dictionary/widgets/cardDecoration/card_decoration.dart';
 import 'package:Dictionary/widgets/colors/grey_color.dart';

@@ -1,11 +1,11 @@
-import 'package:Dictionary/blocs/auth_bloc/auth_bloc.dart';
-import 'package:Dictionary/blocs/auth_bloc/auth_event.dart';
-import 'package:Dictionary/blocs/auth_bloc/auth_state.dart';
-import 'package:Dictionary/screens/auth_screen.dart';
-import 'package:Dictionary/service/firebase_auth_service.dart';
+import 'package:Dictionary/authentication/bloc/auth_bloc/auth_bloc.dart';
+import 'package:Dictionary/authentication/bloc/auth_bloc/auth_event.dart';
+import 'package:Dictionary/authentication/bloc/auth_bloc/auth_state.dart';
+import 'package:Dictionary/authentication/screens/introduction_screen.dart';
+import 'package:Dictionary/authentication/service/firebase_auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'card_screen.dart';
+import '../../cards/card_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   final UserRepository _userRepository;
@@ -22,7 +22,7 @@ class HomeScreen extends StatelessWidget {
                 builder: (context, state) {
                   if (state is AuthFailed) {
                     print('failed');
-                    return AuthScreen();
+                    return IntroductionScreen();
                   }
 
                   if (state is AuthOnSuccess) {

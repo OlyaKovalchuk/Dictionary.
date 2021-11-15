@@ -5,5 +5,5 @@ import 'package:google_fonts/google_fonts.dart';
 TextStyle titleTextStyle() =>
     TextStyle(fontFamily: 'Futura', fontSize: 35, color: greyColor());
 
-TextStyle plainTextStyle() =>
-    GoogleFonts.roboto(fontSize: 15, color: greyColor());
+TextStyle plainTextStyle([double size = 15]) =>
+    GoogleFonts.roboto(fontSize: size, color: greyColor());

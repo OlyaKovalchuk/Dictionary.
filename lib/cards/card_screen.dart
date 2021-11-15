@@ -1,16 +1,17 @@
-import 'package:Dictionary/blocs/request_word.dart';
-import 'package:Dictionary/blocs/card_bloc/word_card_bloc.dart';
-import 'package:Dictionary/blocs/card_bloc/word_card_states.dart';
-import 'package:Dictionary/views/error_view.dart';
-import 'package:Dictionary/views/loaded_view.dart';
-import 'package:Dictionary/views/loading_view.dart';
+import 'package:Dictionary/authentication/service/firebase_auth_service.dart';
+import 'package:Dictionary/cards/card_bloc/word_card_event.dart';
+import 'package:Dictionary/cards/card_bloc/word_card_bloc.dart';
+import 'package:Dictionary/cards/card_bloc/word_card_states.dart';
+import 'package:Dictionary/cards/views/error_view.dart';
+import 'package:Dictionary/cards/views/loaded_view.dart';
+import 'package:Dictionary/cards/views/loading_view.dart';
 import 'package:Dictionary/widgets/gradientColor/gradient_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:Dictionary/service/definition.api.dart';
+import 'package:Dictionary/cards/repository/word_data.dart';
 import 'package:swipable_stack/swipable_stack.dart';
 
 class CardScreen extends StatefulWidget {
@@ -24,7 +25,7 @@ class CardScreen extends StatefulWidget {
 class _CardScreenState extends State<CardScreen> {
   late SwipableStackController _controller;
   WordCardBloc wordBloc = WordCardBloc(repository: Repository());
-
+UserRepository userRepository = UserRepository();
   @override
   void initState() {
     super.initState();
@@ -48,6 +49,9 @@ class _CardScreenState extends State<CardScreen> {
                   fontSize: 25,
                   fontWeight: FontWeight.bold,
                   color: Colors.white)),
+          leading:  TextButton(onPressed: (){
+            userRepository.signOut();
+          }, child: Text('sing out')),
           actions: [
             IconButton(
                 onPressed: () {

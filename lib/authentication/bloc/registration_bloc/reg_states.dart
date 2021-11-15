@@ -1,4 +1,4 @@
-class LoginState {
+class RegState {
   final bool isEmailValid;
   final bool isPasswordValid;
   final bool isSubmitting;
@@ -7,15 +7,15 @@ class LoginState {
 
   bool get isFormValid => isEmailValid && isPasswordValid;
 
-  LoginState(
+  RegState(
       {required this.isEmailValid,
-      required this.isFailure,
-      required this.isPasswordValid,
-      required this.isSubmitting,
-      required this.isSuccess});
+        required this.isFailure,
+        required this.isPasswordValid,
+        required this.isSubmitting,
+        required this.isSuccess});
 
-  factory LoginState.failure() {
-    return LoginState(
+  factory RegState.failure() {
+    return RegState(
         isEmailValid: true,
         isFailure: true,
         isPasswordValid: true,
@@ -23,16 +23,16 @@ class LoginState {
         isSuccess: false);
   }
 
-  factory LoginState.loading() {
-    return LoginState(
+  factory RegState.loading() {
+    return RegState(
         isEmailValid: true,
         isFailure: false,
         isPasswordValid: true,
         isSubmitting: true,
         isSuccess: false);
   }
-  factory LoginState.initial() {
-    return LoginState(
+  factory RegState.initial() {
+    return RegState(
         isEmailValid: true,
         isFailure: false,
         isPasswordValid: true,
@@ -40,8 +40,8 @@ class LoginState {
         isSuccess: false);
   }
 
-  factory LoginState.success() {
-    return LoginState(
+  factory RegState.success() {
+    return RegState(
         isEmailValid: true,
         isFailure: false,
         isPasswordValid: true,
@@ -49,18 +49,18 @@ class LoginState {
         isSuccess: false);
   }
 
-  LoginState update(
+  RegState update(
       { bool? isEmailValid,bool? isPasswordValid}) {
     return copyWith(isEmailValid: isEmailValid, isPasswordValid: isPasswordValid, isSubmitting: false, isSuccess: false, isFailure: false);
   }
 
-  LoginState copyWith(
+  RegState copyWith(
       { bool? isEmailValid,
-       bool? isPasswordValid,
-       bool? isSubmitting,
-       bool? isSuccess,
-       bool? isFailure}) {
-    return LoginState(
+        bool? isPasswordValid,
+        bool? isSubmitting,
+        bool? isSuccess,
+        bool? isFailure}) {
+    return RegState(
         isEmailValid: isEmailValid ?? this.isEmailValid,
         isFailure: isFailure ?? this.isFailure,
         isPasswordValid: isPasswordValid ?? this.isPasswordValid,

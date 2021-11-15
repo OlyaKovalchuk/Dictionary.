@@ -1,11 +1,10 @@
 import 'dart:math';
-
-import 'package:Dictionary/blocs/card_bloc/word_card_states.dart';
-import 'package:Dictionary/model/search_response.dart';
-import 'package:Dictionary/service/definition.api.dart';
+import 'package:Dictionary/cards/card_bloc/word_card_event.dart';
+import 'package:Dictionary/cards/card_bloc/word_card_states.dart';
+import 'package:Dictionary/cards/model/search_response.dart';
+import 'package:Dictionary/cards/repository/word_data.dart';
 import 'package:bloc/bloc.dart';
 import 'package:english_words/english_words.dart';
-import '../request_word.dart';
 
 class WordCardBloc extends Bloc<WordEvent, WordCardStackState> {
   final Repository? repository;

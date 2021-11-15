@@ -1,4 +1,4 @@
-import 'package:Dictionary/model/search_response.dart';
+import 'package:Dictionary/cards/model/search_response.dart';
 import 'package:Dictionary/widgets/textDecoration/text_styles.dart';
 import 'package:Dictionary/widgets/textDecoration/title_text.dart';
 import 'package:flutter/cupertino.dart';

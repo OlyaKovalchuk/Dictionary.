@@ -1,7 +1,7 @@
-import 'package:Dictionary/blocs/request_word.dart';
-import 'package:Dictionary/blocs/search_bloc/word_search_states.dart';
-import 'package:Dictionary/model/search_response.dart';
-import 'package:Dictionary/service/definition.api.dart';
+import 'package:Dictionary/search/search_bloc/word_search_event.dart';
+import 'package:Dictionary/cards/model/search_response.dart';
+import 'package:Dictionary/search/search_bloc/word_search_states.dart';
+import 'package:Dictionary/cards/repository/word_data.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class WordSearchBloc extends Bloc<WordEvent, WordSearchState>{
