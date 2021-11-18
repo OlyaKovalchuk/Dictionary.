@@ -1,8 +1,8 @@
 import 'package:Dictionary/authentication/bloc/simple_bloc_observer.dart';
-import 'package:Dictionary/authentication/screens/auth_screen.dart';
+import 'package:Dictionary/authentication/screens/login_screen.dart';
 import 'package:Dictionary/authentication/screens/register_screen.dart';
 import 'package:Dictionary/cards/card_screen.dart';
-import 'package:Dictionary/authentication/screens/introduction_screen.dart';
+import 'package:Dictionary/authentication/screens/auth_screen.dart';
 import 'package:Dictionary/authentication/screens/main_screen.dart';
 import 'package:Dictionary/search/search_screen.dart';
 import 'package:Dictionary/authentication/service/firebase_auth_service.dart';
@@ -17,7 +17,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   Bloc.observer = SimpleBlocObserver();
-  final UserRepository _userRepository = UserRepository();
+  final UserRepositoryImpl _userRepository = UserRepositoryImpl();
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   runApp(SplashScreen(
@@ -26,9 +26,9 @@ void main() async {
 }
 
 class SplashScreen extends StatelessWidget {
-  final UserRepository _userRepository;
+  final UserRepositoryImpl _userRepository;
 
-  SplashScreen({required UserRepository userRepository})
+  SplashScreen({required UserRepositoryImpl userRepository})
       : _userRepository = userRepository;
 
   @override
@@ -40,7 +40,9 @@ class SplashScreen extends StatelessWidget {
           '/cardScreen': (BuildContext context) => CardScreen(),
           '/introductionScreen': (BuildContext context) => IntroductionScreen(),
           '/registerScreen': (BuildContext context) => RegisterScreen(),
-          '/loginScreen': (BuildContext context) => LoginScreen(userRepository: _userRepository,)
+          '/loginScreen': (BuildContext context) => LoginScreen(
+                userRepository: _userRepository,
+              )
         },
         home: SplashScreenView(
             navigateRoute: HomeScreen(

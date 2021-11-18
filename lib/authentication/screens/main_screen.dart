@@ -1,16 +1,16 @@
 import 'package:Dictionary/authentication/bloc/auth_bloc/auth_bloc.dart';
 import 'package:Dictionary/authentication/bloc/auth_bloc/auth_event.dart';
 import 'package:Dictionary/authentication/bloc/auth_bloc/auth_state.dart';
-import 'package:Dictionary/authentication/screens/introduction_screen.dart';
+import 'package:Dictionary/authentication/screens/auth_screen.dart';
 import 'package:Dictionary/authentication/service/firebase_auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../cards/card_screen.dart';
 
 class HomeScreen extends StatelessWidget {
-  final UserRepository _userRepository;
+  final UserRepositoryImpl _userRepository;
 
-  HomeScreen({Key? key, required UserRepository userRepository})
+  HomeScreen({Key? key, required UserRepositoryImpl userRepository})
       : _userRepository = userRepository,
         super(key: key);
 

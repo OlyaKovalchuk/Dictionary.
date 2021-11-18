@@ -1,4 +1,3 @@
-import 'package:Dictionary/authentication/model/user_data_model.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class RegEvent extends Equatable{
@@ -8,12 +7,16 @@ abstract class RegEvent extends Equatable{
 }
 
 class RegWithCredentialsPressed extends RegEvent{
+  final String name;
   final String email;
   final String password;
-  final UserData userData;
 
-RegWithCredentialsPressed({required this.password,required this.email, required this.userData});
+RegWithCredentialsPressed({required this.password,required this.email,required this.name});
 
   @override
-  List<Object?> get props => [email, password];
+  List<Object?> get props => [email, password,name];
 }
+
+class RegWithGoogle extends RegEvent{}
+
+class RegWithFacebook extends RegEvent{}

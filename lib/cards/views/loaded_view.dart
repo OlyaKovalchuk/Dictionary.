@@ -1,6 +1,6 @@
 import 'package:Dictionary/cards/card_bloc/word_card_bloc.dart';
 import 'package:Dictionary/cards/model/search_response.dart';
-import 'package:Dictionary/utils/string_utils.dart';
+import 'package:Dictionary/cards/utils/string_utils.dart';
 import 'package:Dictionary/widgets/cardDecoration/card_decoration.dart';
 import 'package:Dictionary/widgets/colors/grey_color.dart';
 import 'package:Dictionary/widgets/colors/red_color.dart';
@@ -12,50 +12,51 @@ import 'package:intl/intl.dart';
 import 'package:just_audio/just_audio.dart';
 import 'word_info_view.dart';
 
-Widget loadedView(SearchResponse response, WordCardBloc wordBloc, BuildContext context) {
+Widget loadedView(
+    SearchResponse response, WordCardBloc wordBloc, BuildContext context) {
   return Padding(
       padding: EdgeInsets.all(35),
       child: Column(children: [
         FlipCard(
             direction: FlipDirection.HORIZONTAL,
             front: cardDecoration(
-              context: context,
+                context: context,
                 child: Padding(
-              padding:
-                  EdgeInsets.only(left: 20, right: 20, top: 30, bottom: 30),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _buildWord(response.word),
-                  _buildPhonetics(response.phonetics ?? []),
-                  SizedBox(
-                    height: 30,
+                  padding:
+                      EdgeInsets.only(left: 20, right: 20, top: 30, bottom: 30),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _buildWord(response.word),
+                      _buildPhonetics(response.phonetics ?? []),
+                      SizedBox(
+                        height: 30,
+                      ),
+                      Visibility(
+                        visible:
+                            response.meanings[0].definitions[0].example != null,
+                        child: _buildVisibilityExample(
+                            response.meanings[0].definitions[0].example ?? ''),
+                      ),
+                      Spacer(),
+                      synonymsView(
+                          wordBloc,
+                          response.meanings[0].definitions[0].synonyms ?? [],
+                          response),
+                    ],
                   ),
-                  Visibility(
-                    visible:
-                        response.meanings[0].definitions[0].example != null,
-                    child: _buildVisibilityExample(
-                        response.meanings[0].definitions[0].example ?? ''),
-                  ),
-                  Spacer(),
-                  synonymsView(
-                      wordBloc,
-                      response.meanings[0].definitions[0].synonyms ?? [],
-                      response),
-                ],
-              ),
-            )),
+                )),
             back: cardDecoration(
                 context: context,
                 child: Column(children: [
-              Padding(
-                padding: EdgeInsets.only(
-                  top: 30,
-                ),
-                child: _buildWord(response.word),
-              ),
-              Expanded(child: wordInfo(response))
-            ]))),
+                  Padding(
+                    padding: EdgeInsets.only(
+                      top: 30,
+                    ),
+                    child: _buildWord(response.word),
+                  ),
+                  Expanded(child: wordInfo(response))
+                ]))),
       ]));
 }
 
@@ -124,7 +125,7 @@ Widget _buildPhonetics(List<Phonetics> phonetics) {
       Visibility(
           visible: audio != null,
           child: IconButton(
-              onPressed: ()  {
+              onPressed: () {
                 getAudio(audio);
               },
               icon: Icon(

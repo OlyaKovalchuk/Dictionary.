@@ -33,3 +33,7 @@ class LoginWithCredentialsPressed extends RegEvent{
   @override
   List<Object?> get props => [email, password];
 }
+
+class LoginWithGoogle extends RegEvent{}
+
+class LoginWithFacebook extends RegEvent{}

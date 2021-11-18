@@ -44,9 +44,8 @@ class _SearchScreenState extends State<SearchScreen> {
               if (state is WordSearchLoaded) {
                 return Column(children: [
                   Padding(
-                    padding: EdgeInsets.only(
-                      top: 20,
-                      bottom: 20,
+                    padding: EdgeInsets.symmetric(
+                      vertical: 20,
                     ),
                     child: Text(
                       _controller.text,

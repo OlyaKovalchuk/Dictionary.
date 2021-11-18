@@ -1,7 +1,20 @@
 import 'package:Dictionary/authentication/model/user_data_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class FireUsersDataRepo {
+abstract class FireUsersDataRepo {
+
+  Future<List<UserData>> getUsers();
+
+  Future<UserData?> getUser(String uid);
+
+  Future<bool> existsByPhone(String phone);
+
+  setUser(UserData userData);
+
+  setNumber(String number);
+}
+
+class FireUsersDataRepoImpl implements FireUsersDataRepo {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   CollectionReference _usersCollection =
