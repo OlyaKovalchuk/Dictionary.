@@ -1,7 +1,7 @@
-import 'package:Dictionary/authentication/bloc/registration_bloc/reg_event.dart';
-import 'package:Dictionary/authentication/bloc/registration_bloc/reg_states.dart';
-import 'package:Dictionary/authentication/service/firebase_auth_service.dart';
-import 'package:Dictionary/authentication/utils/firebase_exceptions_valid.dart';
+import 'package:dictionary/authentication/bloc/registration_bloc/reg_event.dart';
+import 'package:dictionary/authentication/bloc/registration_bloc/reg_states.dart';
+import 'package:dictionary/authentication/service/firebase_auth_service.dart';
+import 'package:dictionary/authentication/utils/firebase_exceptions_valid.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

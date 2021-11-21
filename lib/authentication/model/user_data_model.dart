@@ -5,26 +5,19 @@ class UserData {
   final String uid;
   final String name;
   final String email;
-  final List<String>? favoriteWord;
+
   UserData({
     String? uid,
     required this.name,
     required this.email,
-    required this.favoriteWord,
   }) : this.uid = uid ?? Uuid().v1();
 
-  UserData copyWith({
-    String? uid,
-    String? name,
-    String? email,
-    List<String>? favoriteWord
-  }) {
+  UserData copyWith(
+      {String? uid, String? name, String? email, List? favoriteWord}) {
     return UserData(
-      uid: uid ?? this.uid,
-      name: name ?? this.name,
-      email: email ?? this.email,
-      favoriteWord: favoriteWord ?? this.favoriteWord??null
-    );
+        uid: uid ?? this.uid,
+        name: name ?? this.name,
+        email: email ?? this.email,);
   }
 
   Map<String, dynamic> toMap() {
@@ -32,7 +25,6 @@ class UserData {
       'uid': uid,
       'name': name,
       'email': email,
-
     };
   }
 
@@ -46,11 +38,9 @@ class UserData {
 
   factory UserData.fromMap(Map<String, dynamic> map) {
     return UserData(
-      uid: map['uid'],
-      name: map['name'],
-      email: map['email'],
-      favoriteWord: map['favoriteWord']??null
-    );
+        uid: map['uid'],
+        name: map['name'],
+        email: map['email']);
   }
 
   String toJson() => json.encode(toMap());
@@ -60,7 +50,7 @@ class UserData {
 
   @override
   String toString() {
-    return 'UserData(uid: $uid, name: $name, email: $email, favoriteWord: $favoriteWord)';
+    return 'UserData(uid: $uid, name: $name, email: $email,)';
   }
 
   @override
@@ -70,15 +60,13 @@ class UserData {
     return other is UserData &&
         other.uid == uid &&
         other.name == name &&
-        other.email == email &&
-    other.favoriteWord == favoriteWord;
+        other.email == email;
   }
 
   @override
   int get hashCode {
     return uid.hashCode ^
-    name.hashCode ^
-    email.hashCode ^
-    favoriteWord.hashCode;
+        name.hashCode ^
+        email.hashCode;
   }
 }

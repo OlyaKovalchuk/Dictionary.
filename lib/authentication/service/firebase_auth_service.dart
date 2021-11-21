@@ -1,6 +1,8 @@
-import 'package:Dictionary/authentication/model/user_data_model.dart';
-import 'package:Dictionary/authentication/repository/user_repository.dart';
-import 'package:Dictionary/authentication/utils/firebase_exceptions_valid.dart';
+import 'package:dictionary/favorite_words/model/favorite_words_model.dart';
+import 'package:dictionary/authentication/model/user_data_model.dart';
+import 'package:dictionary/authentication/repository/user_repository.dart';
+import 'package:dictionary/authentication/utils/firebase_exceptions_valid.dart';
+import 'package:dictionary/favorite_words/repository/favorite_words_repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -21,16 +23,12 @@ abstract class UserRepository {
   Future<User?> getUser();
 }
 
-
-
 class UserRepositoryImpl implements UserRepository {
   final GoogleSignIn googleSignIn = GoogleSignIn();
   FireUsersDataRepoImpl _fireUsersDataRepo = FireUsersDataRepoImpl();
+  FireFavWordsRepoImpl _fireFavWordsRepoImpl = FireFavWordsRepoImpl();
 
-  FirebaseAuth? _firebaseAuth;
-
-  UserRepositoryImpl({FirebaseAuth? firebaseAuth})
-      : _firebaseAuth = firebaseAuth ?? FirebaseAuth.instance;
+  FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
   Future signInWithCredentials(String email, String password) async {
     try {
@@ -44,15 +42,12 @@ class UserRepositoryImpl implements UserRepository {
 
   Future<void> singUp(String email, String name, String password) async {
     try {
-      UserCredential userCredential = await _firebaseAuth!
+      UserCredential userCredential = await _firebaseAuth
           .createUserWithEmailAndPassword(email: email, password: password);
       print(userCredential);
       User? user = userCredential.user;
-      if (user != null) {
-        UserData userData =
-            UserData(name: name, email: email, favoriteWord: [], uid: user.uid);
-        _fireUsersDataRepo.setUser(userData);
-      }
+      print('User: $user');
+      _createNewUser(user, name);
     } on FirebaseAuthException catch (e) {
       checkError(e.code);
     } catch (e) {
@@ -96,13 +91,13 @@ class UserRepositoryImpl implements UserRepository {
     User? _user;
     final LoginResult loginResult = await FacebookAuth.instance.login();
     // Cre{ate a credential from the access token
-
     final OAuthCredential facebookAuthCredential =
         FacebookAuthProvider.credential(loginResult.accessToken!.token);
     try {
       UserCredential _userCredential = await FirebaseAuth.instance
           .signInWithCredential(facebookAuthCredential);
       _user = _userCredential.user;
+
       _createNewUser(_user);
     } on FirebaseAuthException catch (e) {
       checkError(e.code);
@@ -115,24 +110,23 @@ class UserRepositoryImpl implements UserRepository {
 
   Future signOut() async {
     return Future.wait([
-      _firebaseAuth!.signOut(),
+      _firebaseAuth.signOut(),
       googleSignIn.signOut(),
     ]);
   }
 
   Future<bool> isSignedIn() async {
-    final currentUser = _firebaseAuth?.currentUser;
+    final currentUser = _firebaseAuth.currentUser;
     return currentUser != null;
   }
 
   Future<User?> getUser() async {
-    return _firebaseAuth?.currentUser;
+    return _firebaseAuth.currentUser;
   }
 
-
-
-  _createNewUser(User? user) async {
+  _createNewUser(User? user, [String? name]) async {
     UserData? _userData;
+    FavoriteWords? _favoriteWords;
     if (user != null) {
       final UserData? _getUser = await _fireUsersDataRepo.getUser(user.uid);
       print(user.email);
@@ -140,10 +134,12 @@ class UserRepositoryImpl implements UserRepository {
         print(_getUser);
         _userData = UserData(
             uid: user.uid,
-            name: user.displayName!,
-            email: user.email!,
-            favoriteWord: []);
+            name: name ?? user.displayName!,
+            email: user.email!,);
+
+        _favoriteWords = FavoriteWords(words: [], uid: _userData.uid);
         _fireUsersDataRepo.setUser(_userData);
+        _fireFavWordsRepoImpl.setFavoriteWord(_favoriteWords);
       }
     }
   }

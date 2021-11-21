@@ -1,31 +1,27 @@
-import 'package:Dictionary/authentication/service/firebase_auth_service.dart';
-import 'package:Dictionary/cards/card_bloc/word_card_event.dart';
-import 'package:Dictionary/cards/card_bloc/word_card_bloc.dart';
-import 'package:Dictionary/cards/card_bloc/word_card_states.dart';
-import 'package:Dictionary/cards/views/error_view.dart';
-import 'package:Dictionary/cards/views/loaded_view.dart';
-import 'package:Dictionary/cards/views/loading_view.dart';
-import 'package:Dictionary/widgets/appBar.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:dictionary/authentication/service/firebase_auth_service.dart';
+import 'package:dictionary/cards/card_bloc/word_card_event.dart';
+import 'package:dictionary/cards/card_bloc/word_card_bloc.dart';
+import 'package:dictionary/cards/card_bloc/word_card_states.dart';
+import 'package:dictionary/cards/views/error_view.dart';
+import 'package:dictionary/cards/views/loaded_view.dart';
+import 'package:dictionary/cards/views/loading_view.dart';
+import 'package:dictionary/favorite_words/service/favorite_words_service.dart';
+import 'package:dictionary/widgets/appBar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:Dictionary/cards/repository/word_data.dart';
+import 'package:dictionary/cards/repository/word_data.dart';
 import 'package:swipable_stack/swipable_stack.dart';
 
 class CardScreen extends StatefulWidget {
-  final User? user;
-
-  CardScreen({Key? key, this.user}) : super(key: key);
-
   @override
   _CardScreenState createState() => _CardScreenState();
 }
 
 class _CardScreenState extends State<CardScreen> {
   late SwipableStackController _controller;
-  WordCardBloc wordBloc = WordCardBloc(repository: Repository());
+  WordCardBloc wordBloc = WordCardBloc(repository: Repository(), favWordsService: FavWordsServiceImpl());
   UserRepositoryImpl userRepository = UserRepositoryImpl();
 
   @override
@@ -78,7 +74,7 @@ class _CardScreenState extends State<CardScreen> {
                     return loadingView(context);
                   }
                   if (wordState is Ready) {
-                    return loadedView(wordState.word, wordBloc, context);
+                    return loadedView(wordState.word, wordBloc, context, wordState.isFavorited);
                   }
                   return loadingView(context);
                 });

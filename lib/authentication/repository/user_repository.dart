@@ -1,27 +1,22 @@
-import 'package:Dictionary/authentication/model/user_data_model.dart';
+import 'package:dictionary/favorite_words/model/favorite_words_model.dart';
+import 'package:dictionary/authentication/model/user_data_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 abstract class FireUsersDataRepo {
-
   Future<List<UserData>> getUsers();
 
   Future<UserData?> getUser(String uid);
 
-  Future<bool> existsByPhone(String phone);
-
   setUser(UserData userData);
-
-  setNumber(String number);
 }
 
 class FireUsersDataRepoImpl implements FireUsersDataRepo {
-  FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   CollectionReference _usersCollection =
-  FirebaseFirestore.instance.collection('users');
+      FirebaseFirestore.instance.collection('users');
 
-  CollectionReference _phoneNumbers =
-  FirebaseFirestore.instance.collection('phoneNumbers');
+  CollectionReference _favoriteWordsCollection =
+      FirebaseFirestore.instance.collection('favoriteWords');
 
   Future<List<UserData>> getUsers() async {
     QuerySnapshot usersSnap = await _usersCollection.get();
@@ -40,16 +35,6 @@ class FireUsersDataRepoImpl implements FireUsersDataRepo {
     }
   }
 
-  Future<bool> existsByPhone(String phone) async {
-    try {
-      DocumentSnapshot documentSnapshot = await _phoneNumbers.doc(phone).get();
-      return documentSnapshot.exists;
-    } catch (e) {
-      print('numcheckerr > $e');
-      return false;
-    }
-  }
-
   setUser(UserData userData) async {
     print(userData);
     try {
@@ -58,18 +43,26 @@ class FireUsersDataRepoImpl implements FireUsersDataRepo {
 
       // Prevent errors on large or corrupted data
       await _usersCollection.doc(userData.uid).update(userData.toMap());
-
     } catch (e) {
       print(e);
     }
   }
 
-  setNumber(String number) async {
-    print(number);
+  setFavoriteWord(FavoriteWords words) async {
     try {
-      await _phoneNumbers.doc(number).set({'nember': number});
+      await _favoriteWordsCollection.doc(words.uid).set(words.onlyTextMap());
+      await _favoriteWordsCollection.doc(words.uid).set(words.toMap());
     } catch (e) {
       print(e);
+    }
+  }
+
+  Future<FavoriteWords?> getUsersFavWords(String uid) async {
+    DocumentSnapshot documentSnapshot = await _favoriteWordsCollection.doc(uid).get();
+    if (documentSnapshot.exists) {
+      return FavoriteWords.fromMap(documentSnapshot.data() as Map<String, dynamic>);
+    } else {
+      return null;
     }
   }
 }

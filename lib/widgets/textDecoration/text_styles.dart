@@ -1,4 +1,4 @@
-import 'package:Dictionary/widgets/colors/grey_color.dart';
+import 'package:dictionary/widgets/colors/grey_color.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:google_fonts/google_fonts.dart';
 

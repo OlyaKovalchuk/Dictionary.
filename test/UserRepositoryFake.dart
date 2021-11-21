@@ -1,4 +1,4 @@
-import 'package:Dictionary/authentication/service/firebase_auth_service.dart';
+import 'package:dictionary/authentication/service/firebase_auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class UserRepositoryFake  implements UserRepository {

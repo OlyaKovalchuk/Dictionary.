@@ -1,6 +1,6 @@
-import 'package:Dictionary/cards/model/search_response.dart';
-import 'package:Dictionary/widgets/textDecoration/text_styles.dart';
-import 'package:Dictionary/widgets/textDecoration/title_text.dart';
+import 'package:dictionary/cards/model/search_response.dart';
+import 'package:dictionary/widgets/textDecoration/text_styles.dart';
+import 'package:dictionary/widgets/textDecoration/title_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

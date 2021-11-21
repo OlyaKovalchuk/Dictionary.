@@ -1,5 +1,5 @@
-import 'package:Dictionary/widgets/colors/grey_color.dart';
-import 'package:Dictionary/widgets/gradientColor/gradient_widget.dart';
+import 'package:dictionary/widgets/colors/grey_color.dart';
+import 'package:dictionary/widgets/gradientColor/gradient_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';

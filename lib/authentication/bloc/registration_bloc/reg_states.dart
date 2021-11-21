@@ -1,7 +1,7 @@
 class RegState {
   final bool isEmailValid;
   final String? emailErrorText;
-  final String? errorText;
+  final String? passwordErrorText;
   final bool isPasswordValid;
   final bool isSubmitting;
   final bool isSuccess;
@@ -14,7 +14,7 @@ class RegState {
     return other is RegState &&
         other.isEmailValid == this.isEmailValid &&
         other.emailErrorText == this.emailErrorText &&
-        other.errorText == this.errorText &&
+        other.passwordErrorText == this.passwordErrorText &&
         other.isPasswordValid == this.isPasswordValid &&
         other.isSubmitting == this.isSubmitting &&
         other.isSuccess == this.isSuccess &&
@@ -25,7 +25,7 @@ class RegState {
   int get hashCode {
     return this.isEmailValid.hashCode ^
         this.emailErrorText.hashCode ^
-        this.errorText.hashCode ^
+        this.passwordErrorText.hashCode ^
         this.isPasswordValid.hashCode ^
         this.isSubmitting.hashCode ^
         this.isSuccess.hashCode ^
@@ -37,7 +37,7 @@ class RegState {
   RegState(
       {required this.isEmailValid,
       required this.emailErrorText,
-      required this.errorText,
+      required this.passwordErrorText,
       required this.isFailure,
       required this.isPasswordValid,
       required this.isSubmitting,
@@ -47,7 +47,7 @@ class RegState {
     return RegState(
         isEmailValid: true,
         emailErrorText: null,
-        errorText: null,
+        passwordErrorText: null,
         isFailure: true,
         isPasswordValid: true,
         isSubmitting: false,
@@ -58,7 +58,7 @@ class RegState {
     return RegState(
         isEmailValid: true,
         emailErrorText: null,
-        errorText: null,
+        passwordErrorText: null,
         isFailure: false,
         isPasswordValid: true,
         isSubmitting: true,
@@ -69,7 +69,7 @@ class RegState {
     return RegState(
         isEmailValid: true,
         emailErrorText: null,
-        errorText: null,
+        passwordErrorText: null,
         isFailure: false,
         isPasswordValid: true,
         isSubmitting: false,
@@ -80,7 +80,7 @@ class RegState {
     return RegState(
         isEmailValid: true,
         emailErrorText: null,
-        errorText: null,
+        passwordErrorText: null,
         isFailure: false,
         isPasswordValid: true,
         isSubmitting: false,
@@ -109,7 +109,7 @@ class RegState {
     return RegState(
         isEmailValid: isEmailValid ?? this.isEmailValid,
         emailErrorText: emailErrorText ?? this.emailErrorText,
-        errorText: passwordErrorText ?? this.errorText,
+        passwordErrorText: passwordErrorText ?? this.passwordErrorText,
         isFailure: isFailure ?? this.isFailure,
         isPasswordValid: isPasswordValid ?? this.isPasswordValid,
         isSubmitting: isSubmitting ?? this.isSubmitting,

@@ -1,4 +1,4 @@
-import 'package:Dictionary/cards/model/search_response.dart';
+import 'package:dictionary/cards/model/search_response.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class WordSearchState extends Equatable {

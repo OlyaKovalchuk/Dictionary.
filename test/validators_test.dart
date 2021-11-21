@@ -1,4 +1,4 @@
-import 'package:Dictionary/authentication/utils/validators.dart';
+import 'package:dictionary/authentication/utils/validators.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

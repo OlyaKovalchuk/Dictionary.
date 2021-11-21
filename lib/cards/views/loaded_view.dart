@@ -1,10 +1,11 @@
-import 'package:Dictionary/cards/card_bloc/word_card_bloc.dart';
-import 'package:Dictionary/cards/model/search_response.dart';
-import 'package:Dictionary/cards/utils/string_utils.dart';
-import 'package:Dictionary/widgets/cardDecoration/card_decoration.dart';
-import 'package:Dictionary/widgets/colors/grey_color.dart';
-import 'package:Dictionary/widgets/colors/red_color.dart';
-import 'package:Dictionary/widgets/textDecoration/text_styles.dart';
+import 'package:dictionary/cards/card_bloc/word_card_bloc.dart';
+import 'package:dictionary/cards/model/search_response.dart';
+import 'package:dictionary/cards/utils/string_utils.dart';
+import 'package:dictionary/favorite_words/screen/fav_button.dart';
+import 'package:dictionary/widgets/cardDecoration/card_decoration.dart';
+import 'package:dictionary/widgets/colors/grey_color.dart';
+import 'package:dictionary/widgets/colors/red_color.dart';
+import 'package:dictionary/widgets/textDecoration/text_styles.dart';
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -12,52 +13,57 @@ import 'package:intl/intl.dart';
 import 'package:just_audio/just_audio.dart';
 import 'word_info_view.dart';
 
-Widget loadedView(
-    SearchResponse response, WordCardBloc wordBloc, BuildContext context) {
+Widget loadedView(SearchResponse response, WordCardBloc wordBloc,
+    BuildContext context, bool isFavorited) {
   return Padding(
-      padding: EdgeInsets.all(35),
-      child: Column(children: [
-        FlipCard(
-            direction: FlipDirection.HORIZONTAL,
-            front: cardDecoration(
-                context: context,
-                child: Padding(
-                  padding:
-                      EdgeInsets.only(left: 20, right: 20, top: 30, bottom: 30),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      _buildWord(response.word),
-                      _buildPhonetics(response.phonetics ?? []),
-                      SizedBox(
-                        height: 30,
-                      ),
-                      Visibility(
-                        visible:
-                            response.meanings[0].definitions[0].example != null,
-                        child: _buildVisibilityExample(
-                            response.meanings[0].definitions[0].example ?? ''),
-                      ),
-                      Spacer(),
-                      synonymsView(
-                          wordBloc,
-                          response.meanings[0].definitions[0].synonyms ?? [],
-                          response),
-                    ],
+    padding: EdgeInsets.all(35),
+    child: FlipCard(
+        direction: FlipDirection.HORIZONTAL,
+        front: cardDecoration(
+            context: context,
+            child: Padding(
+              padding:
+                  EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Align(
+                      alignment: Alignment.centerRight,
+                      child: FavoriteWordsButton(
+                        word: response.word,
+                        isFavorited: isFavorited,
+                      )),
+                  _buildWord(response.word),
+                  _buildPhonetics(response.phonetics ?? []),
+                  SizedBox(
+                    height: 30,
                   ),
-                )),
-            back: cardDecoration(
-                context: context,
-                child: Column(children: [
-                  Padding(
-                    padding: EdgeInsets.only(
-                      top: 30,
-                    ),
-                    child: _buildWord(response.word),
+                  Visibility(
+                    visible:
+                        response.meanings[0].definitions[0].example != null,
+                    child: _buildVisibilityExample(
+                        response.meanings[0].definitions[0].example ?? ''),
                   ),
-                  Expanded(child: wordInfo(response))
-                ]))),
-      ]));
+                  Spacer(),
+                  synonymsView(
+                      wordBloc,
+                      response.meanings[0].definitions[0].synonyms ?? [],
+                      response),
+                ],
+              ),
+            )),
+        back: cardDecoration(
+            context: context,
+            child: Column(children: [
+              Padding(
+                padding: EdgeInsets.only(
+                  top: 30,
+                ),
+                child: _buildWord(response.word),
+              ),
+              Expanded(child: wordInfo(response))
+            ]))),
+  );
 }
 
 Widget synonymsView(WordCardBloc wordBloc, List<String> synonyms,

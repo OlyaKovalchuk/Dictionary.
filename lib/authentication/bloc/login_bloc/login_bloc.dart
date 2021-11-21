@@ -1,7 +1,7 @@
-import 'package:Dictionary/authentication/bloc/login_bloc/login_event.dart';
-import 'package:Dictionary/authentication/bloc/login_bloc/login_state.dart';
-import 'package:Dictionary/authentication/service/firebase_auth_service.dart';
-import 'package:Dictionary/authentication/utils/validators.dart';
+import 'package:dictionary/authentication/bloc/login_bloc/login_event.dart';
+import 'package:dictionary/authentication/bloc/login_bloc/login_state.dart';
+import 'package:dictionary/authentication/service/firebase_auth_service.dart';
+import 'package:dictionary/authentication/utils/validators.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class LoginBloc extends Bloc<RegEvent, LoginState> {
