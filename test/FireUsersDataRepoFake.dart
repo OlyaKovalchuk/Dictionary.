@@ -1,0 +1,28 @@
+import 'package:dictionary/authentication/model/user_data_model.dart';
+import 'package:dictionary/authentication/repository/user_repository.dart';
+
+class FireUsersDataRepoFake implements FireUsersDataRepo {
+
+  bool shouldSetUserFail = false;
+
+  @override
+  Future<UserData?> getUser(String uid) {
+    // TODO: implement getUser
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<List<UserData>> getUsers() {
+    // TODO: implement getUsers
+    throw UnimplementedError();
+  }
+
+
+  @override
+  setUser(UserData userData) {
+    if (shouldSetUserFail) {
+      throw Exception("fake exception");
+    }
+  }
+
+}
