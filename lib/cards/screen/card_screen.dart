@@ -21,7 +21,8 @@ class CardScreen extends StatefulWidget {
 
 class _CardScreenState extends State<CardScreen> {
   late SwipableStackController _controller;
-  WordCardBloc wordBloc = WordCardBloc(repository: Repository(), favWordsService: FavWordsServiceImpl());
+  WordCardBloc wordBloc = WordCardBloc(
+      repository: Repository(), favWordsService: FavWordsServiceImpl());
   UserRepositoryImpl userRepository = UserRepositoryImpl();
 
   @override
@@ -34,51 +35,51 @@ class _CardScreenState extends State<CardScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
-        appBar: buildAppBar(
-          leading: TextButton(
-              onPressed: () async {
-                await userRepository.signOut();
-                Navigator.pushNamed(context, '/loginScreen');
+      backgroundColor: Colors.white,
+      appBar: buildAppBar(
+        leading: TextButton(
+            onPressed: () async {
+              await userRepository.signOut();
+              Navigator.pushNamed(context, '/loginScreen');
+            },
+            child: Text('sing out')),
+        actions: [
+          IconButton(
+              onPressed: () {
+                Navigator.of(context).pushNamed('/searchScreen');
               },
-              child: Text('sing out')),
-          actions: [
-            IconButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed('/searchScreen');
-                },
-                icon: Icon(Icons.search))
-          ],
-        ),
-        body: SwipableStack(
-          controller: _controller,
-          stackClipBehaviour: Clip.none,
-          onSwipeCompleted: (index, direction) {
-            wordBloc.add(WordSwipe());
-          },
-          builder:
-              (BuildContext context, int index, BoxConstraints constraints) {
-            return BlocBuilder<WordCardBloc, WordCardStackState>(
-                bloc: wordBloc,
-                builder: (_, wordStackState) {
-                  if (index >= wordStackState.wordCardStates.length) {
-                    return loadingView(context);
-                  }
-                  WordCardState wordState =
-                      wordStackState.wordCardStates[index];
-
-                  if (wordState is Error) {
-                    return errorView();
-                  }
-                  if (wordState is Loading) {
-                    return loadingView(context);
-                  }
-                  if (wordState is Ready) {
-                    return loadedView(wordState.word, wordBloc, context, wordState.isFavorited);
-                  }
+              icon: Icon(Icons.search))
+        ],
+      ),
+      body: SwipableStack(
+        controller: _controller,
+        stackClipBehaviour: Clip.none,
+        onSwipeCompleted: (index, direction) {
+          wordBloc.add(WordSwipe());
+        },
+        builder: (BuildContext context, int index, BoxConstraints constraints) {
+          return BlocBuilder<WordCardBloc, WordCardStackState>(
+              bloc: wordBloc,
+              builder: (_, wordStackState) {
+                if (index >= wordStackState.wordCardStates.length) {
                   return loadingView(context);
-                });
-          },
-        ));
+                }
+                WordCardState wordState = wordStackState.wordCardStates[index];
+
+                if (wordState is Error) {
+                  return errorView();
+                }
+                if (wordState is Loading) {
+                  return loadingView(context);
+                }
+                if (wordState is Ready) {
+                  return loadedView(
+                      wordState.word, wordBloc, context, wordState.isFavorited);
+                }
+                return loadingView(context);
+              });
+        },
+      ),
+    );
   }
 }

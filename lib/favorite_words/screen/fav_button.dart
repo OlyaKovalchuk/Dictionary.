@@ -1,7 +1,6 @@
 import 'package:dictionary/favorite_words/bloc/favorite_words_bloc.dart';
 import 'package:dictionary/favorite_words/bloc/favorite_words_event.dart';
 import 'package:dictionary/favorite_words/service/favorite_words_service.dart';
-import 'package:dictionary/widgets/colors/grey_light_color.dart';
 import 'package:dictionary/widgets/colors/red_color.dart';
 import 'package:favorite_button/favorite_button.dart';
 import 'package:flutter/material.dart';
@@ -33,8 +32,8 @@ class _FavoriteWordsButtonState extends State<FavoriteWordsButton> {
         builder: (context, state) {
           return FavoriteButton(
               isFavorite: widget.isFavorited,
-              iconSize: 40,
-              iconDisabledColor: greyLightColor(),
+              iconSize: 30,
+              iconDisabledColor: redColor(),
               iconColor: redColor(),
               valueChanged: (_isFavorite) {
                 if (_isFavorite) {
