@@ -1,13 +1,15 @@
 import 'package:dictionary/favorite_words/bloc/favorite_words_event.dart';
 import 'package:dictionary/favorite_words/bloc/favorite_words_state.dart';
+import 'package:dictionary/favorite_words/model/favorite_words_model.dart';
 import 'package:dictionary/favorite_words/service/favorite_words_service.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class FavWordsBloc extends Bloc<FavWordsEvent, FavWordsState> {
   final FavWordsService _favWordsService;
+  List? favWords;
 
 
-  FavWordsBloc(FavWordsService favWordsService)
+  FavWordsBloc(FavWordsService favWordsService, [this.favWords])
       : _favWordsService = favWordsService,
         super(InitialState());
 
@@ -37,7 +39,8 @@ class FavWordsBloc extends Bloc<FavWordsEvent, FavWordsState> {
   Stream<FavWordsState> getEventToState() async* {
     yield LoadingState();
     try {
-      await _favWordsService.getFavWords();
+    FavoriteWords? favoriteWords =  await _favWordsService.getFavWords();
+    favWords = favoriteWords!.words;
       yield SuccessState();
     } catch (e) {
       yield FailureState();

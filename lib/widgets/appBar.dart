@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 
 import 'gradientColor/gradient_widget.dart';
 
-buildAppBar({required Widget? leading, required List<Widget>? actions}) =>
+buildAppBar({ Widget? leading,  List<Widget>? actions, String? title}) =>
     AppBar(
       automaticallyImplyLeading: false,
       centerTitle: true,
-      title: Text('Dictionary.',
+      title: Text(title ?? 'Dictionary.',
           style: TextStyle(
               fontFamily: ('Futura'),
               fontSize: 25,

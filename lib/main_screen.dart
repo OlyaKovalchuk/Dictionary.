@@ -17,8 +17,11 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   UserRepositoryImpl userRepository = UserRepositoryImpl();
-  PageController pageController = PageController(initialPage: 1,);
-int selectedPage = 1;
+  PageController pageController = PageController(
+    initialPage: 1,
+  );
+  int selectedPage = 1;
+
   void _onItemTapped(int index) {
     setState(() {
       selectedPage = index;

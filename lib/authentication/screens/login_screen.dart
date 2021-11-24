@@ -46,8 +46,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: Icon(
                         Icons.arrow_back_ios_rounded,
                         color: Colors.white,
-                      )),
-                  actions: null),
+                      )),),
               body: Padding(
                 padding:
                     const EdgeInsets.symmetric(vertical: 50, horizontal: 20),
