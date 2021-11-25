@@ -1,3 +1,4 @@
+import 'package:dictionary/favorite_words/model/words_model.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class FavWordsEvent extends Equatable {
@@ -7,16 +8,16 @@ abstract class FavWordsEvent extends Equatable {
 
 class InitialEvent extends FavWordsEvent {}
 
-class AddToFavWords extends FavWordsEvent {
-  final String word;
+class AddToFavWordsEvent extends FavWordsEvent {
+  final WordData word;
 
-  AddToFavWords({required this.word});
+  AddToFavWordsEvent({required this.word});
 }
 
-class GetFavWords extends FavWordsEvent {}
+class GetFavWordsEvent extends FavWordsEvent {}
 
-class DeleteFavWords extends FavWordsEvent {
-  final String word;
+class DeleteFavWordsEvent extends FavWordsEvent {
+  final WordData word;
 
-  DeleteFavWords({required this.word});
+  DeleteFavWordsEvent({required this.word});
 }

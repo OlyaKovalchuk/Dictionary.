@@ -1,4 +1,5 @@
 import 'package:dictionary/favorite_words/model/favorite_words_model.dart';
+import 'package:dictionary/favorite_words/model/words_model.dart';
 import 'package:dictionary/favorite_words/repository/favorite_words_repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -7,9 +8,9 @@ abstract class FavWordsService {
 
   Future<bool> isFavWord(String word);
 
-  Future addToFavWords(String word);
+  Future addToFavWords(WordData word);
 
-  Future deleteToFavWords(String word);
+  Future deleteToFavWords(WordData word);
 }
 
 class FavWordsServiceImpl implements FavWordsService {
@@ -24,17 +25,17 @@ class FavWordsServiceImpl implements FavWordsService {
       print('Get User: $e');
     }
   }
-
+  @override
   Future<bool> isFavWord(String word) async {
     FavoriteWords? _favoriteWords = await getFavWords();
     return _favoriteWords != null && _favoriteWords.words.contains(word);
   }
-
-  Future addToFavWords(String word) async {
+  @override
+  Future addToFavWords(WordData word) async {
     try {
       FavoriteWords? _favoriteWords = await getFavWords();
       print(word);
-      if (_favoriteWords != null && !_favoriteWords.words.contains(word)) {
+      if (_favoriteWords != null && !_favoriteWords.words.contains(word.word)) {
         _favoriteWords.words.add(word);
         await _fireFavoriteWordsDataRepo.updateFavoriteWords(_favoriteWords);
         print(word);
@@ -45,7 +46,8 @@ class FavWordsServiceImpl implements FavWordsService {
     }
   }
 
-  Future deleteToFavWords(String word) async {
+  @override
+  Future deleteToFavWords(WordData word) async {
     try {
       FavoriteWords? _favoriteWords = await getFavWords();
       if (_favoriteWords != null && _favoriteWords.words.contains(word)) {

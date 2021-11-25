@@ -13,6 +13,7 @@ class FireFavWordsRepoImpl implements FireFavoriteWordsDataRepo {
       FirebaseFirestore.instance.collection('favoriteWords');
 
   FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+
   setFavoriteWord(FavoriteWords words) async {
     try {
       await _favoriteWordsCollection.doc(words.uid).set(words.onlyTextMap());
@@ -22,8 +23,10 @@ class FireFavWordsRepoImpl implements FireFavoriteWordsDataRepo {
     }
   }
 
-  updateFavoriteWords(FavoriteWords favoriteWords)async{
-    await _favoriteWordsCollection.doc(_firebaseAuth.currentUser!.uid).update(favoriteWords.toMap());
+  updateFavoriteWords(FavoriteWords favoriteWords) async {
+    await _favoriteWordsCollection
+        .doc(_firebaseAuth.currentUser!.uid)
+        .update(favoriteWords.toMap());
   }
 
   Future<FavoriteWords?> getUsersFavWords(String uid) async {
@@ -39,7 +42,9 @@ class FireFavWordsRepoImpl implements FireFavoriteWordsDataRepo {
 
   deleteFavoriteWord(FavoriteWords words) async {
     try {
-      await _favoriteWordsCollection.doc(_firebaseAuth.currentUser!.uid).delete();
+      await _favoriteWordsCollection
+          .doc(_firebaseAuth.currentUser!.uid)
+          .delete();
     } catch (e) {}
   }
 }

@@ -1,30 +1,31 @@
 import 'dart:convert';
+import 'package:dictionary/favorite_words/model/words_model.dart';
 import 'package:uuid/uuid.dart';
 
 class FavoriteWords {
   final String uid;
-  final List words;
+  final List<WordData> words;
 
   FavoriteWords({
     String? uid,
     required this.words,
   }) : this.uid = uid ?? Uuid().v1();
 
-  FavoriteWords copyWith({String? uid, List? words}) {
-    return FavoriteWords(
-        uid: uid ?? this.uid, words: words ?? this.words);
+  FavoriteWords copyWith({String? uid, List<WordData>? words}) {
+    return FavoriteWords(uid: uid ?? this.uid, words: words ?? []);
   }
 
   Map<String, dynamic> toMap() {
-    return {'uid': uid, 'words': words};
+    return {'uid': uid, 'words': words.map((word) => word.toMap()).toList(),};
   }
 
   Map<String, dynamic> onlyTextMap() {
-    return {'uid': uid, 'words': words};
+    return {'uid': uid, 'words': words.map((word) => word.toMap()).toList(),};
   }
 
   factory FavoriteWords.fromMap(Map<String, dynamic> map) {
-    return FavoriteWords(uid: map['uid'], words: map['words'] ?? []);
+    return FavoriteWords(uid: map['uid'], words: List<WordData>.from(
+        map['words']?.map((word) => WordData.fromMap(word))));
   }
 
   String toJson() => json.encode(toMap());
@@ -34,7 +35,7 @@ class FavoriteWords {
 
   @override
   String toString() {
-    return 'UserData(uid: $uid, words: $words)';
+    return 'FavWordData(uid: $uid, words: $words)';
   }
 
   @override

@@ -51,16 +51,16 @@ class _CardScreenState extends State<CardScreen> {
               icon: Icon(Icons.search))
         ],
       ),
-      body: SwipableStack(
+      body:BlocBuilder<WordCardBloc, WordCardStackState>(
+        bloc: wordBloc,
+        builder: (_, wordStackState) {
+       return   SwipableStack(
         controller: _controller,
         stackClipBehaviour: Clip.none,
         onSwipeCompleted: (index, direction) {
           wordBloc.add(WordSwipe());
         },
         builder: (BuildContext context, int index, BoxConstraints constraints) {
-          return BlocBuilder<WordCardBloc, WordCardStackState>(
-              bloc: wordBloc,
-              builder: (_, wordStackState) {
                 if (index >= wordStackState.wordCardStates.length) {
                   return loadingView(context);
                 }

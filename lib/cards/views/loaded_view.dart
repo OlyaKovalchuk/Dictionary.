@@ -1,6 +1,8 @@
+import 'package:dictionary/audio_fun.dart';
 import 'package:dictionary/cards/card_bloc/word_card_bloc.dart';
 import 'package:dictionary/cards/model/search_response.dart';
 import 'package:dictionary/cards/utils/string_utils.dart';
+import 'package:dictionary/favorite_words/model/words_model.dart';
 import 'package:dictionary/favorite_words/screen/fav_button.dart';
 import 'package:dictionary/widgets/cardDecoration/card_decoration.dart';
 import 'package:dictionary/widgets/colors/grey_color.dart';
@@ -10,7 +12,6 @@ import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-import 'package:just_audio/just_audio.dart';
 import 'word_info_view.dart';
 
 Widget loadedView(SearchResponse response, WordCardBloc wordBloc,
@@ -30,7 +31,9 @@ Widget loadedView(SearchResponse response, WordCardBloc wordBloc,
                   Align(
                       alignment: Alignment.centerRight,
                       child: FavoriteWordsButton(
-                        word: response.word,
+                        word: WordData(
+                            word: response.word,
+                            audio: response.phonetics?[0].audio ?? ''),
                         isFavorited: isFavorited,
                       )),
                   _buildWord(response.word),
@@ -149,16 +152,7 @@ Widget _buildPhonetics(List<Phonetics> phonetics) {
   );
 }
 
-void getAudio(url) async {
-  try {
-    AudioPlayer audioPlayer = AudioPlayer();
-    await audioPlayer.setUrl('https:$url');
-    audioPlayer.play();
-    print('http:$url');
-  } catch (e) {
-    print(e);
-  }
-}
+
 
 _buildVisibilityExample(String? example) => Center(
       child: Text(

@@ -1,5 +1,6 @@
 import 'package:dictionary/favorite_words/bloc/favorite_words_bloc.dart';
 import 'package:dictionary/favorite_words/bloc/favorite_words_event.dart';
+import 'package:dictionary/favorite_words/model/words_model.dart';
 import 'package:dictionary/favorite_words/service/favorite_words_service.dart';
 import 'package:dictionary/widgets/colors/red_color.dart';
 import 'package:favorite_button/favorite_button.dart';
@@ -7,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class FavoriteWordsButton extends StatefulWidget {
-  final String word;
+  final WordData word;
   final bool isFavorited;
 
   FavoriteWordsButton({required this.word, required this.isFavorited});
@@ -37,12 +38,11 @@ class _FavoriteWordsButtonState extends State<FavoriteWordsButton> {
               iconColor: redColor(),
               valueChanged: (_isFavorite) {
                 if (_isFavorite) {
-                  _favWordsBloc.add(AddToFavWords(word: widget.word));
+                  _favWordsBloc.add(AddToFavWordsEvent(word: widget.word));
                 } else {
-                  _favWordsBloc.add(DeleteFavWords(word: widget.word));
+                  _favWordsBloc.add(DeleteFavWordsEvent(word: widget.word));
                 }
               });
         });
   }
 }
-
