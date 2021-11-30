@@ -1,7 +1,7 @@
-import 'package:dictionary/widgets/colors/grey_color.dart';
-import 'package:dictionary/widgets/gradientColor/gradient_widget.dart';
-import 'package:dictionary/widgets/textDecoration/text_styles.dart';
-import 'package:dictionary/widgets/titileText.dart';
+import 'package:Dictionary/widgets/colors/grey_color.dart';
+import 'package:Dictionary/widgets/gradientColor/gradient_widget.dart';
+import 'package:Dictionary/widgets/textDecoration/text_styles.dart';
+import 'package:Dictionary/widgets/titileText.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 

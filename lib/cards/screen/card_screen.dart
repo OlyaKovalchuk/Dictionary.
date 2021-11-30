@@ -1,17 +1,17 @@
-import 'package:dictionary/authentication/service/firebase_auth_service.dart';
-import 'package:dictionary/cards/card_bloc/word_card_event.dart';
-import 'package:dictionary/cards/card_bloc/word_card_bloc.dart';
-import 'package:dictionary/cards/card_bloc/word_card_states.dart';
-import 'package:dictionary/cards/views/error_view.dart';
-import 'package:dictionary/cards/views/loaded_view.dart';
-import 'package:dictionary/cards/views/loading_view.dart';
-import 'package:dictionary/favorite_words/service/favorite_words_service.dart';
-import 'package:dictionary/widgets/appBar.dart';
+import 'package:Dictionary/authentication/service/firebase_auth_service.dart';
+import 'package:Dictionary/cards/card_bloc/word_card_event.dart';
+import 'package:Dictionary/cards/card_bloc/word_card_bloc.dart';
+import 'package:Dictionary/cards/card_bloc/word_card_states.dart';
+import 'package:Dictionary/cards/views/error_view.dart';
+import 'package:Dictionary/cards/views/loaded_view.dart';
+import 'package:Dictionary/cards/views/loading_view.dart';
+import 'package:Dictionary/favorite_words/service/favorite_words_service.dart';
+import 'package:Dictionary/widgets/appBar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:dictionary/cards/repository/word_data.dart';
+import 'package:Dictionary/cards/repository/word_data.dart';
 import 'package:swipable_stack/swipable_stack.dart';
 
 class CardScreen extends StatefulWidget {
@@ -51,35 +51,39 @@ class _CardScreenState extends State<CardScreen> {
               icon: Icon(Icons.search))
         ],
       ),
-      body:BlocBuilder<WordCardBloc, WordCardStackState>(
-        bloc: wordBloc,
-        builder: (_, wordStackState) {
-       return   SwipableStack(
-        controller: _controller,
-        stackClipBehaviour: Clip.none,
-        onSwipeCompleted: (index, direction) {
-          wordBloc.add(WordSwipe());
-        },
-        builder: (BuildContext context, int index, BoxConstraints constraints) {
-                if (index >= wordStackState.wordCardStates.length) {
-                  return loadingView(context);
-                }
-                WordCardState wordState = wordStackState.wordCardStates[index];
+      body:Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 35, vertical: 30),
+        child: BlocBuilder<WordCardBloc, WordCardStackState>(
+          bloc: wordBloc,
+          builder: (_, wordStackState) {
+         return   SwipableStack(
+          controller: _controller,
+          stackClipBehaviour: Clip.none,
+          onSwipeCompleted: (index, direction) {
+            wordBloc.add(WordSwipe());
+          },
+          builder: (BuildContext context, int index, BoxConstraints constraints) {
+                  if (index >= wordStackState.wordCardStates.length) {
+                    return loadingView(context);
+                  }
+                  WordCardState wordState = wordStackState.wordCardStates[index];
 
-                if (wordState is Error) {
-                  return errorView();
-                }
-                if (wordState is Loading) {
+                  if (wordState is Error) {
+                    return errorView();
+                  }
+                  if (wordState is Loading) {
+                    return loadingView(context);
+                  }
+                  if (wordState is Ready) {
+                    return loadedView(
+                        wordState.word, context, wordState.isFavorited);
+                  }
                   return loadingView(context);
-                }
-                if (wordState is Ready) {
-                  return loadedView(
-                      wordState.word, wordBloc, context, wordState.isFavorited);
-                }
-                return loadingView(context);
-              });
-        },
+                });
+          },
+        ),
       ),
     );
   }
+
 }

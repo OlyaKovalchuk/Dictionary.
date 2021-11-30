@@ -1,6 +1,6 @@
-import 'package:dictionary/authentication/bloc/auth_bloc/auth_event.dart';
-import 'package:dictionary/authentication/bloc/auth_bloc/auth_state.dart';
-import 'package:dictionary/authentication/service/firebase_auth_service.dart';
+import 'package:Dictionary/authentication/bloc/auth_bloc/auth_event.dart';
+import 'package:Dictionary/authentication/bloc/auth_bloc/auth_state.dart';
+import 'package:Dictionary/authentication/service/firebase_auth_service.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {

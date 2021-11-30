@@ -1,16 +1,19 @@
 import 'dart:math';
-import 'package:dictionary/cards/card_bloc/word_card_event.dart';
-import 'package:dictionary/cards/card_bloc/word_card_states.dart';
-import 'package:dictionary/cards/model/search_response.dart';
-import 'package:dictionary/cards/repository/word_data.dart';
+import 'package:Dictionary/cards/card_bloc/word_card_event.dart';
+import 'package:Dictionary/cards/card_bloc/word_card_states.dart';
+import 'package:Dictionary/cards/model/search_response.dart';
+import 'package:Dictionary/cards/repository/word_data.dart';
+import 'package:Dictionary/favorite_words/model/words_model.dart';
 import 'package:bloc/bloc.dart';
-import 'package:dictionary/favorite_words/service/favorite_words_service.dart';
+import 'package:Dictionary/favorite_words/service/favorite_words_service.dart';
 import 'package:english_words/english_words.dart';
 
 class WordCardBloc extends Bloc<WordEvent, WordCardStackState> {
   final Repository? repository;
   List<WordCardState> cardStates = [];
   final FavWordsService favWordsService;
+
+  List<SearchResponse> favWords = [];
 
   WordCardBloc({this.repository, required this.favWordsService})
       : super(WordCardStackState(wordCardStates: []));
@@ -23,6 +26,9 @@ class WordCardBloc extends Bloc<WordEvent, WordCardStackState> {
       for (int i = 0; i < 3; i++) {
         yield* fetchWord();
       }
+    } else if (event is WordSwipeFavWords) {
+      for (int i = 0; i < event.words!.length; i++)
+        yield* fetchFavWords(event.words![i]);
     }
   }
 
@@ -30,10 +36,27 @@ class WordCardBloc extends Bloc<WordEvent, WordCardStackState> {
     try {
       final word = _randomWord();
       final SearchResponse response = await repository!.search(word);
-      final bool isFavorited = await favWordsService.isFavWord(word);
+      final favWord =
+          WordData(word: response.word, audio: response.phonetics?[0].audio);
+      final bool isFavorited = await favWordsService.isFavWord(favWord);
       cardStates.add(Ready(word: response, isFavorited: isFavorited));
       yield WordCardStackState(wordCardStates: cardStates);
     } catch (exception) {
+      cardStates.add(Error());
+      yield WordCardStackState(wordCardStates: cardStates);
+    }
+  }
+
+  Stream<WordCardStackState> fetchFavWords(WordData word) async* {
+    try {
+      final SearchResponse response = await repository!.search(word.word);
+      final favWord =
+          WordData(word: response.word, audio: response.phonetics?[0].audio);
+      final bool isFavorited = await favWordsService.isFavWord(favWord);
+      favWords.add(response);
+      cardStates.add(Ready(word: response, isFavorited: isFavorited));
+      yield WordCardStackState(wordCardStates: cardStates);
+    } catch (e) {
       cardStates.add(Error());
       yield WordCardStackState(wordCardStates: cardStates);
     }

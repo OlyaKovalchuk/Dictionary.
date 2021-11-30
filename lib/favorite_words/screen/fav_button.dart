@@ -1,8 +1,8 @@
-import 'package:dictionary/favorite_words/bloc/favorite_words_bloc.dart';
-import 'package:dictionary/favorite_words/bloc/favorite_words_event.dart';
-import 'package:dictionary/favorite_words/model/words_model.dart';
-import 'package:dictionary/favorite_words/service/favorite_words_service.dart';
-import 'package:dictionary/widgets/colors/red_color.dart';
+import 'package:Dictionary/favorite_words/bloc/favorite_words_bloc.dart';
+import 'package:Dictionary/favorite_words/bloc/favorite_words_event.dart';
+import 'package:Dictionary/favorite_words/model/words_model.dart';
+import 'package:Dictionary/favorite_words/service/favorite_words_service.dart';
+import 'package:Dictionary/widgets/colors/red_color.dart';
 import 'package:favorite_button/favorite_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -24,6 +24,7 @@ class _FavoriteWordsButtonState extends State<FavoriteWordsButton> {
   void initState() {
     super.initState();
     _favWordsBloc.add(InitialEvent());
+
   }
 
   @override
@@ -39,8 +40,10 @@ class _FavoriteWordsButtonState extends State<FavoriteWordsButton> {
               valueChanged: (_isFavorite) {
                 if (_isFavorite) {
                   _favWordsBloc.add(AddToFavWordsEvent(word: widget.word));
+                  _favWordsBloc.favWords!.add(widget.word);
                 } else {
                   _favWordsBloc.add(DeleteFavWordsEvent(word: widget.word));
+                  _favWordsBloc.favWords!.remove(widget.word);
                 }
               });
         });

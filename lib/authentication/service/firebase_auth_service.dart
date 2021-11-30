@@ -1,8 +1,8 @@
-import 'package:dictionary/favorite_words/model/favorite_words_model.dart';
-import 'package:dictionary/authentication/model/user_data_model.dart';
-import 'package:dictionary/authentication/repository/user_repository.dart';
-import 'package:dictionary/authentication/utils/firebase_exceptions_valid.dart';
-import 'package:dictionary/favorite_words/repository/favorite_words_repository.dart';
+import 'package:Dictionary/favorite_words/model/favorite_words_model.dart';
+import 'package:Dictionary/authentication/model/user_data_model.dart';
+import 'package:Dictionary/authentication/repository/user_repository.dart';
+import 'package:Dictionary/authentication/utils/firebase_exceptions_valid.dart';
+import 'package:Dictionary/favorite_words/repository/favorite_words_repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';

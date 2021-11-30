@@ -1,9 +1,9 @@
-import 'package:dictionary/authentication/bloc/auth_bloc/auth_bloc.dart';
-import 'package:dictionary/authentication/bloc/auth_bloc/auth_event.dart';
-import 'package:dictionary/authentication/bloc/auth_bloc/auth_state.dart';
-import 'package:dictionary/authentication/screens/auth_screen.dart';
-import 'package:dictionary/authentication/service/firebase_auth_service.dart';
-import 'package:dictionary/main_screen.dart';
+import 'package:Dictionary/authentication/bloc/auth_bloc/auth_bloc.dart';
+import 'package:Dictionary/authentication/bloc/auth_bloc/auth_event.dart';
+import 'package:Dictionary/authentication/bloc/auth_bloc/auth_state.dart';
+import 'package:Dictionary/authentication/screens/auth_screen.dart';
+import 'package:Dictionary/authentication/service/firebase_auth_service.dart';
+import 'package:Dictionary/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

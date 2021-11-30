@@ -1,10 +1,10 @@
-import 'package:dictionary/authentication/service/firebase_auth_service.dart';
-import 'package:dictionary/cards/screen/card_screen.dart';
-import 'package:dictionary/favorite_words/screen/favorite_words_screen.dart';
-import 'package:dictionary/profile/screen/profile_screen.dart';
-import 'package:dictionary/search/search_screen.dart';
-import 'package:dictionary/widgets/colors/grey_color.dart';
-import 'package:dictionary/widgets/colors/red_color.dart';
+import 'package:Dictionary/authentication/service/firebase_auth_service.dart';
+import 'package:Dictionary/cards/screen/card_screen.dart';
+import 'package:Dictionary/favorite_words/screen/favorite_words_screen.dart';
+import 'package:Dictionary/profile/screen/profile_screen.dart';
+import 'package:Dictionary/search/search_screen.dart';
+import 'package:Dictionary/widgets/colors/grey_color.dart';
+import 'package:Dictionary/widgets/colors/red_color.dart';
 import 'package:flutter/material.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 

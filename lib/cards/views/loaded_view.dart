@@ -1,24 +1,21 @@
-import 'package:dictionary/audio_fun.dart';
-import 'package:dictionary/cards/card_bloc/word_card_bloc.dart';
-import 'package:dictionary/cards/model/search_response.dart';
-import 'package:dictionary/cards/utils/string_utils.dart';
-import 'package:dictionary/favorite_words/model/words_model.dart';
-import 'package:dictionary/favorite_words/screen/fav_button.dart';
-import 'package:dictionary/widgets/cardDecoration/card_decoration.dart';
-import 'package:dictionary/widgets/colors/grey_color.dart';
-import 'package:dictionary/widgets/colors/red_color.dart';
-import 'package:dictionary/widgets/textDecoration/text_styles.dart';
+import 'package:Dictionary/audio_fun.dart';
+import 'package:Dictionary/cards/model/search_response.dart';
+import 'package:Dictionary/cards/utils/string_utils.dart';
+import 'package:Dictionary/favorite_words/model/words_model.dart';
+import 'package:Dictionary/favorite_words/screen/fav_button.dart';
+import 'package:Dictionary/widgets/cardDecoration/card_decoration.dart';
+import 'package:Dictionary/widgets/colors/grey_color.dart';
+import 'package:Dictionary/widgets/colors/red_color.dart';
+import 'package:Dictionary/widgets/textDecoration/text_styles.dart';
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'word_info_view.dart';
 
-Widget loadedView(SearchResponse response, WordCardBloc wordBloc,
-    BuildContext context, bool isFavorited) {
-  return Padding(
-    padding: EdgeInsets.all(35),
-    child: FlipCard(
+Widget loadedView(
+    SearchResponse response, BuildContext context, bool isFavorited) {
+  return  FlipCard(
         direction: FlipDirection.HORIZONTAL,
         front: cardDecoration(
             context: context,
@@ -49,7 +46,6 @@ Widget loadedView(SearchResponse response, WordCardBloc wordBloc,
                   ),
                   Spacer(),
                   synonymsView(
-                      wordBloc,
                       response.meanings[0].definitions[0].synonyms ?? [],
                       response),
                 ],
@@ -65,12 +61,11 @@ Widget loadedView(SearchResponse response, WordCardBloc wordBloc,
                 child: _buildWord(response.word),
               ),
               Expanded(child: wordInfo(response))
-            ]))),
+            ])),
   );
 }
 
-Widget synonymsView(WordCardBloc wordBloc, List<String> synonyms,
-        SearchResponse response) =>
+Widget synonymsView(List<String> synonyms, SearchResponse response) =>
     Visibility(
         visible: synonyms.isNotEmpty,
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -84,12 +79,11 @@ Widget synonymsView(WordCardBloc wordBloc, List<String> synonyms,
           Wrap(
             spacing: 5.0,
             // runSpacing: 4.0,
-            children: synonymChips(wordBloc, response, synonyms),
+            children: synonymChips(response, synonyms),
           )
         ]));
 
-List<Widget> synonymChips(WordCardBloc wordBloc, SearchResponse response,
-        List<String> synonyms) =>
+List<Widget> synonymChips(SearchResponse response, List<String> synonyms) =>
     synonyms
         .take(4)
         .map((synonym) => GestureDetector(
@@ -151,8 +145,6 @@ Widget _buildPhonetics(List<Phonetics> phonetics) {
     ],
   );
 }
-
-
 
 _buildVisibilityExample(String? example) => Center(
       child: Text(

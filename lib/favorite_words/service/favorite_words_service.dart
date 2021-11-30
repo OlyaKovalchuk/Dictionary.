@@ -1,12 +1,12 @@
-import 'package:dictionary/favorite_words/model/favorite_words_model.dart';
-import 'package:dictionary/favorite_words/model/words_model.dart';
-import 'package:dictionary/favorite_words/repository/favorite_words_repository.dart';
+import 'package:Dictionary/favorite_words/model/favorite_words_model.dart';
+import 'package:Dictionary/favorite_words/model/words_model.dart';
+import 'package:Dictionary/favorite_words/repository/favorite_words_repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 abstract class FavWordsService {
   Future<FavoriteWords?> getFavWords();
 
-  Future<bool> isFavWord(String word);
+  Future<bool> isFavWord(WordData word);
 
   Future addToFavWords(WordData word);
 
@@ -26,7 +26,7 @@ class FavWordsServiceImpl implements FavWordsService {
     }
   }
   @override
-  Future<bool> isFavWord(String word) async {
+  Future<bool> isFavWord(WordData word) async {
     FavoriteWords? _favoriteWords = await getFavWords();
     return _favoriteWords != null && _favoriteWords.words.contains(word);
   }

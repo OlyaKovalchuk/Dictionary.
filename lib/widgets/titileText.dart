@@ -1,4 +1,4 @@
-import 'package:dictionary/widgets/gradientColor/gradient_widget.dart';
+import 'package:Dictionary/widgets/gradientColor/gradient_widget.dart';
 import 'package:flutter/material.dart';
 
 buildTitleText({required String text, required double? fontSize, FontWeight? fontWeight})=>Text(

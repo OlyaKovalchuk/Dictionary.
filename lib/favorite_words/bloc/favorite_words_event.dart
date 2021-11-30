@@ -1,4 +1,4 @@
-import 'package:dictionary/favorite_words/model/words_model.dart';
+import 'package:Dictionary/favorite_words/model/words_model.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class FavWordsEvent extends Equatable {

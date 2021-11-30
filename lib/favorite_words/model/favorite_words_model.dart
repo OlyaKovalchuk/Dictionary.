@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:dictionary/favorite_words/model/words_model.dart';
+import 'package:Dictionary/favorite_words/model/words_model.dart';
 import 'package:uuid/uuid.dart';
 
 class FavoriteWords {

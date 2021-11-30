@@ -1,4 +1,4 @@
-import 'package:dictionary/favorite_words/model/favorite_words_model.dart';
+import 'package:Dictionary/favorite_words/model/favorite_words_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 

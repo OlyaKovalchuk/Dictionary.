@@ -1,18 +1,18 @@
-import 'package:dictionary/cards/views/empty_view.dart';
-import 'package:dictionary/cards/views/error_view.dart';
-import 'package:dictionary/cards/views/word_info_view.dart';
-import 'package:dictionary/search/search_bloc/word_search_event.dart';
-import 'package:dictionary/search/search_bloc/word_search_bloc.dart';
-import 'package:dictionary/search/search_bloc/word_search_states.dart';
-import 'package:dictionary/widgets/border/border_radius.dart';
-import 'package:dictionary/widgets/cardDecoration/indicator_decoration.dart';
-import 'package:dictionary/widgets/colors/grey_color.dart';
-import 'package:dictionary/widgets/colors/grey_light_color.dart';
-import 'package:dictionary/widgets/colors/red_color.dart';
-import 'package:dictionary/widgets/gradientColor/gradient_widget.dart';
-import 'package:dictionary/widgets/gradientColor/icon_gradient.dart';
+import 'package:Dictionary/cards/views/empty_view.dart';
+import 'package:Dictionary/cards/views/error_view.dart';
+import 'package:Dictionary/cards/views/word_info_view.dart';
+import 'package:Dictionary/search/search_bloc/word_search_event.dart';
+import 'package:Dictionary/search/search_bloc/word_search_bloc.dart';
+import 'package:Dictionary/search/search_bloc/word_search_states.dart';
+import 'package:Dictionary/widgets/border/border_radius.dart';
+import 'package:Dictionary/widgets/cardDecoration/indicator_decoration.dart';
+import 'package:Dictionary/widgets/colors/grey_color.dart';
+import 'package:Dictionary/widgets/colors/grey_light_color.dart';
+import 'package:Dictionary/widgets/colors/red_color.dart';
+import 'package:Dictionary/widgets/gradientColor/gradient_widget.dart';
+import 'package:Dictionary/widgets/gradientColor/icon_gradient.dart';
 import 'package:flutter/material.dart';
-import 'package:dictionary/cards/repository/word_data.dart';
+import 'package:Dictionary/cards/repository/word_data.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SearchScreen extends StatefulWidget {

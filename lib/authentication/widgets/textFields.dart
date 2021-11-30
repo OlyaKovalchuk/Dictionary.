@@ -1,4 +1,4 @@
-import 'package:dictionary/widgets/border/border_radius.dart';
+import 'package:Dictionary/widgets/border/border_radius.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 

@@ -1,6 +1,6 @@
-import 'package:dictionary/authentication/bloc/registration_bloc/reg_states.dart';
-import 'package:dictionary/authentication/bloc/registration_bloc/reg_bloc.dart';
-import 'package:dictionary/authentication/bloc/registration_bloc/reg_event.dart';
+import 'package:Dictionary/authentication/bloc/registration_bloc/reg_states.dart';
+import 'package:Dictionary/authentication/bloc/registration_bloc/reg_bloc.dart';
+import 'package:Dictionary/authentication/bloc/registration_bloc/reg_event.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'UserRepositoryFake.dart';
 

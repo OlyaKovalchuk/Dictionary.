@@ -1,5 +1,5 @@
-import 'package:dictionary/authentication/model/user_data_model.dart';
-import 'package:dictionary/authentication/repository/user_repository.dart';
+import 'package:Dictionary/authentication/model/user_data_model.dart';
+import 'package:Dictionary/authentication/repository/user_repository.dart';
 
 class FireUsersDataRepoFake implements FireUsersDataRepo {
 
