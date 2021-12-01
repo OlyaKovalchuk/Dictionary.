@@ -1,11 +1,9 @@
 import 'package:Dictionary/audio_fun.dart';
 import 'package:Dictionary/cards/card_bloc/word_card_bloc.dart';
 import 'package:Dictionary/cards/card_bloc/word_card_event.dart';
-import 'package:Dictionary/cards/card_bloc/word_card_states.dart';
 import 'package:Dictionary/cards/repository/word_data.dart';
+import 'package:Dictionary/cards/widgets/cards.dart';
 import 'package:Dictionary/cards/views/error_view.dart';
-import 'package:Dictionary/cards/views/loaded_view.dart';
-import 'package:Dictionary/cards/views/loading_view.dart';
 import 'package:Dictionary/favorite_words/bloc/favorite_words_bloc.dart';
 import 'package:Dictionary/favorite_words/bloc/favorite_words_event.dart';
 import 'package:Dictionary/favorite_words/bloc/favorite_words_state.dart';
@@ -51,8 +49,10 @@ class _FavoriteWordsScreenState extends State<FavoriteWordsScreen> {
               if (state is LoadingState) {
                 return _buildCircularIndicator();
               } else if (state is SuccessState) {
-                if (_favWordsBloc.favWords == null) {
+                if (_favWordsBloc.favWords!.isEmpty) {
                   return Container(
+                    width: double.infinity,
+                    height:double.infinity ,
                     child: Center(
                       child: Text(
                         "You don't have favorite words yet!",
@@ -60,8 +60,8 @@ class _FavoriteWordsScreenState extends State<FavoriteWordsScreen> {
                       ),
                     ),
                   );
-                }
-                return _buildListOfFavWords(_favWordsBloc.favWords!);
+                }else{
+                return _buildListOfFavWords(_favWordsBloc.favWords!);}
               }
               return errorView();
             }));
@@ -111,7 +111,8 @@ class _FavoriteWordsScreenState extends State<FavoriteWordsScreen> {
         child: GestureDetector(
           onTap: () {
             wordBloc.add(WordSwipeFavWords(_favWordsBloc.favWords));
-            _buildDialog(_buildCards());
+            _buildDialog(buildCards(WordSwipeFavWords(_favWordsBloc.favWords),
+                wordBloc, _controller));
           },
           child: Icon(
             Icons.content_copy_outlined,
@@ -131,42 +132,9 @@ class _FavoriteWordsScreenState extends State<FavoriteWordsScreen> {
                 left: 30,
                 right: 30),
             backgroundColor: Colors.transparent,
-            child: child);
+            child: Container(
+                width: double.infinity,
+                height: MediaQuery.of(context).size.height / 1.7,
+                child: child));
       });
-
-  _buildCards() => Container(
-        width: double.infinity,
-        height: MediaQuery.of(context).size.height / 1.7,
-        child: BlocBuilder<WordCardBloc, WordCardStackState>(
-          bloc: wordBloc,
-          builder: (context, wordStackState) {
-            return SwipableStack(
-                controller: _controller,
-                stackClipBehaviour: Clip.none,
-                onSwipeCompleted: (index, direction) {
-                  wordBloc.add(WordSwipeFavWords(_favWordsBloc.favWords));
-                },
-                builder: (BuildContext context, int index,
-                    BoxConstraints constraints) {
-                  if (index >= wordStackState.wordCardStates.length) {
-                    return loadingView(context);
-                  }
-                  WordCardState wordState =
-                      wordStackState.wordCardStates[index];
-
-                  if (wordState is Error) {
-                    return errorView();
-                  }
-                  if (wordState is Loading) {
-                    return loadingView(context);
-                  }
-                  if (wordState is Ready) {
-                    return loadedView(
-                        wordState.word, context, wordState.isFavorited);
-                  }
-                  return loadingView(context);
-                });
-          },
-        ),
-      );
 }

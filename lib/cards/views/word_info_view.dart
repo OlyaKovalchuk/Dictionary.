@@ -10,7 +10,9 @@ Widget wordInfo(SearchResponse response) => ListView.builder(
     itemCount: response.meanings.length,
     itemBuilder: (BuildContext context, int index) => ListBody(
           children: [
-            Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Column(
+              mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start, children: [
               SizedBox(
                 height: 10,
               ),

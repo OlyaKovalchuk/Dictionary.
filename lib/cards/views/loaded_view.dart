@@ -2,7 +2,7 @@ import 'package:Dictionary/audio_fun.dart';
 import 'package:Dictionary/cards/model/search_response.dart';
 import 'package:Dictionary/cards/utils/string_utils.dart';
 import 'package:Dictionary/favorite_words/model/words_model.dart';
-import 'package:Dictionary/favorite_words/screen/fav_button.dart';
+import 'package:Dictionary/favorite_words/widgets/fav_button.dart';
 import 'package:Dictionary/widgets/cardDecoration/card_decoration.dart';
 import 'package:Dictionary/widgets/colors/grey_color.dart';
 import 'package:Dictionary/widgets/colors/red_color.dart';
@@ -15,53 +15,53 @@ import 'word_info_view.dart';
 
 Widget loadedView(
     SearchResponse response, BuildContext context, bool isFavorited) {
-  return  FlipCard(
-        direction: FlipDirection.HORIZONTAL,
-        front: cardDecoration(
-            context: context,
-            child: Padding(
-              padding:
-                  EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Align(
-                      alignment: Alignment.centerRight,
-                      child: FavoriteWordsButton(
-                        word: WordData(
-                            word: response.word,
-                            audio: response.phonetics?[0].audio ?? ''),
-                        isFavorited: isFavorited,
-                      )),
-                  _buildWord(response.word),
-                  _buildPhonetics(response.phonetics ?? []),
-                  SizedBox(
-                    height: 30,
-                  ),
-                  Visibility(
-                    visible:
-                        response.meanings[0].definitions[0].example != null,
-                    child: _buildVisibilityExample(
-                        response.meanings[0].definitions[0].example ?? ''),
-                  ),
-                  Spacer(),
-                  synonymsView(
-                      response.meanings[0].definitions[0].synonyms ?? [],
-                      response),
-                ],
+  return FlipCard(
+    direction: FlipDirection.HORIZONTAL,
+    front: cardDecoration(
+        context: context,
+        child: Padding(
+          padding: EdgeInsets.all(20),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Align(
+                  alignment: Alignment.centerRight,
+                  child: FavoriteWordsButton(
+                    word: WordData(
+                        word: response.word,
+                        audio: response.phonetics?[0].audio ?? ''),
+                    isFavorited: isFavorited,
+                  )),
+              _buildWord(response.word),
+              _buildPhonetics(response.phonetics ?? []),
+              SizedBox(
+                height: 30,
               ),
-            )),
-        back: cardDecoration(
-            context: context,
-            child: Column(children: [
-              Padding(
-                padding: EdgeInsets.only(
-                  top: 30,
-                ),
-                child: _buildWord(response.word),
+              Visibility(
+                visible: response.meanings[0].definitions[0].example != null,
+                child: _buildVisibilityExample(
+                    response.meanings[0].definitions[0].example ?? ''),
               ),
-              Expanded(child: wordInfo(response))
-            ])),
+              SizedBox(
+                height: 60,
+              ),
+              synonymsView(
+                  response.meanings[0].definitions[0].synonyms ?? [], response),
+            ],
+          ),
+        )),
+    back: cardDecoration(
+        context: context,
+        child: Column(mainAxisSize: MainAxisSize.min, children: [
+          Padding(
+            padding: EdgeInsets.only(
+              top: 30,
+            ),
+            child: _buildWord(response.word),
+          ),
+          wordInfo(response),
+        ])),
   );
 }
 

@@ -1,16 +1,12 @@
 import 'package:Dictionary/authentication/service/firebase_auth_service.dart';
 import 'package:Dictionary/cards/card_bloc/word_card_event.dart';
 import 'package:Dictionary/cards/card_bloc/word_card_bloc.dart';
-import 'package:Dictionary/cards/card_bloc/word_card_states.dart';
-import 'package:Dictionary/cards/views/error_view.dart';
-import 'package:Dictionary/cards/views/loaded_view.dart';
-import 'package:Dictionary/cards/views/loading_view.dart';
+import 'package:Dictionary/cards/widgets/cards.dart';
 import 'package:Dictionary/favorite_words/service/favorite_words_service.dart';
 import 'package:Dictionary/widgets/appBar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:Dictionary/cards/repository/word_data.dart';
 import 'package:swipable_stack/swipable_stack.dart';
 
@@ -43,47 +39,10 @@ class _CardScreenState extends State<CardScreen> {
               Navigator.pushNamed(context, '/loginScreen');
             },
             child: Text('sing out')),
-        actions: [
-          IconButton(
-              onPressed: () {
-                Navigator.of(context).pushNamed('/searchScreen');
-              },
-              icon: Icon(Icons.search))
-        ],
       ),
-      body:Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 35, vertical: 30),
-        child: BlocBuilder<WordCardBloc, WordCardStackState>(
-          bloc: wordBloc,
-          builder: (_, wordStackState) {
-         return   SwipableStack(
-          controller: _controller,
-          stackClipBehaviour: Clip.none,
-          onSwipeCompleted: (index, direction) {
-            wordBloc.add(WordSwipe());
-          },
-          builder: (BuildContext context, int index, BoxConstraints constraints) {
-                  if (index >= wordStackState.wordCardStates.length) {
-                    return loadingView(context);
-                  }
-                  WordCardState wordState = wordStackState.wordCardStates[index];
-
-                  if (wordState is Error) {
-                    return errorView();
-                  }
-                  if (wordState is Loading) {
-                    return loadingView(context);
-                  }
-                  if (wordState is Ready) {
-                    return loadedView(
-                        wordState.word, context, wordState.isFavorited);
-                  }
-                  return loadingView(context);
-                });
-          },
-        ),
-      ),
+      body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 35, vertical: 30),
+          child: buildCards(WordSwipe(), wordBloc, _controller)),
     );
   }
-
 }
