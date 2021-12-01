@@ -5,9 +5,10 @@ import 'package:Dictionary/authentication/service/firebase_auth_service.dart';
 import 'package:Dictionary/authentication/utils/validators.dart';
 import 'package:Dictionary/authentication/widgets/auth_widgets.dart';
 import 'package:Dictionary/authentication/widgets/textFields.dart';
-import 'package:Dictionary/cards/screen/card_screen.dart';
+import 'package:Dictionary/main_screen.dart';
 import 'package:Dictionary/widgets/appBar.dart';
 import 'package:Dictionary/widgets/titileText.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -32,21 +33,21 @@ class _LoginScreenState extends State<LoginScreen> {
     return BlocBuilder<LoginBloc, LoginState>(
         bloc: _loginBloc,
         builder: (context, state) {
-          if (_key.currentState?.validate() != null &&
-              _key.currentState!.validate()) {
-            if (state.isSuccess == true) {
-              return CardScreen();
-            }
+          if (state.isSuccess &&
+              FirebaseAuth.instance.currentUser != null) {
+            return MainScreen();
           }
+
           return Scaffold(
               resizeToAvoidBottomInset: false,
               appBar: buildAppBar(
-                  leading: GestureDetector(
-                      onTap: () => Navigator.pop(context),
-                      child: Icon(
-                        Icons.arrow_back_ios_rounded,
-                        color: Colors.white,
-                      )),),
+                leading: GestureDetector(
+                    onTap: () => Navigator.pop(context),
+                    child: Icon(
+                      Icons.arrow_back_ios_rounded,
+                      color: Colors.white,
+                    )),
+              ),
               body: Padding(
                 padding:
                     const EdgeInsets.symmetric(vertical: 50, horizontal: 20),
@@ -102,6 +103,11 @@ class _LoginScreenState extends State<LoginScreen> {
                             _loginBloc.add(LoginWithCredentialsPressed(
                                 password: _controllerPassword.text,
                                 email: _controllerEmail.text));
+                            if (state.isFailure) {
+                              print(state.isFailure);
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(content: Text(state.passwordErrorText ?? 'You must login in')));
+                            }
                           },
                           onTapSignWithGoogle: () {
                             _loginBloc.add(LoginWithGoogle());

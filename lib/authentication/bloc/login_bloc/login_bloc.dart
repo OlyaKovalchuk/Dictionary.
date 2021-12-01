@@ -1,17 +1,19 @@
 import 'package:Dictionary/authentication/bloc/login_bloc/login_event.dart';
 import 'package:Dictionary/authentication/bloc/login_bloc/login_state.dart';
 import 'package:Dictionary/authentication/service/firebase_auth_service.dart';
+import 'package:Dictionary/authentication/utils/firebase_exceptions_valid.dart';
 import 'package:Dictionary/authentication/utils/validators.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class LoginBloc extends Bloc<RegEvent, LoginState> {
+class LoginBloc extends Bloc<LoginEvent, LoginState> {
   final UserRepositoryImpl _userRepository;
 
   LoginBloc(UserRepositoryImpl userRepository)
       : _userRepository = userRepository,
         super(LoginState.initial());
 
-  Stream<LoginState> mapEventToState(RegEvent event) async* {
+  Stream<LoginState> mapEventToState(LoginEvent event) async* {
     if (event is LoginWithCredentialsPressed) {
       yield* _mapLoginWithCredentialsPressedToState(
           password: event.password, email: event.email);
@@ -40,9 +42,9 @@ class LoginBloc extends Bloc<RegEvent, LoginState> {
     try {
       await _userRepository.signInWithCredentials(email, password);
       yield LoginState.success();
-    } catch (e) {
+    } on FirebaseAuthException catch (e) {
       print('Error auth: $e');
-      yield LoginState.failure();
+      yield LoginState.failure().copyWith(passwordErrorText: checkError(e.code));
     }
   }
 
@@ -51,9 +53,10 @@ class LoginBloc extends Bloc<RegEvent, LoginState> {
     try {
       await _userRepository.signInWithGoogle();
       yield LoginState.success();
-    } catch (e) {
+    } on FirebaseAuthException catch (e) {
       print('Error auth: $e');
-      yield LoginState.failure();
+      checkError(e.code);
+      yield LoginState.failure().copyWith(passwordErrorText: checkError(e.code));
     }
   }
 
@@ -62,9 +65,9 @@ class LoginBloc extends Bloc<RegEvent, LoginState> {
     try {
       await _userRepository.signInWithFacebook();
       yield LoginState.success();
-    } catch (e) {
+    } on FirebaseAuthException catch (e) {
       print('Error auth: $e');
-      yield LoginState.failure();
+      yield LoginState.failure().copyWith(passwordErrorText: checkError(e.code));
     }
   }
 }

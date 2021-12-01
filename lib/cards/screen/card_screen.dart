@@ -3,7 +3,6 @@ import 'package:Dictionary/cards/card_bloc/word_card_event.dart';
 import 'package:Dictionary/cards/card_bloc/word_card_bloc.dart';
 import 'package:Dictionary/cards/widgets/cards.dart';
 import 'package:Dictionary/favorite_words/service/favorite_words_service.dart';
-import 'package:Dictionary/widgets/appBar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -31,18 +30,10 @@ class _CardScreenState extends State<CardScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: buildAppBar(
-        leading: TextButton(
-            onPressed: () async {
-              await userRepository.signOut();
-              Navigator.pushNamed(context, '/loginScreen');
-            },
-            child: Text('sing out')),
-      ),
       body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 35, vertical: 30),
-          child: buildCards(WordSwipe(), wordBloc, _controller)),
+            padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 30),
+            child: buildCards(WordSwipe(), wordBloc, _controller)
+      ),
     );
   }
 }

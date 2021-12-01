@@ -9,7 +9,6 @@ import 'package:Dictionary/favorite_words/bloc/favorite_words_event.dart';
 import 'package:Dictionary/favorite_words/bloc/favorite_words_state.dart';
 import 'package:Dictionary/favorite_words/model/words_model.dart';
 import 'package:Dictionary/favorite_words/service/favorite_words_service.dart';
-import 'package:Dictionary/widgets/appBar.dart';
 import 'package:Dictionary/widgets/cardDecoration/indicator_decoration.dart';
 import 'package:Dictionary/widgets/colors/grey_color.dart';
 import 'package:Dictionary/widgets/colors/red_color.dart';
@@ -40,9 +39,6 @@ class _FavoriteWordsScreenState extends State<FavoriteWordsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: buildAppBar(title: 'Favorite Words', actions: [
-          _buildWordsToCard(context),
-        ]),
         body: BlocBuilder(
             bloc: _favWordsBloc..add(GetFavWordsEvent()),
             builder: (BuildContext context, state) {
@@ -106,7 +102,7 @@ class _FavoriteWordsScreenState extends State<FavoriteWordsScreen> {
         },
       );
 
-  _buildWordsToCard(BuildContext context) => Padding(
+  buildWordsToCard(BuildContext context) => Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10.0),
         child: GestureDetector(
           onTap: () {

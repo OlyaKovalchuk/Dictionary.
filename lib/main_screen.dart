@@ -3,6 +3,7 @@ import 'package:Dictionary/cards/screen/card_screen.dart';
 import 'package:Dictionary/favorite_words/screen/favorite_words_screen.dart';
 import 'package:Dictionary/profile/screen/profile_screen.dart';
 import 'package:Dictionary/search/search_screen.dart';
+import 'package:Dictionary/widgets/appBar.dart';
 import 'package:Dictionary/widgets/colors/grey_color.dart';
 import 'package:Dictionary/widgets/colors/red_color.dart';
 import 'package:flutter/material.dart';
@@ -30,10 +31,29 @@ class _MainScreenState extends State<MainScreen> {
     });
   }
 
+  getAppbar() {
+    if (selectedPage == 0) {
+      return buildAppBar(title: 'Profile');
+    } else if (selectedPage == 1) {
+      return buildAppBar(
+        leading: TextButton(
+            onPressed: () async {
+              await userRepository.signOut();
+              Navigator.pushNamed(context, '/loginScreen');
+            },
+            child: Text('sing out')),
+      );
+    } else if (selectedPage == 2) {
+      return buildAppBar(title: 'Favorite Words');
+    } else if (selectedPage == 3) {}
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        appBar: getAppbar(),
         backgroundColor: Colors.white,
+        resizeToAvoidBottomInset: false,
         body: PageView(
           physics: NeverScrollableScrollPhysics(),
           controller: pageController,
@@ -44,7 +64,7 @@ class _MainScreenState extends State<MainScreen> {
             SearchScreen(),
           ],
         ),
-        extendBody: true,
+        extendBody: false,
         bottomNavigationBar: Container(
           margin: EdgeInsets.symmetric(vertical: 20, horizontal: 15),
           decoration: BoxDecoration(
