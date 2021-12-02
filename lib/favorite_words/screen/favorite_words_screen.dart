@@ -38,53 +38,79 @@ class _FavoriteWordsScreenState extends State<FavoriteWordsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: BlocBuilder(
-            bloc: _favWordsBloc..add(GetFavWordsEvent()),
-            builder: (BuildContext context, state) {
-              if (state is LoadingState) {
-                return _buildCircularIndicator();
-              } else if (state is SuccessState) {
-                if (_favWordsBloc.favWords!.isEmpty) {
-                  return Container(
-                    width: double.infinity,
-                    height:double.infinity ,
-                    child: Center(
-                      child: Text(
-                        "You don't have favorite words yet!",
-                        style: TextStyle(color: greyColor()),
-                      ),
+    return SingleChildScrollView(
+      child: BlocBuilder(
+          bloc: _favWordsBloc..add(GetFavWordsEvent()),
+          builder: (BuildContext context, state) {
+            if (state is LoadingState) {
+              return _buildCircularIndicator();
+            } else if (state is SuccessState) {
+              if (_favWordsBloc.favWords!.isEmpty) {
+                return Container(
+                  width: double.infinity,
+                  height: double.infinity,
+                  child: Center(
+                    child: Text(
+                      "You don't have favorite words yet!",
+                      style: TextStyle(color: greyColor()),
                     ),
-                  );
-                }else{
-                return _buildListOfFavWords(_favWordsBloc.favWords!);}
+                  ),
+                );
+              } else {
+                return _buildListOfFavWords(_favWordsBloc.favWords!);
               }
-              return errorView();
-            }));
+            }
+            return errorView();
+          }),
+    );
   }
 
   _buildCircularIndicator() => Container(
         child: indicatorCircular(),
       );
 
-  _buildListOfFavWords(List<WordData> words) => ListView.separated(
-        itemCount: words.length,
+  _buildListOfFavWords(s) => ListView.separated(
+        scrollDirection: Axis.vertical,
+        shrinkWrap: true,
+        physics: NeverScrollableScrollPhysics(),
+        itemCount: _favWordsBloc.favWords!.length,
         itemBuilder: (context, index) {
           return ListTile(
             leading: GestureDetector(
-                onTap: () => getAudio(words[index].audio),
+                onTap: () => getAudio(_favWordsBloc.favWords![index].audio),
                 child: Icon(
                   Icons.volume_up_rounded,
                   color: greyColor(),
                   size: 20,
                 )),
-            title: Text(
-              toBeginningOfSentenceCase(words[index].word)!,
+            title: GestureDetector(
+              onTap: () {
+                wordBloc.add(WordSwipeFavWords(_favWordsBloc.favWords!));
+                int ind = _favWordsBloc.favWords!
+                    .indexOf(_favWordsBloc.favWords![index]);
+                print(ind);
+
+                for (int i = 0; i < ind; i++) {
+                  WordData word = WordData(
+                      word: _favWordsBloc.favWords![0].word,
+                      audio: _favWordsBloc.favWords![0].audio);
+                  _favWordsBloc.favWords!.remove(_favWordsBloc.favWords![0]);
+                  _favWordsBloc.favWords!.add(word);
+                }
+                _buildDialog(buildCards(
+                    WordSwipeFavWords(_favWordsBloc.favWords!),
+                    wordBloc,
+                    _controller));
+              },
+              child: Text(
+                toBeginningOfSentenceCase(_favWordsBloc.favWords![index].word)!,
+              ),
             ),
             trailing: GestureDetector(
               onTap: () {
-                _favWordsBloc.add(DeleteFavWordsEvent(word: words[index]));
-                _favWordsBloc.favWords!.remove(words[index]);
+                _favWordsBloc.add(
+                    DeleteFavWordsEvent(word: _favWordsBloc.favWords![index]));
+                _favWordsBloc.favWords!.remove(_favWordsBloc.favWords![index]);
               },
               child: Icon(
                 Icons.delete_outlined,
@@ -100,21 +126,6 @@ class _FavoriteWordsScreenState extends State<FavoriteWordsScreen> {
             color: redColor().withOpacity(0.2),
           );
         },
-      );
-
-  buildWordsToCard(BuildContext context) => Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10.0),
-        child: GestureDetector(
-          onTap: () {
-            wordBloc.add(WordSwipeFavWords(_favWordsBloc.favWords));
-            _buildDialog(buildCards(WordSwipeFavWords(_favWordsBloc.favWords),
-                wordBloc, _controller));
-          },
-          child: Icon(
-            Icons.content_copy_outlined,
-            color: Colors.white,
-          ),
-        ),
       );
 
   _buildDialog(Widget child) => showDialog<void>(

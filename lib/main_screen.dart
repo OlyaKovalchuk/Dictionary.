@@ -64,7 +64,7 @@ class _MainScreenState extends State<MainScreen> {
             SearchScreen(),
           ],
         ),
-        extendBody: false,
+        extendBody: true,
         bottomNavigationBar: Container(
           margin: EdgeInsets.symmetric(vertical: 20, horizontal: 15),
           decoration: BoxDecoration(

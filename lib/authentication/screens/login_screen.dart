@@ -33,8 +33,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return BlocBuilder<LoginBloc, LoginState>(
         bloc: _loginBloc,
         builder: (context, state) {
-          if (state.isSuccess &&
-              FirebaseAuth.instance.currentUser != null) {
+          if (state.isSuccess && FirebaseAuth.instance.currentUser != null) {
             return MainScreen();
           }
 
@@ -106,7 +105,9 @@ class _LoginScreenState extends State<LoginScreen> {
                             if (state.isFailure) {
                               print(state.isFailure);
                               ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(content: Text(state.passwordErrorText ?? 'You must login in')));
+                                  SnackBar(
+                                      content: Text(state.passwordErrorText ??
+                                          'You must login in')));
                             }
                           },
                           onTapSignWithGoogle: () {
