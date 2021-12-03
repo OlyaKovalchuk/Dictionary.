@@ -4,7 +4,7 @@ import 'package:Dictionary/authentication/bloc/registration_bloc/reg_states.dart
 import 'package:Dictionary/authentication/service/firebase_auth_service.dart';
 import 'package:Dictionary/authentication/utils/validators.dart';
 import 'package:Dictionary/authentication/widgets/auth_widgets.dart';
-import 'package:Dictionary/cards/screen/card_screen.dart';
+import 'package:Dictionary/main_screen.dart';
 import 'package:Dictionary/widgets/appBar.dart';
 import 'package:Dictionary/authentication/widgets/textFields.dart';
 import 'package:Dictionary/widgets/titileText.dart';
@@ -31,11 +31,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
     return BlocBuilder<RegBloc, RegState>(
       bloc: _regBloc,
       builder: (context, state) {
-        if (_key.currentState?.validate() != null &&
-            _key.currentState!.validate()) {
-          if (state.isSuccess == true) {
-            return CardScreen();
-          }
+        if (state.isSuccess == true) {
+          return MainScreen();
         }
         if (state.isFailure == true) {
           if (state.passwordErrorText != null) {

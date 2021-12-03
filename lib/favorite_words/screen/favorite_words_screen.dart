@@ -47,8 +47,8 @@ class _FavoriteWordsScreenState extends State<FavoriteWordsScreen> {
             } else if (state is SuccessState) {
               if (_favWordsBloc.favWords!.isEmpty) {
                 return Container(
-                  width: double.infinity,
-                  height: double.infinity,
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height,
                   child: Center(
                     child: Text(
                       "You don't have favorite words yet!",
@@ -85,6 +85,7 @@ class _FavoriteWordsScreenState extends State<FavoriteWordsScreen> {
                 )),
             title: GestureDetector(
               onTap: () {
+                List<WordData> words = _favWordsBloc.favWords!;
                 wordBloc.add(WordSwipeFavWords(_favWordsBloc.favWords!));
                 int ind = _favWordsBloc.favWords!
                     .indexOf(_favWordsBloc.favWords![index]);
@@ -94,13 +95,11 @@ class _FavoriteWordsScreenState extends State<FavoriteWordsScreen> {
                   WordData word = WordData(
                       word: _favWordsBloc.favWords![0].word,
                       audio: _favWordsBloc.favWords![0].audio);
-                  _favWordsBloc.favWords!.remove(_favWordsBloc.favWords![0]);
-                  _favWordsBloc.favWords!.add(word);
+                  words.remove(_favWordsBloc.favWords![0]);
+                  words.add(word);
                 }
                 _buildDialog(buildCards(
-                    WordSwipeFavWords(_favWordsBloc.favWords!),
-                    wordBloc,
-                    _controller));
+                    WordSwipeFavWords(words), wordBloc, _controller));
               },
               child: Text(
                 toBeginningOfSentenceCase(_favWordsBloc.favWords![index].word)!,
@@ -135,13 +134,10 @@ class _FavoriteWordsScreenState extends State<FavoriteWordsScreen> {
       builder: (BuildContext context) {
         return Dialog(
             insetPadding: EdgeInsets.only(
-                bottom: MediaQuery.of(context).size.height / 5,
+                top: MediaQuery.of(context).size.height / 7,
                 left: 30,
                 right: 30),
             backgroundColor: Colors.transparent,
-            child: Container(
-                width: double.infinity,
-                height: MediaQuery.of(context).size.height / 1.7,
-                child: child));
+            child: child);
       });
 }

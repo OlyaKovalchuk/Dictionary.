@@ -16,15 +16,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       yield* _mapAuthStarted();
     } else if (event is AuthLoggedIn) {
       yield* _mapAuthLoggedIn();
-    } else if (event is AuthLoggedOut) {
-      _mapAuthLoggedOut();
     }
   }
 
-  Stream<AuthState> _mapAuthLoggedOut() async* {
-    yield AuthFailed();
-    _userRepository.signOut();
-  }
+
 
   Stream<AuthState> _mapAuthLoggedIn() async* {
     yield AuthOnSuccess(user: await _userRepository.getUser());

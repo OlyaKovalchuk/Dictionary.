@@ -35,14 +35,7 @@ class _MainScreenState extends State<MainScreen> {
     if (selectedPage == 0) {
       return buildAppBar(title: 'Profile');
     } else if (selectedPage == 1) {
-      return buildAppBar(
-        leading: TextButton(
-            onPressed: () async {
-              await userRepository.signOut();
-              Navigator.pushNamed(context, '/loginScreen');
-            },
-            child: Text('sing out')),
-      );
+      return buildAppBar();
     } else if (selectedPage == 2) {
       return buildAppBar(title: 'Favorite Words');
     } else if (selectedPage == 3) {}

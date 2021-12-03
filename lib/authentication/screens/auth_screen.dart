@@ -1,3 +1,4 @@
+import 'package:Dictionary/widgets/button_gradient.dart';
 import 'package:Dictionary/widgets/colors/grey_color.dart';
 import 'package:Dictionary/widgets/gradientColor/gradient_widget.dart';
 import 'package:Dictionary/widgets/textDecoration/text_styles.dart';
@@ -58,23 +59,9 @@ class _IntroductionScreenState extends State<IntroductionScreen> {
       onTap: () => Navigator.of(context).pushNamed(
             '/registerScreen',
           ),
-      child: Container(
-        alignment: Alignment.center,
-        height: 56,
-        width: 236,
-        decoration: BoxDecoration(
-          gradient: gradientColor(),
-          borderRadius: BorderRadius.all(Radius.circular(30.0)),
-        ),
-        child: Text(
-          "Create an account",
-          style: TextStyle(
-              fontFamily: ('Futura'),
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              color: Colors.white),
-        ),
-      ));
+      child: buildGradientButton(onTap: () => Navigator.of(context).pushNamed(
+          '/registerScreen'), title:  "Create an account"));
+
 
   _buildLogInButton() => GestureDetector(
         onTap: () {

@@ -90,7 +90,6 @@ class UserRepositoryImpl implements UserRepository {
   Future<User?> signInWithFacebook() async {
     User? _user;
     final LoginResult loginResult = await FacebookAuth.instance.login();
-    // Cre{ate a credential from the access token
     final OAuthCredential facebookAuthCredential =
         FacebookAuthProvider.credential(loginResult.accessToken!.token);
     try {
@@ -109,7 +108,7 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   Future signOut() async {
-    return Future.wait([
+    await Future.wait([
       _firebaseAuth.signOut(),
       googleSignIn.signOut(),
     ]);
@@ -133,9 +132,11 @@ class UserRepositoryImpl implements UserRepository {
       if (_getUser == null) {
         print(_getUser);
         _userData = UserData(
-            uid: user.uid,
-            name: name ?? user.displayName!,
-            email: user.email!,);
+          uid: user.uid,
+          name: name ?? user.displayName!,
+          email: user.email!,
+          photoURL: user.photoURL!,
+        );
 
         _favoriteWords = FavoriteWords(words: [], uid: _userData.uid);
         _fireUsersDataRepo.setUser(_userData);

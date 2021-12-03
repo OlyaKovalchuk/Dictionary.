@@ -105,7 +105,6 @@ class _SearchScreenState extends State<SearchScreen> {
             ),
             autocorrect: true,
             maxLines: 1,
-            enableSuggestions: true,
             cursorColor: redColor(),
             autofocus: false,
             style: TextStyle(

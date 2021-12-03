@@ -9,7 +9,7 @@ class FavWordsBloc extends Bloc<FavWordsEvent, FavWordsState> {
   final FavWordsService _favWordsService;
   List<WordData>? favWords;
 
-  FavWordsBloc(FavWordsService favWordsService, [this.favWords])
+  FavWordsBloc(FavWordsService favWordsService)
       : _favWordsService = favWordsService,
         super(InitialState());
 
