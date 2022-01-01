@@ -2,7 +2,8 @@ import 'package:Dictionary/authentication/service/firebase_auth_service.dart';
 import 'package:Dictionary/cards/screen/card_screen.dart';
 import 'package:Dictionary/favorite_words/screen/favorite_words_screen.dart';
 import 'package:Dictionary/profile/screen/profile_screen.dart';
-import 'package:Dictionary/search/search_screen.dart';
+import 'package:Dictionary/search/screen/appBar_search.dart';
+import 'package:Dictionary/search/screen/search_screen.dart';
 import 'package:Dictionary/widgets/appBar.dart';
 import 'package:Dictionary/widgets/colors/grey_color.dart';
 import 'package:Dictionary/widgets/colors/red_color.dart';
@@ -19,6 +20,7 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   UserRepositoryImpl userRepository = UserRepositoryImpl();
   PageController pageController = PageController(
+    keepPage: true,
     initialPage: 1,
   );
   int selectedPage = 1;
@@ -38,7 +40,9 @@ class _MainScreenState extends State<MainScreen> {
       return buildAppBar();
     } else if (selectedPage == 2) {
       return buildAppBar(title: 'Favorite Words');
-    } else if (selectedPage == 3) {}
+    } else if (selectedPage == 3) {
+      return appBarSearch(context);
+    }
   }
 
   @override

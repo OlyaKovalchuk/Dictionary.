@@ -24,10 +24,6 @@ class WordSwipeFavWords extends WordEvent {
 }
 
 class InitView extends WordEvent {
-  final List<String>? word;
-
-  InitView([this.word]);
-
   @override
   List<Object?> get props => [];
 }

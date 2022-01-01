@@ -1,6 +1,5 @@
 import 'package:Dictionary/widgets/border/border_radius.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 import '../../widgets/colors/grey_light_color.dart';
 import '../../widgets/colors/red_color.dart';
@@ -11,8 +10,8 @@ buildTextField({
   required TextEditingController controller,
   required TextInputType textInputType,
   required String hint,
-  required String? validator(String? val),
-  required onSubmit(String str),
+  String? validator(String? val)?,
+  onSubmit(String str)?,
 }) =>
     TextFormField(
       autovalidateMode: AutovalidateMode.disabled,

@@ -9,7 +9,7 @@ class Repository {
 //https://api.dictionaryapi.dev/api/v2/entries/en_US/hello
    try {
       var url = Uri.http(
-          'api.dictionaryapi.dev', 'api/v2/entries/en_US/${word.trim()}');
+          'api.dictionaryapi.dev', 'api/v2/entries/en/${word.trim()}');
       Response response = await get(url);
       var body = json.decode(response.body) as List;
       SearchResponse searchResponse = SearchResponse.fromJson(body[0]);

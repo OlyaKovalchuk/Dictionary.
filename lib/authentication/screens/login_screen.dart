@@ -1,6 +1,7 @@
 import 'package:Dictionary/authentication/bloc/login_bloc/login_bloc.dart';
 import 'package:Dictionary/authentication/bloc/login_bloc/login_event.dart';
 import 'package:Dictionary/authentication/bloc/login_bloc/login_state.dart';
+import 'package:Dictionary/authentication/screens/auth_screen.dart';
 import 'package:Dictionary/authentication/service/firebase_auth_service.dart';
 import 'package:Dictionary/authentication/utils/validators.dart';
 import 'package:Dictionary/authentication/widgets/auth_widgets.dart';
@@ -13,9 +14,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class LoginScreen extends StatefulWidget {
-  final UserRepositoryImpl userRepository;
-
-  LoginScreen({required this.userRepository});
 
   @override
   _LoginScreenState createState() => _LoginScreenState();
@@ -41,7 +39,11 @@ class _LoginScreenState extends State<LoginScreen> {
               resizeToAvoidBottomInset: false,
               appBar: buildAppBar(
                 leading: GestureDetector(
-                    onTap: () => Navigator.pop(context),
+                    onTap: () => Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => IntroductionScreen()),
+                        (route) => false),
                     child: Icon(
                       Icons.arrow_back_ios_rounded,
                       color: Colors.white,

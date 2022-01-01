@@ -41,7 +41,7 @@ class UserRepositoryFake  implements UserRepository {
   }
 
   @override
-  singUp(String email, String password, String name) {
+  singUp({required String email,required String name,required String password} ){
     if (shouldSignUpFail) {
       return Future.error(Exception("fake exception"));
     }

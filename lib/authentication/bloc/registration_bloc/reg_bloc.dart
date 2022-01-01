@@ -32,7 +32,7 @@ class RegBloc extends Bloc<RegEvent, RegState> {
       required String name}) async* {
     yield RegState.loading();
     try {
-      await _userRepository.singUp(email, password, name);
+      await _userRepository.singUp(email: email,password:  password, name: name);
 
       yield RegState.success();
     } on FirebaseAuthException catch (e) {

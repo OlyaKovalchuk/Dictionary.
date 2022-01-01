@@ -1,4 +1,4 @@
-import 'package:Dictionary/audio_fun.dart';
+import 'package:Dictionary/utils/audio_fun.dart';
 import 'package:Dictionary/cards/model/search_response.dart';
 import 'package:Dictionary/cards/utils/string_utils.dart';
 import 'package:Dictionary/favorite_words/model/words_model.dart';

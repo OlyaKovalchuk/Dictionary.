@@ -10,7 +10,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 abstract class UserRepository {
   Future signInWithCredentials(String email, String password);
 
-  singUp(String email, String password, String name);
+  singUp({required String email,required String name,required String password});
 
   Future<User?> signInWithGoogle();
 
@@ -32,7 +32,7 @@ class UserRepositoryImpl implements UserRepository {
 
   Future signInWithCredentials(String email, String password) async {
     try {
-      UserCredential userCredential = await FirebaseAuth.instance
+      UserCredential userCredential = await _firebaseAuth
           .signInWithEmailAndPassword(email: email, password: password);
       print(userCredential);
     } on FirebaseAuthException catch (e) {
@@ -40,10 +40,9 @@ class UserRepositoryImpl implements UserRepository {
     }
   }
 
-  Future<void> singUp(String email, String name, String password) async {
+  Future<void> singUp({required String email,required String name,required String password}) async {
     try {
-      UserCredential userCredential = await _firebaseAuth
-          .createUserWithEmailAndPassword(email: email, password: password);
+      UserCredential userCredential = await _firebaseAuth.createUserWithEmailAndPassword(email: email, password: password);
       print(userCredential);
       User? user = userCredential.user;
       print('User: $user');
@@ -57,7 +56,7 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   Future<User?> signInWithGoogle() async {
-    FirebaseAuth auth = FirebaseAuth.instance;
+
     User? _user;
     final UserCredential _userCredential;
     final GoogleSignInAccount? googleSignInAccount =
@@ -73,7 +72,7 @@ class UserRepositoryImpl implements UserRepository {
       );
 
       try {
-        _userCredential = await auth.signInWithCredential(credential);
+        _userCredential = await _firebaseAuth.signInWithCredential(credential);
         _user = _userCredential.user;
         _createNewUser(_user);
       } on FirebaseAuthException catch (e) {
@@ -124,21 +123,25 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   _createNewUser(User? user, [String? name]) async {
-    UserData? _userData;
-    FavoriteWords? _favoriteWords;
     if (user != null) {
       final UserData? _getUser = await _fireUsersDataRepo.getUser(user.uid);
       print(user.email);
       if (_getUser == null) {
         print(_getUser);
-        _userData = UserData(
+       if(user.displayName == null){
+         _firebaseAuth.currentUser!.updateDisplayName(name);
+       }
+       if(user.photoURL == null){
+         _firebaseAuth.currentUser!.updatePhotoURL('https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png');
+       }
+        UserData  _userData = UserData(
           uid: user.uid,
           name: name ?? user.displayName!,
           email: user.email!,
-          photoURL: user.photoURL!,
+          photoURL: user.photoURL ?? "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
         );
 
-        _favoriteWords = FavoriteWords(words: [], uid: _userData.uid);
+        FavoriteWords   _favoriteWords = FavoriteWords(words: [], uid: _userData.uid);
         _fireUsersDataRepo.setUser(_userData);
         _fireFavWordsRepoImpl.setFavoriteWord(_favoriteWords);
       }
