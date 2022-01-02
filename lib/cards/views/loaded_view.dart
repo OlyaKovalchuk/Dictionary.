@@ -1,15 +1,12 @@
+import 'package:Dictionary/cards/widgets/cardDecoration/card_decoration.dart';
 import 'package:Dictionary/utils/audio_fun.dart';
 import 'package:Dictionary/cards/model/search_response.dart';
 import 'package:Dictionary/cards/utils/string_utils.dart';
 import 'package:Dictionary/favorite_words/model/words_model.dart';
 import 'package:Dictionary/favorite_words/widgets/fav_button.dart';
-import 'package:Dictionary/widgets/cardDecoration/card_decoration.dart';
-import 'package:Dictionary/widgets/colors/grey_color.dart';
-import 'package:Dictionary/widgets/colors/red_color.dart';
-import 'package:Dictionary/widgets/textDecoration/text_styles.dart';
+import 'package:Dictionary/theme/theme_colors.dart';
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'word_info_view.dart';
 
@@ -33,21 +30,21 @@ Widget loadedView(
                         audio: response.phonetics?[0].audio ?? ''),
                     isFavorited: isFavorited,
                   )),
-              _buildWord(response.word),
-              _buildPhonetics(response.phonetics ?? []),
+              _buildWord(response.word, context),
+              _buildPhonetics(response.phonetics ?? [], context),
               SizedBox(
                 height: 30,
               ),
               Visibility(
                 visible: response.meanings[0].definitions[0].example != null,
                 child: _buildVisibilityExample(
-                    response.meanings[0].definitions[0].example ?? ''),
+                    response.meanings[0].definitions[0].example ?? '', context),
               ),
               SizedBox(
                 height: 60,
               ),
-              synonymsView(
-                  response.meanings[0].definitions[0].synonyms ?? [], response),
+              _synonymsView(
+                  response.meanings[0].definitions[0].synonyms ?? [], response, context),
             ],
           ),
         )),
@@ -58,32 +55,29 @@ Widget loadedView(
             padding: EdgeInsets.only(
               top: 30,
             ),
-            child: _buildWord(response.word),
+            child: _buildWord(response.word, context),
           ),
           wordInfo(response),
         ])),
   );
 }
 
-Widget synonymsView(List<String> synonyms, SearchResponse response) =>
+Widget _synonymsView(List<String> synonyms, SearchResponse response, BuildContext context) =>
     Visibility(
         visible: synonyms.isNotEmpty,
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Text(
             'synonyms: ',
-            style: GoogleFonts.roboto(
-              fontSize: 12,
-              color: redColor(),
-            ),
+            style: Theme.of(context).textTheme.bodyText1!.copyWith(fontSize: 12, color: redColor),
           ),
           Wrap(
             spacing: 5.0,
             // runSpacing: 4.0,
-            children: synonymChips(response, synonyms),
+            children: _synonymChips(response, synonyms, context),
           )
         ]));
 
-List<Widget> synonymChips(SearchResponse response, List<String> synonyms) =>
+List<Widget> _synonymChips(SearchResponse response, List<String> synonyms, BuildContext context) =>
     synonyms
         .take(4)
         .map((synonym) => GestureDetector(
@@ -94,25 +88,22 @@ List<Widget> synonymChips(SearchResponse response, List<String> synonyms) =>
               },
               child: Chip(
                   backgroundColor: Colors.white,
-                  side: BorderSide(color: redColor()),
+                  side: BorderSide(color: redColor),
                   label: Text(
                     synonym,
-                    style: TextStyle(
-                      fontSize: 15,
-                      color: redColor(),
-                    ),
+                    style: Theme.of(context).textTheme.bodyText1!.copyWith(color: redColor)
                   )),
             ))
         .toList();
 
-Widget _buildWord(String word) => Center(
+Widget _buildWord(String word, BuildContext context) => Center(
       child: Text(
         word,
-        style: titleTextStyle(),
+        style: Theme.of(context).textTheme.subtitle1,
       ),
     );
 
-Widget _buildPhonetics(List<Phonetics> phonetics) {
+Widget _buildPhonetics(List<Phonetics> phonetics, BuildContext context) {
   String? audio;
   String? text;
 
@@ -134,21 +125,21 @@ Widget _buildPhonetics(List<Phonetics> phonetics) {
               icon: Icon(
                 Icons.volume_up,
                 size: 20,
-                color: greyColor(),
+                color: greyDarkColor,
               ))),
       Visibility(
           visible: text != null,
           child: Text(
             '[ ' + (text ?? ' ') + ' ]',
-            style: TextStyle(fontSize: 15, color: greyColor()),
+            style: Theme.of(context).textTheme.bodyText1,
           ))
     ],
   );
 }
 
-_buildVisibilityExample(String? example) => Center(
+_buildVisibilityExample(String? example, BuildContext context) => Center(
       child: Text(
         toBeginningOfSentenceCase(example)!,
-        style: plainTextStyle(),
+        style: Theme.of(context).textTheme.bodyText1,
       ),
     );

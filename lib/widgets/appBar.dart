@@ -1,18 +1,17 @@
+import 'package:Dictionary/theme/theme_colors.dart';
 import 'package:flutter/material.dart';
 
-import 'gradientColor/gradient_widget.dart';
 
-buildAppBar({ Widget? leading,  List<Widget>? actions, String? title}) =>
-    AppBar(
-      automaticallyImplyLeading: false,
-      centerTitle: true,
-      title: Text(title ?? 'Dictionary.',
-          style: TextStyle(
-              fontFamily: ('Futura'),
-              fontSize: 25,
-              fontWeight: FontWeight.bold,
-              color: Colors.white)),
-      flexibleSpace: gradientLinear(),
-      leading: leading,
-      actions: actions,
-    );
+buildAppBar({ Widget? leading,  List<Widget>? actions, Widget? title, required BuildContext context}) {
+      return AppBar(
+            automaticallyImplyLeading: false,
+            title: title ?? Text('Dictionary.'),
+            flexibleSpace: _gradientLinear(),
+            leading: leading,
+            actions: actions,
+      );
+}
+
+
+Container _gradientLinear() =>
+    Container(decoration: BoxDecoration(gradient: gradientColor));

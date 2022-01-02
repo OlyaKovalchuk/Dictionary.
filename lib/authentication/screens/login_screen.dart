@@ -8,7 +8,7 @@ import 'package:Dictionary/authentication/widgets/auth_widgets.dart';
 import 'package:Dictionary/authentication/widgets/textFields.dart';
 import 'package:Dictionary/main_screen.dart';
 import 'package:Dictionary/widgets/appBar.dart';
-import 'package:Dictionary/widgets/titileText.dart';
+import 'package:Dictionary/authentication/widgets/titileText.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -47,7 +47,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: Icon(
                       Icons.arrow_back_ios_rounded,
                       color: Colors.white,
-                    )),
+                    )), context: context,
               ),
               body: Padding(
                 padding:
@@ -57,6 +57,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   children: [
                     Column(children: [
                       buildTitleText(
+                        context: context,
                           text: 'Log in',
                           fontSize: 30,
                           fontWeight: FontWeight.normal),

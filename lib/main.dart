@@ -4,6 +4,7 @@ import 'package:Dictionary/favorite_words/service/favorite_words_service.dart';
 import 'package:Dictionary/profile/bloc/profile_bloc.dart';
 import 'package:Dictionary/profile/profile_service.dart';
 import 'package:Dictionary/search/search_bloc/word_search_bloc.dart';
+import 'package:Dictionary/theme/theme_data.dart';
 import 'package:Dictionary/utils/simple_bloc_observer.dart';
 import 'package:Dictionary/authentication/screens/login_screen.dart';
 import 'package:Dictionary/authentication/screens/register_screen.dart';
@@ -12,7 +13,7 @@ import 'package:Dictionary/authentication/screens/auth_screen.dart';
 import 'package:Dictionary/authentication/screens/main_screen.dart';
 import 'package:Dictionary/search/screen/search_screen.dart';
 import 'package:Dictionary/authentication/service/firebase_auth_service.dart';
-import 'package:Dictionary/widgets/gradientColor/gradient_widget.dart';
+import 'package:Dictionary/theme/theme_colors.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -53,6 +54,7 @@ class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+        theme: themeData,
         debugShowCheckedModeBanner: false,
         routes: <String, WidgetBuilder>{
           '/searchScreen': (BuildContext context) => SearchScreen(),
@@ -68,8 +70,8 @@ class SplashScreen extends StatelessWidget {
             duration: 3,
             text: 'Dictionary.',
             textStyle: TextStyle(
-                fontFamily: ('Futura'), fontSize: 50, color: Colors.white),
+                fontFamily: 'Futura', fontSize: 50, color: Colors.white),
             pageRouteTransition: PageRouteTransition.CupertinoPageRoute,
-            backgroundColor: gradientColor()));
+            backgroundColor: gradientColor));
   }
 }

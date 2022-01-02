@@ -1,5 +1,5 @@
-import 'package:Dictionary/widgets/cardDecoration/card_decoration.dart';
-import 'package:Dictionary/widgets/cardDecoration/indicator_decoration.dart';
+import 'package:Dictionary/cards/widgets/cardDecoration/card_decoration.dart';
+import 'package:Dictionary/cards/widgets/cardDecoration/indicator_decoration.dart';
 import 'package:flutter/cupertino.dart';
 
 Widget loadingView(BuildContext context) {

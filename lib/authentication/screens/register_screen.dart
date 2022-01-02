@@ -7,7 +7,7 @@ import 'package:Dictionary/authentication/widgets/auth_widgets.dart';
 import 'package:Dictionary/main_screen.dart';
 import 'package:Dictionary/widgets/appBar.dart';
 import 'package:Dictionary/authentication/widgets/textFields.dart';
-import 'package:Dictionary/widgets/titileText.dart';
+import 'package:Dictionary/authentication/widgets/titileText.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -42,6 +42,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         return Scaffold(
           resizeToAvoidBottomInset: false,
           appBar: buildAppBar(
+            context: context,
               leading: GestureDetector(
                   onTap: () => Navigator.pop(context),
                   child: Icon(
@@ -54,7 +55,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                buildTitleText(text: 'Create a new account', fontSize: 30),
+                buildTitleText(text: 'Create a new account', fontSize: 30, context: context),
                 Form(
                   key: _key,
                   child: Column(

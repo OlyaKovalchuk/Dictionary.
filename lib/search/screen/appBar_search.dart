@@ -1,18 +1,14 @@
 import 'package:Dictionary/search/search_bloc/word_search_bloc.dart';
 import 'package:Dictionary/search/search_bloc/word_search_event.dart';
-import 'package:Dictionary/widgets/border/border_radius.dart';
-import 'package:Dictionary/widgets/colors/grey_light_color.dart';
-import 'package:Dictionary/widgets/colors/red_color.dart';
-import 'package:Dictionary/widgets/gradientColor/gradient_widget.dart';
-import 'package:Dictionary/widgets/gradientColor/icon_gradient.dart';
+import 'package:Dictionary/theme/theme_colors.dart';
+import 'package:Dictionary/search/widgets/icon_gradient.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-appBarSearch(BuildContext context) =>AppBar(flexibleSpace: gradientLinear(), title: textFieldBoard(context),
-automaticallyImplyLeading: false,
-);
+
 
 textFieldBoard(BuildContext context) {
+ final BorderRadius borderRadius =  BorderRadius.circular(40);
   late final _focusNode = FocusNode();
   TextEditingController _controller = TextEditingController();
 
@@ -20,7 +16,7 @@ textFieldBoard(BuildContext context) {
       preferredSize: Size.fromHeight(40.0),
       child: Container(
           decoration: BoxDecoration(
-            borderRadius: borderRadius(),
+            borderRadius: borderRadius,
             color: Colors.white,
           ),
           height: 40,
@@ -33,21 +29,23 @@ textFieldBoard(BuildContext context) {
               }
             },
             decoration: InputDecoration(
+
               focusedBorder: OutlineInputBorder(
                 borderSide: BorderSide(
                   color: Colors.white,
                 ),
-                borderRadius: borderRadius(),
+                borderRadius: borderRadius,
               ),
               enabledBorder: OutlineInputBorder(
-                borderRadius: borderRadius(),
+                borderRadius: borderRadius,
                 borderSide: BorderSide(
                   color: Colors.white,
                 ),
               ),
               contentPadding: EdgeInsets.only(left: 15),
               hintText: 'Enter a word',
-              hintStyle: TextStyle(color: greyLightColor()),
+              hintStyle: TextStyle(color: greyLightColor),
+              counterStyle: Theme.of(context).textTheme.bodyText1!.copyWith(color: greyDarkColor),
               suffixIcon: IconButton(
                   icon: iconGradient(),
                   onPressed: () {
@@ -56,7 +54,6 @@ textFieldBoard(BuildContext context) {
             ),
             autocorrect: true,
             maxLines: 1,
-            cursorColor: redColor(),
             autofocus: false,
             style: TextStyle(
               fontSize: 15,

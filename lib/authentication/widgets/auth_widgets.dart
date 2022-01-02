@@ -1,5 +1,4 @@
-import 'package:Dictionary/widgets/colors/grey_color.dart';
-import 'package:Dictionary/widgets/gradientColor/gradient_widget.dart';
+import 'package:Dictionary/theme/theme_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -20,6 +19,7 @@ Widget buildAuthButtons(
         child: Column(
           children: [
             _buttonSign(
+                context: context,
                 onTap: onTapSign,
                 textOfButton: _isRegistrationOrLogin(isRegistrationOrLogin)),
             SizedBox(
@@ -32,6 +32,7 @@ Widget buildAuthButtons(
             Column(
               children: [
                 _buttonSignWithGoogleOrFacebook(
+                  context: context,
                   onTap: onTapSignWithGoogle,
                   textOfButton:
                       _isRegistrationOrLogin(isRegistrationOrLogin) + ' Google',
@@ -45,6 +46,7 @@ Widget buildAuthButtons(
                   height: 15,
                 ),
                 _buttonSignWithGoogleOrFacebook(
+                  context: context,
                   onTap: onTapSignWithFacebook,
                   textOfButton: _isRegistrationOrLogin(isRegistrationOrLogin) +
                       ' Facebook',
@@ -64,6 +66,7 @@ Widget buildAuthButtons(
 _buttonSign({
   required void onTap()?,
   required String textOfButton,
+  required BuildContext context
 }) =>
     GestureDetector(
         onTap: onTap,
@@ -72,23 +75,19 @@ _buttonSign({
           height: 56,
           width: 236,
           decoration: BoxDecoration(
-            gradient: gradientColor(),
+            gradient: gradientColor,
             borderRadius: BorderRadius.all(Radius.circular(30.0)),
           ),
           child: Text(
             textOfButton,
-            style: TextStyle(
-                fontFamily: ('Futura'),
-                fontSize: 20,
-                fontWeight: FontWeight.normal,
-                color: Colors.white),
+            style: Theme.of(context).textTheme.button
           ),
         ));
 
 _buttonSignWithGoogleOrFacebook(
         {required void onTap()?,
         required String textOfButton,
-        required Widget image}) =>
+        required Widget image, required BuildContext context}) =>
     GestureDetector(
         onTap: onTap,
         child: Container(
@@ -96,7 +95,7 @@ _buttonSignWithGoogleOrFacebook(
           height: 56,
           width: 236,
           decoration: BoxDecoration(
-            border: Border.all(color: greyTextColor()),
+            border: Border.all(color: greyColor),
             borderRadius: BorderRadius.all(Radius.circular(30.0)),
           ),
           child: Row(
@@ -109,8 +108,7 @@ _buttonSignWithGoogleOrFacebook(
               ),
               Text(
                 textOfButton,
-                style: TextStyle(
-                    fontFamily: ('Futura'), fontSize: 17, color: greyColor()),
+                style: Theme.of(context).textTheme.button!.copyWith(color: greyDarkColor, fontSize: 17),
               ),
             ],
           ),
@@ -119,7 +117,7 @@ _buttonSignWithGoogleOrFacebook(
 _divider(BuildContext context) => Container(
     height: 1,
     width: MediaQuery.of(context).size.width / 2.5,
-    color: greyTextColor());
+    color: greyColor);
 
 _lineOr(BuildContext context) => Container(
       alignment: Alignment.center,
@@ -136,7 +134,7 @@ _lineOr(BuildContext context) => Container(
               fontSize: 15,
               fontWeight: FontWeight.w400,
               foreground: Paint()
-                ..shader = gradientColor()
+                ..shader = gradientColor
                     .createShader(Rect.fromLTWH(0.0, 0.0, 200.0, 70.0)),
             ),
           ),

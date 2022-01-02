@@ -1,8 +1,5 @@
-import 'package:Dictionary/widgets/button_gradient.dart';
-import 'package:Dictionary/widgets/colors/grey_color.dart';
-import 'package:Dictionary/widgets/gradientColor/gradient_widget.dart';
-import 'package:Dictionary/widgets/textDecoration/text_styles.dart';
-import 'package:Dictionary/widgets/titileText.dart';
+import 'package:Dictionary/authentication/widgets/button_gradient.dart';
+import 'package:Dictionary/authentication/widgets/titileText.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -47,19 +44,21 @@ class _IntroductionScreenState extends State<IntroductionScreen> {
   _buildTextHello() => Container(
         alignment: Alignment.topCenter,
         child: buildTitleText(
-            text: 'Hello', fontSize: 45, fontWeight: FontWeight.bold),
+            text: 'Hello', fontSize: 45, fontWeight: FontWeight.bold, context: context),
       );
 
   _buildIntroductionText() => Text(
       'We are Dictionary,\n here you will learn many interesting\n words, what they mean and how to\n use them in your vocabulary',
       textAlign: TextAlign.center,
-      style: plainTextStyle(17));
+      style: Theme.of(context).textTheme.bodyText1!.copyWith(fontSize: 17));
 
   _buildCreateAccountButton() => GestureDetector(
       onTap: () => Navigator.of(context).pushNamed(
             '/registerScreen',
           ),
-      child: buildGradientButton(onTap: () => Navigator.of(context).pushNamed(
+      child: buildGradientButton(
+          context: context,
+          onTap: () => Navigator.of(context).pushNamed(
           '/registerScreen'), title:  "Create an account"));
 
 
@@ -72,24 +71,14 @@ class _IntroductionScreenState extends State<IntroductionScreen> {
           children: [
             Text(
               "already have an account?",
-              style: TextStyle(
-                  fontFamily: ('Futura'),
-                  fontSize: 15,
-                  fontWeight: FontWeight.bold,
-                  color: greyTextColor()),
+              style: Theme.of(context).textTheme.bodyText2
             ),
             SizedBox(
               height: 50,
             ),
             Text(
               " Log in",
-              style: TextStyle(
-                  fontFamily: ('Futura'),
-                  fontSize: 17,
-                  fontWeight: FontWeight.bold,
-                  foreground: Paint()
-                    ..shader = gradientColor()
-                        .createShader(Rect.fromLTWH(0.0, 0.0, 200.0, 70.0))),
+              style: Theme.of(context).textTheme.subtitle2!.copyWith(fontSize: 17)
             ),
           ],
         ),
