@@ -1,7 +1,6 @@
 import 'package:Dictionary/theme/theme_colors.dart';
 import 'package:flutter/material.dart';
 
-
 buildTextField({
   String? errorText,
   FocusNode? focusNode,
@@ -12,7 +11,7 @@ buildTextField({
   onSubmit(String str)?,
 }) =>
     TextFormField(
-      autovalidateMode: AutovalidateMode.disabled,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: validator,
       focusNode: focusNode,
       onFieldSubmitted: onSubmit,

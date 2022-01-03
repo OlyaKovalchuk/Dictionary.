@@ -3,4 +3,5 @@ import 'package:Dictionary/cards/widgets/cardDecoration/indicator_decoration.dar
 import 'package:flutter/cupertino.dart';
 
 Widget loadingView(BuildContext context) {
-  return cardDecoration( context: context,child: indicatorCircular());}
+  return cardDecoration(context: context, child: indicatorCircular());
+}

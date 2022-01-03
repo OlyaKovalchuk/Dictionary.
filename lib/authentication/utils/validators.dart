@@ -11,12 +11,10 @@ class Validators {
   }
 
   static String? validEmail(String? email) {
-    if (email != null) {
-      if (!isValidEmail(email)) {
-        return 'Please enter your email correctly';
-      }
-    } else {
+    if (email == '') {
       return 'Email is required';
+    } else if (!isValidEmail(email!)) {
+      return 'Please enter your email correctly';
     }
   }
 
@@ -26,10 +24,10 @@ class Validators {
 
   static String? validPassword(String? password) {
     {
-      if (password == null) {
+      if (password == '') {
         return 'Password is required';
       } else {
-        if (!isValidPassword(password)) {
+        if (!isValidPassword(password!)) {
           return 'Please enter your password correctly';
         }
       }
@@ -37,7 +35,7 @@ class Validators {
   }
 
   static String? validName(String? name) {
-    if (name == null) {
+    if (name == '') {
       return 'Name is required';
     }
   }

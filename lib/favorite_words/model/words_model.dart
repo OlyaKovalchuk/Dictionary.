@@ -5,13 +5,12 @@ class WordData {
   final String? audio;
 
   WordData({
-required this.word,
+    required this.word,
     required this.audio,
   });
 
   WordData copyWith({String? word, String? audio}) {
-    return WordData(
-        word: word ?? this.word, audio: audio ?? this.audio);
+    return WordData(word: word ?? this.word, audio: audio ?? this.audio);
   }
 
   Map<String, String?> toMap() {

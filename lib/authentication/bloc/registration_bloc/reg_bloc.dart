@@ -32,13 +32,13 @@ class RegBloc extends Bloc<RegEvent, RegState> {
       required String name}) async* {
     yield RegState.loading();
     try {
-      await _userRepository.singUp(email: email,password:  password, name: name);
+      await _userRepository.singUp(
+          email: email, password: password, name: name);
 
       yield RegState.success();
     } on FirebaseAuthException catch (e) {
       print(e.code);
-      checkError(e.code);
-      yield RegState.failure().copyWith(passwordErrorText: e.code);
+      yield RegState.failure(checkError(e.code));
     }
   }
 
@@ -48,8 +48,7 @@ class RegBloc extends Bloc<RegEvent, RegState> {
       await _userRepository.signInWithGoogle();
       yield RegState.success();
     } on FirebaseAuthException catch (e) {
-      checkError(e.code);
-      yield RegState.failure().copyWith(passwordErrorText: e.code);
+      yield RegState.failure(checkError(e.code));
     }
   }
 
@@ -59,8 +58,9 @@ class RegBloc extends Bloc<RegEvent, RegState> {
       await _userRepository.signInWithFacebook();
       yield RegState.success();
     } on FirebaseAuthException catch (e) {
-      checkError(e.code);
-      yield RegState.failure().copyWith(passwordErrorText: e.code);
+      yield RegState.failure(checkError(e.code));
+    } catch (e) {
+      yield RegState.failure(checkError(e.toString()));
     }
   }
 }

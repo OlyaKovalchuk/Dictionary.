@@ -1,4 +1,4 @@
-import 'package:Dictionary/cards/widgets/cardDecoration/indicator_decoration.dart';
+import 'package:Dictionary/search/utils/check_words.dart';
 import 'package:Dictionary/utils/audio_fun.dart';
 import 'package:Dictionary/authentication/widgets/textFields.dart';
 import 'package:Dictionary/cards/card_bloc/word_card_bloc.dart';
@@ -11,9 +11,9 @@ import 'package:Dictionary/favorite_words/bloc/favorite_words_event.dart';
 import 'package:Dictionary/favorite_words/bloc/favorite_words_state.dart';
 import 'package:Dictionary/favorite_words/model/words_model.dart';
 import 'package:Dictionary/favorite_words/service/favorite_words_service.dart';
-import 'package:Dictionary/search/search_bloc/word_search_bloc.dart';
-import 'package:Dictionary/search/search_bloc/word_search_event.dart';
-import 'package:Dictionary/search/search_bloc/word_search_states.dart';
+import 'package:Dictionary/search/bloc/word_search_bloc.dart';
+import 'package:Dictionary/search/bloc/word_search_event.dart';
+import 'package:Dictionary/search/bloc/word_search_states.dart';
 import 'package:Dictionary/theme/theme_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -28,8 +28,10 @@ class FavoriteWordsScreen extends StatefulWidget {
 class _FavoriteWordsScreenState extends State<FavoriteWordsScreen> {
   final WordCardBloc wordBloc = WordCardBloc(
       repository: Repository(), favWordsService: FavWordsServiceImpl());
+
   final WordSearchBloc _wordSearchBloc =
       WordSearchBloc(repository: Repository());
+
   late SwipableStackController _controller;
 
   @override
@@ -63,7 +65,7 @@ class _FavoriteWordsScreenState extends State<FavoriteWordsScreen> {
                     BlocProvider.of<FavWordsBloc>(context).favWords!);
               }
             }
-            return errorView();
+            return errorView(context);
           }),
     );
   }
@@ -115,10 +117,8 @@ class _FavoriteWordsScreenState extends State<FavoriteWordsScreen> {
           wordBloc.add(WordSwipeFavWords(words));
 
           for (int i = 0; i < index; i++) {
-            WordData word = WordData(
-                word: words[0].word,
-                audio:
-                words[0].audio);
+            WordData word =
+                WordData(word: words[0].word, audio: words[0].audio);
             words.remove(words[0]);
             words.add(word);
           }
@@ -225,12 +225,13 @@ class _FavoriteWordsScreenState extends State<FavoriteWordsScreen> {
                       style: TextStyle(color: greyColor),
                     )),
                 TextButton(
-                    onPressed: () {
+                    onPressed: () async {
                       _wordSearchBloc
                           .add(WordSearch(word: textController.text));
                       if (state is WordSearchLoading) {
                         return _buildCircularIndicator();
-                      } else if (state is WordSearchLoaded) {
+                      }
+                      if (state is WordSearchLoaded) {
                         WordData word = WordData(
                             word: state.response.word,
                             audio: state.response.phonetics?.first.audio);
@@ -241,8 +242,21 @@ class _FavoriteWordsScreenState extends State<FavoriteWordsScreen> {
                               .add(AddToFavWordsEvent(word: word));
                           BlocProvider.of<FavWordsBloc>(context)
                               .add(GetFavWordsEvent());
-                          return Navigator.of(context).pop();
+                          await _close();
+                        } else if (BlocProvider.of<FavWordsBloc>(context)
+                            .favWords!
+                            .contains(word)) {
+                          errorOutput(
+                              error: 'This word is already added',
+                              context: context);
                         }
+                      }
+                      if (state is WordSearchError) {
+                        return errorOutput(
+                            error: textController.text == ''
+                                ? 'Enter a word'
+                                : 'There is no such word in the dictionary',
+                            context: context);
                       }
                     },
                     child: Text('ADD',
@@ -252,4 +266,8 @@ class _FavoriteWordsScreenState extends State<FavoriteWordsScreen> {
           },
         );
       });
+
+  _close() {
+    Navigator.pop(context);
+  }
 }

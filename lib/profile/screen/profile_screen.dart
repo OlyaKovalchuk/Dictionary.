@@ -52,7 +52,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
               Text(
                 BlocProvider.of<ProfileBloc>(context).userData!.name,
-                style: Theme.of(context).textTheme.bodyText2!.copyWith(fontSize: 20, color: greyDarkColor),
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyText2!
+                    .copyWith(fontSize: 20, color: greyDarkColor),
               ),
               Spacer(),
               buildGradientButton(

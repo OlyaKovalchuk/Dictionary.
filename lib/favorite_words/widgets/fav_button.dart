@@ -24,7 +24,6 @@ class _FavoriteWordsButtonState extends State<FavoriteWordsButton> {
   void initState() {
     super.initState();
     _favWordsBloc.add(InitialEvent());
-
   }
 
   @override

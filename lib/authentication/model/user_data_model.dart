@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:uuid/uuid.dart';
 
 class UserData {
-
   final String uid;
   final String name;
   final String email;
@@ -38,7 +37,12 @@ class UserData {
   }
 
   Map<String, dynamic> onlyTextMap() {
-    return {'uid': uid, 'displayName': name, 'email': email, 'photoURL': photoURL};
+    return {
+      'uid': uid,
+      'displayName': name,
+      'email': email,
+      'photoURL': photoURL
+    };
   }
 
   factory UserData.fromMap(Map<String, dynamic> map) {
@@ -48,7 +52,6 @@ class UserData {
       email: map['email'],
       photoURL: map['photoURL'] ??
           'https://firebasestorage.googleapis.com/v0/b/point-citi.appspot.com/o/avatars%2Fempty_logo.svg?alt=media&token=c21ab355-6c25-4109-adc7-c0769926eac2',
-
     );
   }
 

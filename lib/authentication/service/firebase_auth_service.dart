@@ -1,7 +1,6 @@
 import 'package:Dictionary/favorite_words/model/favorite_words_model.dart';
 import 'package:Dictionary/authentication/model/user_data_model.dart';
 import 'package:Dictionary/authentication/repository/user_repository.dart';
-import 'package:Dictionary/authentication/utils/firebase_exceptions_valid.dart';
 import 'package:Dictionary/favorite_words/repository/favorite_words_repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
@@ -10,7 +9,8 @@ import 'package:google_sign_in/google_sign_in.dart';
 abstract class UserRepository {
   Future signInWithCredentials(String email, String password);
 
-  singUp({required String email,required String name,required String password});
+  singUp(
+      {required String email, required String name, required String password});
 
   Future<User?> signInWithGoogle();
 
@@ -25,30 +25,28 @@ abstract class UserRepository {
 
 class UserRepositoryImpl implements UserRepository {
   final GoogleSignIn googleSignIn = GoogleSignIn();
-  FireUsersDataRepoImpl _fireUsersDataRepo = FireUsersDataRepoImpl();
+  FireUsersDataRepo _fireUsersDataRepo = FireUsersDataRepoImpl();
   FireFavWordsRepoImpl _fireFavWordsRepoImpl = FireFavWordsRepoImpl();
 
   FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
   Future signInWithCredentials(String email, String password) async {
-    try {
-      UserCredential userCredential = await _firebaseAuth
-          .signInWithEmailAndPassword(email: email, password: password);
-      print(userCredential);
-    } on FirebaseAuthException catch (e) {
-      checkError(e.code);
-    }
+    UserCredential userCredential = await _firebaseAuth
+        .signInWithEmailAndPassword(email: email, password: password);
+    print(userCredential);
   }
 
-  Future<void> singUp({required String email,required String name,required String password}) async {
+  Future<void> singUp(
+      {required String email,
+      required String name,
+      required String password}) async {
     try {
-      UserCredential userCredential = await _firebaseAuth.createUserWithEmailAndPassword(email: email, password: password);
+      UserCredential userCredential = await _firebaseAuth
+          .createUserWithEmailAndPassword(email: email, password: password);
       print(userCredential);
       User? user = userCredential.user;
       print('User: $user');
       _createNewUser(user, name);
-    } on FirebaseAuthException catch (e) {
-      checkError(e.code);
     } catch (e) {
       print(e);
       return Future.error(e);
@@ -56,7 +54,6 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   Future<User?> signInWithGoogle() async {
-
     User? _user;
     final UserCredential _userCredential;
     final GoogleSignInAccount? googleSignInAccount =
@@ -75,8 +72,6 @@ class UserRepositoryImpl implements UserRepository {
         _userCredential = await _firebaseAuth.signInWithCredential(credential);
         _user = _userCredential.user;
         _createNewUser(_user);
-      } on FirebaseAuthException catch (e) {
-        checkError(e.code);
       } catch (e) {
         print(e);
         return Future.error(e);
@@ -91,18 +86,12 @@ class UserRepositoryImpl implements UserRepository {
     final LoginResult loginResult = await FacebookAuth.instance.login();
     final OAuthCredential facebookAuthCredential =
         FacebookAuthProvider.credential(loginResult.accessToken!.token);
-    try {
-      UserCredential _userCredential = await FirebaseAuth.instance
-          .signInWithCredential(facebookAuthCredential);
-      _user = _userCredential.user;
+    UserCredential _userCredential = await FirebaseAuth.instance
+        .signInWithCredential(facebookAuthCredential);
+    _user = _userCredential.user;
 
-      _createNewUser(_user);
-    } on FirebaseAuthException catch (e) {
-      checkError(e.code);
-    } catch (e) {
-      print(e);
-      return Future.error(e);
-    }
+    _createNewUser(_user);
+
     return _user;
   }
 
@@ -128,20 +117,23 @@ class UserRepositoryImpl implements UserRepository {
       print(user.email);
       if (_getUser == null) {
         print(_getUser);
-       if(user.displayName == null){
-         _firebaseAuth.currentUser!.updateDisplayName(name);
-       }
-       if(user.photoURL == null){
-         _firebaseAuth.currentUser!.updatePhotoURL('https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png');
-       }
-        UserData  _userData = UserData(
+        if (user.displayName == null) {
+          _firebaseAuth.currentUser!.updateDisplayName(name);
+        }
+        if (user.photoURL == null) {
+          _firebaseAuth.currentUser!.updatePhotoURL(
+              'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png');
+        }
+        UserData _userData = UserData(
           uid: user.uid,
           name: name ?? user.displayName!,
           email: user.email!,
-          photoURL: user.photoURL ?? "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
+          photoURL: user.photoURL ??
+              "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
         );
 
-        FavoriteWords   _favoriteWords = FavoriteWords(words: [], uid: _userData.uid);
+        FavoriteWords _favoriteWords =
+            FavoriteWords(words: [], uid: _userData.uid);
         _fireUsersDataRepo.setUser(_userData);
         _fireFavWordsRepoImpl.setFavoriteWord(_favoriteWords);
       }

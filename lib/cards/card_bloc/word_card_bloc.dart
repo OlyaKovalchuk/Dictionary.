@@ -36,12 +36,14 @@ class WordCardBloc extends Bloc<WordEvent, WordCardStackState> {
     try {
       final word = _randomWord();
       final SearchResponse response = await repository!.search(word);
-      final favWord =
-          WordData(word: response.word, audio: response.phonetics?[0].audio);
+      final favWord = WordData(
+          word: response.word, audio: response.phonetics?[0].audio ?? '');
+      print(favWord);
       final bool isFavorited = await favWordsService.isFavWord(favWord);
       cardStates.add(Ready(word: response, isFavorited: isFavorited));
       yield WordCardStackState(wordCardStates: cardStates);
     } catch (exception) {
+      print(exception);
       cardStates.add(Error());
       yield WordCardStackState(wordCardStates: cardStates);
     }
@@ -50,20 +52,23 @@ class WordCardBloc extends Bloc<WordEvent, WordCardStackState> {
   Stream<WordCardStackState> fetchFavWords(WordData word) async* {
     try {
       final SearchResponse response = await repository!.search(word.word);
-      final favWord =
-          WordData(word: response.word, audio: response.phonetics?[0].audio);
+      final favWord = WordData(
+          word: response.word, audio: response.phonetics?[0].audio ?? '');
+      print(favWord);
       final bool isFavorited = await favWordsService.isFavWord(favWord);
       favWords.add(response);
       cardStates.add(Ready(word: response, isFavorited: isFavorited));
       yield WordCardStackState(wordCardStates: cardStates);
     } catch (e) {
+      print(e);
       cardStates.add(Error());
       yield WordCardStackState(wordCardStates: cardStates);
     }
   }
 
-  String _randomWord() {
+  _randomWord() {
     final index = Random().nextInt(nouns.length - 1);
+    print(index);
     return nouns[index];
   }
 }

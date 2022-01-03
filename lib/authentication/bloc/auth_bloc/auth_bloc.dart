@@ -4,9 +4,9 @@ import 'package:Dictionary/authentication/service/firebase_auth_service.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
-  final UserRepositoryImpl _userRepository;
+  final UserRepository _userRepository;
 
-  AuthBloc({required UserRepositoryImpl userRepository})
+  AuthBloc({required UserRepository userRepository})
       : _userRepository = userRepository,
         super(AuthInitial());
 
@@ -18,8 +18,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       yield* _mapAuthLoggedIn();
     }
   }
-
-
 
   Stream<AuthState> _mapAuthLoggedIn() async* {
     yield AuthOnSuccess(user: await _userRepository.getUser());

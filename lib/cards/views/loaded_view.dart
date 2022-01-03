@@ -43,8 +43,8 @@ Widget loadedView(
               SizedBox(
                 height: 60,
               ),
-              _synonymsView(
-                  response.meanings[0].definitions[0].synonyms ?? [], response, context),
+              _synonymsView(response.meanings[0].definitions[0].synonyms ?? [],
+                  response, context),
             ],
           ),
         )),
@@ -62,13 +62,17 @@ Widget loadedView(
   );
 }
 
-Widget _synonymsView(List<String> synonyms, SearchResponse response, BuildContext context) =>
+Widget _synonymsView(
+        List<String> synonyms, SearchResponse response, BuildContext context) =>
     Visibility(
         visible: synonyms.isNotEmpty,
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Text(
             'synonyms: ',
-            style: Theme.of(context).textTheme.bodyText1!.copyWith(fontSize: 12, color: redColor),
+            style: Theme.of(context)
+                .textTheme
+                .bodyText1!
+                .copyWith(fontSize: 12, color: redColor),
           ),
           Wrap(
             spacing: 5.0,
@@ -77,7 +81,8 @@ Widget _synonymsView(List<String> synonyms, SearchResponse response, BuildContex
           )
         ]));
 
-List<Widget> _synonymChips(SearchResponse response, List<String> synonyms, BuildContext context) =>
+List<Widget> _synonymChips(
+        SearchResponse response, List<String> synonyms, BuildContext context) =>
     synonyms
         .take(4)
         .map((synonym) => GestureDetector(
@@ -89,10 +94,11 @@ List<Widget> _synonymChips(SearchResponse response, List<String> synonyms, Build
               child: Chip(
                   backgroundColor: Colors.white,
                   side: BorderSide(color: redColor),
-                  label: Text(
-                    synonym,
-                    style: Theme.of(context).textTheme.bodyText1!.copyWith(color: redColor)
-                  )),
+                  label: Text(synonym,
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyText1!
+                          .copyWith(color: redColor))),
             ))
         .toList();
 

@@ -1,4 +1,3 @@
-import 'package:Dictionary/authentication/service/firebase_auth_service.dart';
 import 'package:Dictionary/cards/card_bloc/word_card_event.dart';
 import 'package:Dictionary/cards/card_bloc/word_card_bloc.dart';
 import 'package:Dictionary/cards/widgets/cards.dart';
@@ -16,7 +15,6 @@ class _CardScreenState extends State<CardScreen> {
   late SwipableStackController _controller;
   WordCardBloc wordBloc = WordCardBloc(
       repository: Repository(), favWordsService: FavWordsServiceImpl());
-  UserRepositoryImpl userRepository = UserRepositoryImpl();
 
   @override
   void initState() {

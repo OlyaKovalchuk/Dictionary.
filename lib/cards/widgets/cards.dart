@@ -1,6 +1,7 @@
 import 'package:Dictionary/cards/card_bloc/word_card_bloc.dart';
 import 'package:Dictionary/cards/card_bloc/word_card_event.dart';
 import 'package:Dictionary/cards/card_bloc/word_card_states.dart';
+import 'package:Dictionary/cards/views/empty_view.dart';
 import 'package:Dictionary/cards/views/error_view.dart';
 import 'package:Dictionary/cards/views/loaded_view.dart';
 import 'package:Dictionary/cards/views/loading_view.dart';
@@ -27,7 +28,7 @@ buildCards(WordEvent event, WordCardBloc wordBloc,
               WordCardState wordState = wordStackState.wordCardStates[index];
 
               if (wordState is Error) {
-                return errorView();
+                return errorView(context);
               }
               if (wordState is Loading) {
                 return loadingView(context);
@@ -36,7 +37,7 @@ buildCards(WordEvent event, WordCardBloc wordBloc,
                 return loadedView(
                     wordState.word, context, wordState.isFavorited);
               }
-              return loadingView(context);
+              return emptyView();
             });
       },
     );

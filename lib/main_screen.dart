@@ -1,12 +1,17 @@
+import 'dart:async';
+import 'dart:developer' as developer;
 import 'package:Dictionary/authentication/service/firebase_auth_service.dart';
 import 'package:Dictionary/cards/screen/card_screen.dart';
 import 'package:Dictionary/favorite_words/screen/favorite_words_screen.dart';
 import 'package:Dictionary/profile/screen/profile_screen.dart';
 import 'package:Dictionary/search/screen/appBar_search.dart';
 import 'package:Dictionary/search/screen/search_screen.dart';
+import 'package:Dictionary/search/utils/check_words.dart';
 import 'package:Dictionary/widgets/appBar.dart';
 import 'package:Dictionary/widgets/bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:flutter/services.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -16,12 +21,54 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  UserRepositoryImpl userRepository = UserRepositoryImpl();
+
+  UserRepository? userRepository;
   PageController pageController = PageController(
     keepPage: true,
     initialPage: 1,
   );
   int selectedPage = 1;
+
+  final Connectivity _connectivity = Connectivity();
+  late StreamSubscription<ConnectivityResult> _connectivitySubscription;
+  @override
+  void initState() {
+    _connectivitySubscription =
+        _connectivity.onConnectivityChanged.listen(_updateConnectionStatus);
+    super.initState();
+    initConnectivity();
+
+  }
+
+  @override
+  void dispose() {
+    _connectivitySubscription.cancel();
+    super.dispose();
+  }
+  Future<void> initConnectivity() async {
+    late ConnectivityResult connectivityResult;
+    try {
+       connectivityResult = await (Connectivity().checkConnectivity());
+      if (connectivityResult == ConnectivityResult.none) {
+        errorOutput(error: 'Check your internet connection', context: context) ;
+      }
+
+    } on PlatformException catch (e) {
+      developer.log('Couldn\'t check connectivity status', error: e);
+      return;
+    }
+    if (!mounted) {
+      return Future.value(null);
+    }
+
+    return _updateConnectionStatus(connectivityResult);
+  }
+  ConnectivityResult _connectionStatus = ConnectivityResult.none;
+  Future<void> _updateConnectionStatus(ConnectivityResult result) async {
+    setState(() {
+      _connectionStatus = result;
+    });
+  }
 
   void _onItemTapped(int index) {
     setState(() {

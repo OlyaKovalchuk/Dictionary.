@@ -11,7 +11,6 @@ abstract class FireUsersDataRepo {
 }
 
 class FireUsersDataRepoImpl implements FireUsersDataRepo {
-
   CollectionReference _usersCollection =
       FirebaseFirestore.instance.collection('users');
 
@@ -58,9 +57,11 @@ class FireUsersDataRepoImpl implements FireUsersDataRepo {
   }
 
   Future<FavoriteWords?> getUsersFavWords(String uid) async {
-    DocumentSnapshot documentSnapshot = await _favoriteWordsCollection.doc(uid).get();
+    DocumentSnapshot documentSnapshot =
+        await _favoriteWordsCollection.doc(uid).get();
     if (documentSnapshot.exists) {
-      return FavoriteWords.fromMap(documentSnapshot.data() as Map<String, dynamic>);
+      return FavoriteWords.fromMap(
+          documentSnapshot.data() as Map<String, dynamic>);
     } else {
       return null;
     }

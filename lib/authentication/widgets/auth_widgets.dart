@@ -63,11 +63,10 @@ Widget buildAuthButtons(
       ),
     );
 
-_buttonSign({
-  required void onTap()?,
-  required String textOfButton,
-  required BuildContext context
-}) =>
+_buttonSign(
+        {required void onTap()?,
+        required String textOfButton,
+        required BuildContext context}) =>
     GestureDetector(
         onTap: onTap,
         child: Container(
@@ -78,16 +77,14 @@ _buttonSign({
             gradient: gradientColor,
             borderRadius: BorderRadius.all(Radius.circular(30.0)),
           ),
-          child: Text(
-            textOfButton,
-            style: Theme.of(context).textTheme.button
-          ),
+          child: Text(textOfButton, style: Theme.of(context).textTheme.button),
         ));
 
 _buttonSignWithGoogleOrFacebook(
         {required void onTap()?,
         required String textOfButton,
-        required Widget image, required BuildContext context}) =>
+        required Widget image,
+        required BuildContext context}) =>
     GestureDetector(
         onTap: onTap,
         child: Container(
@@ -108,7 +105,10 @@ _buttonSignWithGoogleOrFacebook(
               ),
               Text(
                 textOfButton,
-                style: Theme.of(context).textTheme.button!.copyWith(color: greyDarkColor, fontSize: 17),
+                style: Theme.of(context)
+                    .textTheme
+                    .button!
+                    .copyWith(color: greyDarkColor, fontSize: 17),
               ),
             ],
           ),

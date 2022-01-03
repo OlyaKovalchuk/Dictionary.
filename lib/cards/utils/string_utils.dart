@@ -1,6 +1,3 @@
 bool isSingleWord(String synonym) {
-  return synonym
-      .split(' ')
-      .length == 1;
-
+  return synonym.split(' ').length == 1;
 }

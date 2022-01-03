@@ -1,10 +1,10 @@
 import 'package:equatable/equatable.dart';
 
-abstract class WordEvent extends Equatable {
-  WordEvent([List props = const []]) : super();
+abstract class WordSearchEvent extends Equatable {
+  WordSearchEvent([List props = const []]) : super();
 }
 
-class WordSearch extends WordEvent {
+class WordSearch extends WordSearchEvent {
   final String? word;
 
   WordSearch({this.word});
@@ -13,10 +13,7 @@ class WordSearch extends WordEvent {
   List<Object?> get props => [];
 }
 
-class InitView extends WordEvent {
-
-  InitView();
-
+class InitView extends WordSearchEvent {
   @override
   List<Object?> get props => [];
 }

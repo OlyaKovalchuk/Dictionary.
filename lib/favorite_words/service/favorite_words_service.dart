@@ -25,11 +25,13 @@ class FavWordsServiceImpl implements FavWordsService {
       print('Get User: $e');
     }
   }
+
   @override
   Future<bool> isFavWord(WordData word) async {
     FavoriteWords? _favoriteWords = await getFavWords();
     return _favoriteWords != null && _favoriteWords.words.contains(word);
   }
+
   @override
   Future addToFavWords(WordData word) async {
     try {

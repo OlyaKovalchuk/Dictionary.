@@ -16,16 +16,24 @@ class FavoriteWords {
   }
 
   Map<String, dynamic> toMap() {
-    return {'uid': uid, 'words': words.map((word) => word.toMap()).toList(),};
+    return {
+      'uid': uid,
+      'words': words.map((word) => word.toMap()).toList(),
+    };
   }
 
   Map<String, dynamic> onlyTextMap() {
-    return {'uid': uid, 'words': words.map((word) => word.toMap()).toList(),};
+    return {
+      'uid': uid,
+      'words': words.map((word) => word.toMap()).toList(),
+    };
   }
 
   factory FavoriteWords.fromMap(Map<String, dynamic> map) {
-    return FavoriteWords(uid: map['uid'], words: List<WordData>.from(
-        map['words']?.map((word) => WordData.fromMap(word))));
+    return FavoriteWords(
+        uid: map['uid'],
+        words: List<WordData>.from(
+            map['words']?.map((word) => WordData.fromMap(word))));
   }
 
   String toJson() => json.encode(toMap());

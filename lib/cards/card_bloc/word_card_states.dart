@@ -25,6 +25,7 @@ class Ready extends WordCardState {
 
   final SearchResponse word;
   final bool isFavorited;
+
   Ready({required this.word, required this.isFavorited}) : super([word]);
 }
 

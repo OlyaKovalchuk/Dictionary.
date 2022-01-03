@@ -2,15 +2,15 @@ import 'package:Dictionary/cards/repository/word_data.dart';
 import 'package:Dictionary/favorite_words/bloc/favorite_words_bloc.dart';
 import 'package:Dictionary/favorite_words/service/favorite_words_service.dart';
 import 'package:Dictionary/profile/bloc/profile_bloc.dart';
-import 'package:Dictionary/profile/profile_service.dart';
-import 'package:Dictionary/search/search_bloc/word_search_bloc.dart';
+import 'package:Dictionary/profile/service/profile_service.dart';
+import 'package:Dictionary/search/bloc/word_search_bloc.dart';
 import 'package:Dictionary/theme/theme_data.dart';
 import 'package:Dictionary/utils/simple_bloc_observer.dart';
 import 'package:Dictionary/authentication/screens/login_screen.dart';
 import 'package:Dictionary/authentication/screens/register_screen.dart';
 import 'package:Dictionary/cards/screen/card_screen.dart';
+import 'package:Dictionary/authentication/screens/introduction_screen.dart';
 import 'package:Dictionary/authentication/screens/auth_screen.dart';
-import 'package:Dictionary/authentication/screens/main_screen.dart';
 import 'package:Dictionary/search/screen/search_screen.dart';
 import 'package:Dictionary/authentication/service/firebase_auth_service.dart';
 import 'package:Dictionary/theme/theme_colors.dart';
@@ -45,12 +45,17 @@ void main() async {
   ));
 }
 
-class SplashScreen extends StatelessWidget {
-  final UserRepositoryImpl _userRepository;
+class SplashScreen extends StatefulWidget {
+  final UserRepository _userRepository;
 
-  SplashScreen({required UserRepositoryImpl userRepository})
+  SplashScreen({required UserRepository userRepository})
       : _userRepository = userRepository;
 
+  @override
+  State<SplashScreen> createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -65,7 +70,7 @@ class SplashScreen extends StatelessWidget {
         },
         home: SplashScreenView(
             navigateRoute: HomeScreen(
-              userRepository: _userRepository,
+              userRepository: widget._userRepository,
             ),
             duration: 3,
             text: 'Dictionary.',

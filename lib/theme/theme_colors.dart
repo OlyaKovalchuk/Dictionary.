@@ -22,7 +22,7 @@ const colorScheme = ColorScheme(
     primaryVariant: redLightColor,
     surface: Colors.white,
     onSurface: Colors.grey,
-    onSecondary: Colors.white,
+    onSecondary: redLightColor,
     onPrimary: redColor,
     onBackground: redColor,
     onError: Colors.white);

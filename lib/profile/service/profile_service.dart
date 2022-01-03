@@ -10,7 +10,7 @@ abstract class ProfileService {
 
 class ProfileServiceImpl extends ProfileService {
   FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
- UserRepositoryImpl _userRepositoryImpl = UserRepositoryImpl();
+  late UserRepository _userRepositoryImpl;
 
   Future<UserData?> getUserData() async {
     User? user = _firebaseAuth.currentUser;
@@ -19,6 +19,6 @@ class ProfileServiceImpl extends ProfileService {
   }
 
   Future<User?> signOut() async {
-   await _userRepositoryImpl.signOut();
+    await _userRepositoryImpl.signOut();
   }
 }

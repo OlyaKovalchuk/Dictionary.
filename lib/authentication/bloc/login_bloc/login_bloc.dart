@@ -7,9 +7,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
-  final UserRepositoryImpl _userRepository;
+  final UserRepository _userRepository;
 
-  LoginBloc(UserRepositoryImpl userRepository)
+  LoginBloc(UserRepository userRepository)
       : _userRepository = userRepository,
         super(LoginState.initial());
 
@@ -43,8 +43,9 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       await _userRepository.signInWithCredentials(email, password);
       yield LoginState.success();
     } on FirebaseAuthException catch (e) {
-      print('Error auth: $e');
-      yield LoginState.failure().copyWith(passwordErrorText: checkError(e.code));
+      checkError(e.toString());
+      print('Error auth: ${e.code}');
+      yield LoginState.failure(checkError(e.code));
     }
   }
 
@@ -55,8 +56,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       yield LoginState.success();
     } on FirebaseAuthException catch (e) {
       print('Error auth: $e');
-      checkError(e.code);
-      yield LoginState.failure().copyWith(passwordErrorText: checkError(e.code));
+      checkError(e.toString());
+      yield LoginState.failure(checkError(e.toString()));
     }
   }
 
@@ -66,8 +67,11 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       await _userRepository.signInWithFacebook();
       yield LoginState.success();
     } on FirebaseAuthException catch (e) {
+      checkError(e.code);
       print('Error auth: $e');
-      yield LoginState.failure().copyWith(passwordErrorText: checkError(e.code));
+      yield LoginState.failure(checkError(e.toString()));
+    } catch (e) {
+      yield LoginState.failure(checkError(e.toString()));
     }
   }
 }

@@ -1,7 +1,6 @@
 class RegState {
   final bool isEmailValid;
-  final String? emailErrorText;
-  final String? passwordErrorText;
+  final String? errorText;
   final bool isPasswordValid;
   final bool isSubmitting;
   final bool isSuccess;
@@ -13,8 +12,7 @@ class RegState {
 
     return other is RegState &&
         other.isEmailValid == this.isEmailValid &&
-        other.emailErrorText == this.emailErrorText &&
-        other.passwordErrorText == this.passwordErrorText &&
+        other.errorText == this.errorText &&
         other.isPasswordValid == this.isPasswordValid &&
         other.isSubmitting == this.isSubmitting &&
         other.isSuccess == this.isSuccess &&
@@ -24,8 +22,7 @@ class RegState {
   @override
   int get hashCode {
     return this.isEmailValid.hashCode ^
-        this.emailErrorText.hashCode ^
-        this.passwordErrorText.hashCode ^
+        this.errorText.hashCode ^
         this.isPasswordValid.hashCode ^
         this.isSubmitting.hashCode ^
         this.isSuccess.hashCode ^
@@ -36,18 +33,16 @@ class RegState {
 
   RegState(
       {required this.isEmailValid,
-      required this.emailErrorText,
-      required this.passwordErrorText,
+      required this.errorText,
       required this.isFailure,
       required this.isPasswordValid,
       required this.isSubmitting,
       required this.isSuccess});
 
-  factory RegState.failure() {
+  factory RegState.failure(String? errorText) {
     return RegState(
         isEmailValid: true,
-        emailErrorText: null,
-        passwordErrorText: null,
+        errorText: errorText,
         isFailure: true,
         isPasswordValid: true,
         isSubmitting: false,
@@ -57,8 +52,7 @@ class RegState {
   factory RegState.loading() {
     return RegState(
         isEmailValid: true,
-        emailErrorText: null,
-        passwordErrorText: null,
+        errorText: null,
         isFailure: false,
         isPasswordValid: true,
         isSubmitting: true,
@@ -68,8 +62,7 @@ class RegState {
   factory RegState.initial() {
     return RegState(
         isEmailValid: true,
-        emailErrorText: null,
-        passwordErrorText: null,
+        errorText: null,
         isFailure: false,
         isPasswordValid: true,
         isSubmitting: false,
@@ -79,8 +72,7 @@ class RegState {
   factory RegState.success() {
     return RegState(
         isEmailValid: true,
-        emailErrorText: null,
-        passwordErrorText: null,
+        errorText: null,
         isFailure: false,
         isPasswordValid: true,
         isSubmitting: false,
@@ -108,8 +100,7 @@ class RegState {
       String? passwordErrorText}) {
     return RegState(
         isEmailValid: isEmailValid ?? this.isEmailValid,
-        emailErrorText: emailErrorText ?? this.emailErrorText,
-        passwordErrorText: passwordErrorText ?? this.passwordErrorText,
+        errorText: emailErrorText ?? this.errorText,
         isFailure: isFailure ?? this.isFailure,
         isPasswordValid: isPasswordValid ?? this.isPasswordValid,
         isSubmitting: isSubmitting ?? this.isSubmitting,
