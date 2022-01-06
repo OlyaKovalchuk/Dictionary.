@@ -1,12 +1,12 @@
-import 'package:dictionary/authentication/bloc/auth_bloc/auth_event.dart';
-import 'package:dictionary/authentication/bloc/auth_bloc/auth_state.dart';
-import 'package:dictionary/authentication/service/firebase_auth_service.dart';
+import 'package:Dictionary/authentication/bloc/auth_bloc/auth_event.dart';
+import 'package:Dictionary/authentication/bloc/auth_bloc/auth_state.dart';
+import 'package:Dictionary/authentication/service/firebase_auth_service.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
-  final UserRepositoryImpl _userRepository;
+  final UserRepository _userRepository;
 
-  AuthBloc({required UserRepositoryImpl userRepository})
+  AuthBloc({required UserRepository userRepository})
       : _userRepository = userRepository,
         super(AuthInitial());
 
@@ -16,14 +16,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       yield* _mapAuthStarted();
     } else if (event is AuthLoggedIn) {
       yield* _mapAuthLoggedIn();
-    } else if (event is AuthLoggedOut) {
-      _mapAuthLoggedOut();
     }
-  }
-
-  Stream<AuthState> _mapAuthLoggedOut() async* {
-    yield AuthFailed();
-    _userRepository.signOut();
   }
 
   Stream<AuthState> _mapAuthLoggedIn() async* {

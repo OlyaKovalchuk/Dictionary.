@@ -1,12 +1,7 @@
 import 'package:flutter/cupertino.dart';
 
- errorView() {
-  try{
-    return Center(
-      child: Text('Error'),
-    );
-  }catch(e){
-    print(e);
-  }
-
+errorView() {
+  return Center(
+    child: Text('Oops. Something went wrong!  :('),
+  );
 }

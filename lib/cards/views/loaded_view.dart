@@ -1,92 +1,88 @@
-import 'package:dictionary/cards/card_bloc/word_card_bloc.dart';
-import 'package:dictionary/cards/model/search_response.dart';
-import 'package:dictionary/cards/utils/string_utils.dart';
-import 'package:dictionary/favorite_words/screen/fav_button.dart';
-import 'package:dictionary/widgets/cardDecoration/card_decoration.dart';
-import 'package:dictionary/widgets/colors/grey_color.dart';
-import 'package:dictionary/widgets/colors/red_color.dart';
-import 'package:dictionary/widgets/textDecoration/text_styles.dart';
+import 'package:Dictionary/cards/widgets/cardDecoration/card_decoration.dart';
+import 'package:Dictionary/utils/audio_fun.dart';
+import 'package:Dictionary/cards/model/search_response.dart';
+import 'package:Dictionary/cards/utils/string_utils.dart';
+import 'package:Dictionary/favorite_words/model/words_model.dart';
+import 'package:Dictionary/favorite_words/widgets/fav_button.dart';
+import 'package:Dictionary/theme/theme_colors.dart';
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-import 'package:just_audio/just_audio.dart';
 import 'word_info_view.dart';
 
-Widget loadedView(SearchResponse response, WordCardBloc wordBloc,
-    BuildContext context, bool isFavorited) {
-  return Padding(
-    padding: EdgeInsets.all(35),
-    child: FlipCard(
-        direction: FlipDirection.HORIZONTAL,
-        front: cardDecoration(
-            context: context,
-            child: Padding(
-              padding:
-                  EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Align(
-                      alignment: Alignment.centerRight,
-                      child: FavoriteWordsButton(
+Widget loadedView(
+    SearchResponse response, BuildContext context, bool isFavorited) {
+  return FlipCard(
+    direction: FlipDirection.HORIZONTAL,
+    front: cardDecoration(
+        context: context,
+        child: Padding(
+          padding: EdgeInsets.all(20),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Align(
+                  alignment: Alignment.centerRight,
+                  child: FavoriteWordsButton(
+                    word: WordData(
                         word: response.word,
-                        isFavorited: isFavorited,
-                      )),
-                  _buildWord(response.word),
-                  _buildPhonetics(response.phonetics ?? []),
-                  SizedBox(
-                    height: 30,
-                  ),
-                  Visibility(
-                    visible:
-                        response.meanings[0].definitions[0].example != null,
-                    child: _buildVisibilityExample(
-                        response.meanings[0].definitions[0].example ?? ''),
-                  ),
-                  Spacer(),
-                  synonymsView(
-                      wordBloc,
-                      response.meanings[0].definitions[0].synonyms ?? [],
-                      response),
-                ],
+                        audio: response.phonetics?[0].audio ?? ''),
+                    isFavorited: isFavorited,
+                  )),
+              _buildWord(response.word, context),
+              _buildPhonetics(response.phonetics ?? [], context),
+              SizedBox(
+                height: 30,
               ),
-            )),
-        back: cardDecoration(
-            context: context,
-            child: Column(children: [
-              Padding(
-                padding: EdgeInsets.only(
-                  top: 30,
-                ),
-                child: _buildWord(response.word),
+              Visibility(
+                visible: response.meanings[0].definitions[0].example != null,
+                child: _buildVisibilityExample(
+                    response.meanings[0].definitions[0].example ?? '', context),
               ),
-              Expanded(child: wordInfo(response))
-            ]))),
+              SizedBox(
+                height: 60,
+              ),
+              _synonymsView(response.meanings[0].definitions[0].synonyms ?? [],
+                  response, context),
+            ],
+          ),
+        )),
+    back: cardDecoration(
+        context: context,
+        child: Column(mainAxisSize: MainAxisSize.min, children: [
+          Padding(
+            padding: EdgeInsets.only(
+              top: 30,
+            ),
+            child: _buildWord(response.word, context),
+          ),
+          wordInfo(response),
+        ])),
   );
 }
 
-Widget synonymsView(WordCardBloc wordBloc, List<String> synonyms,
-        SearchResponse response) =>
+Widget _synonymsView(
+        List<String> synonyms, SearchResponse response, BuildContext context) =>
     Visibility(
         visible: synonyms.isNotEmpty,
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Text(
             'synonyms: ',
-            style: GoogleFonts.roboto(
-              fontSize: 12,
-              color: redColor(),
-            ),
+            style: Theme.of(context)
+                .textTheme
+                .bodyText1!
+                .copyWith(fontSize: 12, color: redColor),
           ),
           Wrap(
             spacing: 5.0,
             // runSpacing: 4.0,
-            children: synonymChips(wordBloc, response, synonyms),
+            children: _synonymChips(response, synonyms, context),
           )
         ]));
 
-List<Widget> synonymChips(WordCardBloc wordBloc, SearchResponse response,
-        List<String> synonyms) =>
+List<Widget> _synonymChips(
+        SearchResponse response, List<String> synonyms, BuildContext context) =>
     synonyms
         .take(4)
         .map((synonym) => GestureDetector(
@@ -97,25 +93,23 @@ List<Widget> synonymChips(WordCardBloc wordBloc, SearchResponse response,
               },
               child: Chip(
                   backgroundColor: Colors.white,
-                  side: BorderSide(color: redColor()),
-                  label: Text(
-                    synonym,
-                    style: TextStyle(
-                      fontSize: 15,
-                      color: redColor(),
-                    ),
-                  )),
+                  side: BorderSide(color: redColor),
+                  label: Text(synonym,
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyText1!
+                          .copyWith(color: redColor))),
             ))
         .toList();
 
-Widget _buildWord(String word) => Center(
+Widget _buildWord(String word, BuildContext context) => Center(
       child: Text(
         word,
-        style: titleTextStyle(),
+        style: Theme.of(context).textTheme.subtitle1,
       ),
     );
 
-Widget _buildPhonetics(List<Phonetics> phonetics) {
+Widget _buildPhonetics(List<Phonetics> phonetics, BuildContext context) {
   String? audio;
   String? text;
 
@@ -137,32 +131,21 @@ Widget _buildPhonetics(List<Phonetics> phonetics) {
               icon: Icon(
                 Icons.volume_up,
                 size: 20,
-                color: greyColor(),
+                color: greyDarkColor,
               ))),
       Visibility(
           visible: text != null,
           child: Text(
             '[ ' + (text ?? ' ') + ' ]',
-            style: TextStyle(fontSize: 15, color: greyColor()),
+            style: Theme.of(context).textTheme.bodyText1,
           ))
     ],
   );
 }
 
-void getAudio(url) async {
-  try {
-    AudioPlayer audioPlayer = AudioPlayer();
-    await audioPlayer.setUrl('https:$url');
-    audioPlayer.play();
-    print('http:$url');
-  } catch (e) {
-    print(e);
-  }
-}
-
-_buildVisibilityExample(String? example) => Center(
+_buildVisibilityExample(String? example, BuildContext context) => Center(
       child: Text(
         toBeginningOfSentenceCase(example)!,
-        style: plainTextStyle(),
+        style: Theme.of(context).textTheme.bodyText1,
       ),
     );

@@ -1,4 +1,4 @@
-import 'package:dictionary/cards/model/search_response.dart';
+import 'package:Dictionary/cards/model/search_response.dart';
 import 'package:equatable/equatable.dart';
 
 class WordCardStackState extends Equatable {
@@ -25,6 +25,7 @@ class Ready extends WordCardState {
 
   final SearchResponse word;
   final bool isFavorited;
+
   Ready({required this.word, required this.isFavorited}) : super([word]);
 }
 

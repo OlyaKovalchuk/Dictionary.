@@ -1,4 +1,4 @@
-name: dictionary
+name: Dictionary
 description: A new Flutter project.
 
 # The following line prevents the package from being accidentally published to
@@ -15,37 +15,51 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 0.0.2
+version: 0.0.3
 
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
 
 dependencies:
+  #auth
   flutter_facebook_auth:
   google_sign_in:
-  flutter_svg: ^0.23.0+1
+  firebase_auth:
+  cloud_firestore: ^3.1.0
+
+  #card
+  flip_card: ^0.5.0
+  english_words: ^4.0.0
   just_audio: ^0.9.17
   swipable_stack: ^0.7.1
+
+  #decoration
+  google_fonts: ^2.1.0
+  flutter_svg: ^0.23.0+1
+
+  #bloc
   flutter_bloc: ^7.0.1
   equatable: ^2.0.3
-  flip_card: ^0.5.0
+
+  #api
   http: ^0.13.3
-  english_words: ^4.0.0
-  google_fonts: ^2.1.0
+
+
   flutter:
     sdk: flutter
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^1.0.1
   animations: ^2.0.1
-  splash_screen_view: ^3.0.0
-  intl: ^0.17.0
-  firebase_auth:
-  cloud_firestore: ^3.1.0
-  flutter_facebook_sdk: ^1.0.0
+  cupertino_icons: ^1.0.1
+  connectivity_plus: ^2.2.0
   favorite_button: ^0.0.4
+  intl: ^0.17.0
+  salomon_bottom_bar: ^3.1.0
+  splash_screen_view: ^3.0.0
+
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

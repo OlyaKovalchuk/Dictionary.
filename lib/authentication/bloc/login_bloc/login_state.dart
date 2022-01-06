@@ -1,7 +1,6 @@
 class LoginState {
   final bool isEmailValid;
-  final String? emailErrorText;
-  final String? passwordErrorText;
+  final String? errorText;
   final bool isPasswordValid;
   final bool isSubmitting;
   final bool isSuccess;
@@ -13,8 +12,7 @@ class LoginState {
 
     return other is LoginState &&
         other.isEmailValid == this.isEmailValid &&
-        other.emailErrorText == this.emailErrorText &&
-        other.passwordErrorText == this.passwordErrorText &&
+        other.errorText == this.errorText &&
         other.isPasswordValid == this.isPasswordValid &&
         other.isSubmitting == this.isSubmitting &&
         other.isSuccess == this.isSuccess &&
@@ -24,30 +22,27 @@ class LoginState {
   @override
   int get hashCode {
     return this.isEmailValid.hashCode ^
-    this.emailErrorText.hashCode ^
-    this.passwordErrorText.hashCode ^
-    this.isPasswordValid.hashCode ^
-    this.isSubmitting.hashCode ^
-    this.isSuccess.hashCode ^
-    this.isFailure.hashCode;
+        this.errorText.hashCode ^
+        this.isPasswordValid.hashCode ^
+        this.isSubmitting.hashCode ^
+        this.isSuccess.hashCode ^
+        this.isFailure.hashCode;
   }
 
   bool get isFormValid => isEmailValid && isPasswordValid;
 
   LoginState(
       {required this.isEmailValid,
-        required this.emailErrorText,
-        required this.passwordErrorText,
-        required this.isFailure,
-        required this.isPasswordValid,
-        required this.isSubmitting,
-        required this.isSuccess});
+      required this.errorText,
+      required this.isFailure,
+      required this.isPasswordValid,
+      required this.isSubmitting,
+      required this.isSuccess});
 
-  factory LoginState.failure() {
+  factory LoginState.failure(String errorText) {
     return LoginState(
         isEmailValid: true,
-        emailErrorText: null,
-        passwordErrorText: null,
+        errorText: errorText,
         isFailure: true,
         isPasswordValid: true,
         isSubmitting: false,
@@ -57,8 +52,7 @@ class LoginState {
   factory LoginState.loading() {
     return LoginState(
         isEmailValid: true,
-        emailErrorText: null,
-        passwordErrorText: null,
+        errorText: null,
         isFailure: false,
         isPasswordValid: true,
         isSubmitting: true,
@@ -68,8 +62,7 @@ class LoginState {
   factory LoginState.initial() {
     return LoginState(
         isEmailValid: true,
-        emailErrorText: null,
-        passwordErrorText: null,
+        errorText: null,
         isFailure: false,
         isPasswordValid: true,
         isSubmitting: false,
@@ -79,8 +72,7 @@ class LoginState {
   factory LoginState.success() {
     return LoginState(
         isEmailValid: true,
-        emailErrorText: null,
-        passwordErrorText: null,
+        errorText: null,
         isFailure: false,
         isPasswordValid: true,
         isSubmitting: false,
@@ -94,22 +86,20 @@ class LoginState {
         isSubmitting: false,
         isSuccess: false,
         isFailure: false,
-        emailErrorText: null,
         passwordErrorText: null);
   }
 
   LoginState copyWith(
       {bool? isEmailValid,
-        String? emailErrorText,
-        bool? isPasswordValid,
-        bool? isSubmitting,
-        bool? isSuccess,
-        bool? isFailure,
-        String? passwordErrorText}) {
+      String? errorText,
+      bool? isPasswordValid,
+      bool? isSubmitting,
+      bool? isSuccess,
+      bool? isFailure,
+      String? passwordErrorText}) {
     return LoginState(
         isEmailValid: isEmailValid ?? this.isEmailValid,
-        emailErrorText: emailErrorText ?? this.emailErrorText,
-        passwordErrorText: passwordErrorText ?? this.passwordErrorText,
+        errorText: errorText ?? this.errorText,
         isFailure: isFailure ?? this.isFailure,
         isPasswordValid: isPasswordValid ?? this.isPasswordValid,
         isSubmitting: isSubmitting ?? this.isSubmitting,

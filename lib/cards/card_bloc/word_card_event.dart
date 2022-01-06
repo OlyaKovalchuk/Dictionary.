@@ -1,3 +1,4 @@
+import 'package:Dictionary/favorite_words/model/words_model.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class WordEvent extends Equatable {
@@ -13,10 +14,16 @@ class WordSwipe extends WordEvent {
   List<Object?> get props => [];
 }
 
+class WordSwipeFavWords extends WordEvent {
+  final List<WordData>? words;
+
+  WordSwipeFavWords([this.words]);
+
+  @override
+  List<Object?> get props => [];
+}
+
 class InitView extends WordEvent {
-
-  InitView();
-
   @override
   List<Object?> get props => [];
 }

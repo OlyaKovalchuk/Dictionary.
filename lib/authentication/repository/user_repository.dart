@@ -1,5 +1,5 @@
-import 'package:dictionary/favorite_words/model/favorite_words_model.dart';
-import 'package:dictionary/authentication/model/user_data_model.dart';
+import 'package:Dictionary/favorite_words/model/favorite_words_model.dart';
+import 'package:Dictionary/authentication/model/user_data_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 abstract class FireUsersDataRepo {
@@ -11,7 +11,6 @@ abstract class FireUsersDataRepo {
 }
 
 class FireUsersDataRepoImpl implements FireUsersDataRepo {
-
   CollectionReference _usersCollection =
       FirebaseFirestore.instance.collection('users');
 
@@ -48,19 +47,12 @@ class FireUsersDataRepoImpl implements FireUsersDataRepo {
     }
   }
 
-  setFavoriteWord(FavoriteWords words) async {
-    try {
-      await _favoriteWordsCollection.doc(words.uid).set(words.onlyTextMap());
-      await _favoriteWordsCollection.doc(words.uid).set(words.toMap());
-    } catch (e) {
-      print(e);
-    }
-  }
-
-  Future<FavoriteWords?> getUsersFavWords(String uid) async {
-    DocumentSnapshot documentSnapshot = await _favoriteWordsCollection.doc(uid).get();
+  Future<FavoriteWordsData?> getUsersFavWords(String uid) async {
+    DocumentSnapshot documentSnapshot =
+        await _favoriteWordsCollection.doc(uid).get();
     if (documentSnapshot.exists) {
-      return FavoriteWords.fromMap(documentSnapshot.data() as Map<String, dynamic>);
+      return FavoriteWordsData.fromMap(
+          documentSnapshot.data() as Map<String, dynamic>);
     } else {
       return null;
     }

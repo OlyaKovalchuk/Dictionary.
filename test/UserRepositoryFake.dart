@@ -1,4 +1,4 @@
-import 'package:dictionary/authentication/service/firebase_auth_service.dart';
+import 'package:Dictionary/authentication/service/firebase_auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class UserRepositoryFake  implements UserRepository {
@@ -41,7 +41,7 @@ class UserRepositoryFake  implements UserRepository {
   }
 
   @override
-  singUp(String email, String password, String name) {
+  singUp({required String email,required String name,required String password} ){
     if (shouldSignUpFail) {
       return Future.error(Exception("fake exception"));
     }

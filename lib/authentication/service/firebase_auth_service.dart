@@ -1,8 +1,7 @@
-import 'package:dictionary/favorite_words/model/favorite_words_model.dart';
-import 'package:dictionary/authentication/model/user_data_model.dart';
-import 'package:dictionary/authentication/repository/user_repository.dart';
-import 'package:dictionary/authentication/utils/firebase_exceptions_valid.dart';
-import 'package:dictionary/favorite_words/repository/favorite_words_repository.dart';
+import 'package:Dictionary/favorite_words/model/favorite_words_model.dart';
+import 'package:Dictionary/authentication/model/user_data_model.dart';
+import 'package:Dictionary/authentication/repository/user_repository.dart';
+import 'package:Dictionary/favorite_words/repository/favorite_words_repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -10,7 +9,8 @@ import 'package:google_sign_in/google_sign_in.dart';
 abstract class UserRepository {
   Future signInWithCredentials(String email, String password);
 
-  singUp(String email, String password, String name);
+  singUp(
+      {required String email, required String name, required String password});
 
   Future<User?> signInWithGoogle();
 
@@ -25,22 +25,21 @@ abstract class UserRepository {
 
 class UserRepositoryImpl implements UserRepository {
   final GoogleSignIn googleSignIn = GoogleSignIn();
-  FireUsersDataRepoImpl _fireUsersDataRepo = FireUsersDataRepoImpl();
+  FireUsersDataRepo _fireUsersDataRepo = FireUsersDataRepoImpl();
   FireFavWordsRepoImpl _fireFavWordsRepoImpl = FireFavWordsRepoImpl();
 
   FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
   Future signInWithCredentials(String email, String password) async {
-    try {
-      UserCredential userCredential = await FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: email, password: password);
-      print(userCredential);
-    } on FirebaseAuthException catch (e) {
-      checkError(e.code);
-    }
+    UserCredential userCredential = await _firebaseAuth
+        .signInWithEmailAndPassword(email: email, password: password);
+    print(userCredential);
   }
 
-  Future<void> singUp(String email, String name, String password) async {
+  Future<void> singUp(
+      {required String email,
+      required String name,
+      required String password}) async {
     try {
       UserCredential userCredential = await _firebaseAuth
           .createUserWithEmailAndPassword(email: email, password: password);
@@ -48,8 +47,6 @@ class UserRepositoryImpl implements UserRepository {
       User? user = userCredential.user;
       print('User: $user');
       _createNewUser(user, name);
-    } on FirebaseAuthException catch (e) {
-      checkError(e.code);
     } catch (e) {
       print(e);
       return Future.error(e);
@@ -57,7 +54,6 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   Future<User?> signInWithGoogle() async {
-    FirebaseAuth auth = FirebaseAuth.instance;
     User? _user;
     final UserCredential _userCredential;
     final GoogleSignInAccount? googleSignInAccount =
@@ -73,13 +69,12 @@ class UserRepositoryImpl implements UserRepository {
       );
 
       try {
-        _userCredential = await auth.signInWithCredential(credential);
+        _userCredential = await _firebaseAuth.signInWithCredential(credential);
         _user = _userCredential.user;
         _createNewUser(_user);
-      } on FirebaseAuthException catch (e) {
-        checkError(e.code);
       } catch (e) {
         print(e);
+
         return Future.error(e);
       }
     }
@@ -90,26 +85,19 @@ class UserRepositoryImpl implements UserRepository {
   Future<User?> signInWithFacebook() async {
     User? _user;
     final LoginResult loginResult = await FacebookAuth.instance.login();
-    // Cre{ate a credential from the access token
     final OAuthCredential facebookAuthCredential =
         FacebookAuthProvider.credential(loginResult.accessToken!.token);
-    try {
-      UserCredential _userCredential = await FirebaseAuth.instance
-          .signInWithCredential(facebookAuthCredential);
-      _user = _userCredential.user;
+    UserCredential _userCredential = await FirebaseAuth.instance
+        .signInWithCredential(facebookAuthCredential);
+    _user = _userCredential.user;
 
-      _createNewUser(_user);
-    } on FirebaseAuthException catch (e) {
-      checkError(e.code);
-    } catch (e) {
-      print(e);
-      return Future.error(e);
-    }
+    _createNewUser(_user);
+
     return _user;
   }
 
   Future signOut() async {
-    return Future.wait([
+    await Future.wait([
       _firebaseAuth.signOut(),
       googleSignIn.signOut(),
     ]);
@@ -125,19 +113,28 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   _createNewUser(User? user, [String? name]) async {
-    UserData? _userData;
-    FavoriteWords? _favoriteWords;
     if (user != null) {
       final UserData? _getUser = await _fireUsersDataRepo.getUser(user.uid);
       print(user.email);
       if (_getUser == null) {
         print(_getUser);
-        _userData = UserData(
-            uid: user.uid,
-            name: name ?? user.displayName!,
-            email: user.email!,);
+        if (user.displayName == null) {
+          _firebaseAuth.currentUser!.updateDisplayName(name);
+        }
+        if (user.photoURL == null) {
+          _firebaseAuth.currentUser!.updatePhotoURL(
+              'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png');
+        }
+        UserData _userData = UserData(
+          uid: user.uid,
+          name: name ?? user.displayName!,
+          email: user.email!,
+          photoURL: user.photoURL ??
+              "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
+        );
 
-        _favoriteWords = FavoriteWords(words: [], uid: _userData.uid);
+        FavoriteWordsData _favoriteWords =
+            FavoriteWordsData(words: [], uid: _userData.uid);
         _fireUsersDataRepo.setUser(_userData);
         _fireFavWordsRepoImpl.setFavoriteWord(_favoriteWords);
       }
