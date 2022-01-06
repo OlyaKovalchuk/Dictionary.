@@ -24,5 +24,4 @@ class FireUsersDataRepoFake implements FireUsersDataRepo {
       throw Exception("fake exception");
     }
   }
-
 }

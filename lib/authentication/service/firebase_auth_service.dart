@@ -74,6 +74,7 @@ class UserRepositoryImpl implements UserRepository {
         _createNewUser(_user);
       } catch (e) {
         print(e);
+
         return Future.error(e);
       }
     }
@@ -132,8 +133,8 @@ class UserRepositoryImpl implements UserRepository {
               "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
         );
 
-        FavoriteWords _favoriteWords =
-            FavoriteWords(words: [], uid: _userData.uid);
+        FavoriteWordsData _favoriteWords =
+            FavoriteWordsData(words: [], uid: _userData.uid);
         _fireUsersDataRepo.setUser(_userData);
         _fireFavWordsRepoImpl.setFavoriteWord(_favoriteWords);
       }

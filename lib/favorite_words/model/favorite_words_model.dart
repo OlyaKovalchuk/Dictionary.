@@ -2,17 +2,17 @@ import 'dart:convert';
 import 'package:Dictionary/favorite_words/model/words_model.dart';
 import 'package:uuid/uuid.dart';
 
-class FavoriteWords {
+class FavoriteWordsData {
   final String uid;
   final List<WordData> words;
 
-  FavoriteWords({
+  FavoriteWordsData({
     String? uid,
     required this.words,
   }) : this.uid = uid ?? Uuid().v1();
 
-  FavoriteWords copyWith({String? uid, List<WordData>? words}) {
-    return FavoriteWords(uid: uid ?? this.uid, words: words ?? []);
+  FavoriteWordsData copyWith({String? uid, List<WordData>? words}) {
+    return FavoriteWordsData(uid: uid ?? this.uid, words: words ?? []);
   }
 
   Map<String, dynamic> toMap() {
@@ -29,8 +29,8 @@ class FavoriteWords {
     };
   }
 
-  factory FavoriteWords.fromMap(Map<String, dynamic> map) {
-    return FavoriteWords(
+  factory FavoriteWordsData.fromMap(Map<String, dynamic> map) {
+    return FavoriteWordsData(
         uid: map['uid'],
         words: List<WordData>.from(
             map['words']?.map((word) => WordData.fromMap(word))));
@@ -38,8 +38,8 @@ class FavoriteWords {
 
   String toJson() => json.encode(toMap());
 
-  factory FavoriteWords.fromJson(String source) =>
-      FavoriteWords.fromMap(json.decode(source));
+  factory FavoriteWordsData.fromJson(String source) =>
+      FavoriteWordsData.fromMap(json.decode(source));
 
   @override
   String toString() {
@@ -50,7 +50,7 @@ class FavoriteWords {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is FavoriteWords && other.uid == uid && other.words == words;
+    return other is FavoriteWordsData && other.uid == uid && other.words == words;
   }
 
   @override

@@ -47,20 +47,11 @@ class FireUsersDataRepoImpl implements FireUsersDataRepo {
     }
   }
 
-  setFavoriteWord(FavoriteWords words) async {
-    try {
-      await _favoriteWordsCollection.doc(words.uid).set(words.onlyTextMap());
-      await _favoriteWordsCollection.doc(words.uid).set(words.toMap());
-    } catch (e) {
-      print(e);
-    }
-  }
-
-  Future<FavoriteWords?> getUsersFavWords(String uid) async {
+  Future<FavoriteWordsData?> getUsersFavWords(String uid) async {
     DocumentSnapshot documentSnapshot =
         await _favoriteWordsCollection.doc(uid).get();
     if (documentSnapshot.exists) {
-      return FavoriteWords.fromMap(
+      return FavoriteWordsData.fromMap(
           documentSnapshot.data() as Map<String, dynamic>);
     } else {
       return null;

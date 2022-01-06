@@ -39,7 +39,7 @@ class FavWordsBloc extends Bloc<FavWordsEvent, FavWordsState> {
   Stream<FavWordsState> getEventToState() async* {
     yield LoadingState();
     try {
-      FavoriteWords? favoriteWords = await _favWordsService.getFavWords();
+      FavoriteWordsData? favoriteWords = await _favWordsService.getFavWords();
       favWords = favoriteWords!.words;
       yield SuccessState();
     } catch (e) {

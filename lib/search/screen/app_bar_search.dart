@@ -1,6 +1,6 @@
 import 'package:Dictionary/search/bloc/word_search_bloc.dart';
 import 'package:Dictionary/search/bloc/word_search_event.dart';
-import 'package:Dictionary/search/utils/check_words.dart';
+import 'package:Dictionary/search/utils/error_output.dart';
 import 'package:Dictionary/theme/theme_colors.dart';
 import 'package:Dictionary/search/widgets/icon_gradient.dart';
 import 'package:flutter/material.dart';

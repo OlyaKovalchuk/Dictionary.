@@ -28,7 +28,7 @@ buildCards(WordEvent event, WordCardBloc wordBloc,
               WordCardState wordState = wordStackState.wordCardStates[index];
 
               if (wordState is Error) {
-                return errorView(context);
+                return errorView();
               }
               if (wordState is Loading) {
                 return loadingView(context);

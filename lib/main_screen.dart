@@ -4,10 +4,10 @@ import 'package:Dictionary/authentication/service/firebase_auth_service.dart';
 import 'package:Dictionary/cards/screen/card_screen.dart';
 import 'package:Dictionary/favorite_words/screen/favorite_words_screen.dart';
 import 'package:Dictionary/profile/screen/profile_screen.dart';
-import 'package:Dictionary/search/screen/appBar_search.dart';
+import 'package:Dictionary/search/screen/app_bar_search.dart';
 import 'package:Dictionary/search/screen/search_screen.dart';
-import 'package:Dictionary/search/utils/check_words.dart';
-import 'package:Dictionary/widgets/appBar.dart';
+import 'package:Dictionary/search/utils/error_output.dart';
+import 'package:Dictionary/widgets/app_bar.dart';
 import 'package:Dictionary/widgets/bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
@@ -54,7 +54,7 @@ class _MainScreenState extends State<MainScreen> {
       }
 
     } on PlatformException catch (e) {
-      developer.log('Couldn\'t check connectivity status', error: e);
+      developer.log("Couldn\'t check connectivity status", error: e);
       return;
     }
     if (!mounted) {

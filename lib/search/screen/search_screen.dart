@@ -3,7 +3,7 @@ import 'package:Dictionary/cards/views/word_info_view.dart';
 import 'package:Dictionary/cards/widgets/cardDecoration/indicator_decoration.dart';
 import 'package:Dictionary/search/bloc/word_search_bloc.dart';
 import 'package:Dictionary/search/bloc/word_search_states.dart';
-import 'package:Dictionary/search/utils/check_words.dart';
+import 'package:Dictionary/search/utils/error_output.dart';
 import 'package:Dictionary/theme/theme_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

@@ -3,9 +3,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 abstract class FireFavoriteWordsDataRepo {
-  setFavoriteWord(FavoriteWords words);
+  setFavoriteWord(FavoriteWordsData words);
 
-  Future<FavoriteWords?> getUsersFavWords(String uid);
+  Future<FavoriteWordsData?> getUsersFavWords(String uid);
 }
 
 class FireFavWordsRepoImpl implements FireFavoriteWordsDataRepo {
@@ -14,7 +14,7 @@ class FireFavWordsRepoImpl implements FireFavoriteWordsDataRepo {
 
   FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
-  setFavoriteWord(FavoriteWords words) async {
+  setFavoriteWord(FavoriteWordsData words) async {
     try {
       await _favoriteWordsCollection.doc(words.uid).set(words.onlyTextMap());
       await _favoriteWordsCollection.doc(words.uid).set(words.toMap());
@@ -23,24 +23,24 @@ class FireFavWordsRepoImpl implements FireFavoriteWordsDataRepo {
     }
   }
 
-  updateFavoriteWords(FavoriteWords favoriteWords) async {
+  updateFavoriteWords(FavoriteWordsData favoriteWords) async {
     await _favoriteWordsCollection
         .doc(_firebaseAuth.currentUser!.uid)
         .update(favoriteWords.toMap());
   }
 
-  Future<FavoriteWords?> getUsersFavWords(String uid) async {
+  Future<FavoriteWordsData?> getUsersFavWords(String uid) async {
     DocumentSnapshot documentSnapshot =
         await _favoriteWordsCollection.doc(uid).get();
     if (documentSnapshot.exists) {
-      return FavoriteWords.fromMap(
+      return FavoriteWordsData.fromMap(
           documentSnapshot.data() as Map<String, dynamic>);
     } else {
       return null;
     }
   }
 
-  deleteFavoriteWord(FavoriteWords words) async {
+  deleteFavoriteWord(FavoriteWordsData words) async {
     try {
       await _favoriteWordsCollection
           .doc(_firebaseAuth.currentUser!.uid)

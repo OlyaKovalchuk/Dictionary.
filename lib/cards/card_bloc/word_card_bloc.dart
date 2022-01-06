@@ -68,7 +68,6 @@ class WordCardBloc extends Bloc<WordEvent, WordCardStackState> {
 
   _randomWord() {
     final index = Random().nextInt(nouns.length - 1);
-    print(index);
     return nouns[index];
   }
 }

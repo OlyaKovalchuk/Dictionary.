@@ -1,4 +1,4 @@
-import 'package:Dictionary/search/utils/check_words.dart';
+import 'package:Dictionary/search/utils/error_output.dart';
 import 'package:Dictionary/utils/audio_fun.dart';
 import 'package:Dictionary/authentication/widgets/textFields.dart';
 import 'package:Dictionary/cards/card_bloc/word_card_bloc.dart';
@@ -57,7 +57,7 @@ class _FavoriteWordsScreenState extends State<FavoriteWordsScreen> {
                   alignment: Alignment.center,
                   child: Text(
                     "You don't have favorite words yet!",
-                    style: Theme.of(context).textTheme.bodyText1,
+                    style: Theme.of(context).textTheme.bodyText2!.copyWith(fontSize: 15),
                   ),
                 );
               } else {
@@ -65,7 +65,7 @@ class _FavoriteWordsScreenState extends State<FavoriteWordsScreen> {
                     BlocProvider.of<FavWordsBloc>(context).favWords!);
               }
             }
-            return errorView(context);
+            return errorView();
           }),
     );
   }

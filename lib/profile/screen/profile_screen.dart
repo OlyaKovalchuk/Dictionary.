@@ -1,4 +1,5 @@
 import 'package:Dictionary/authentication/screens/login_screen.dart';
+import 'package:Dictionary/cards/views/error_view.dart';
 import 'package:Dictionary/cards/widgets/cardDecoration/indicator_decoration.dart';
 import 'package:Dictionary/profile/bloc/profile_bloc.dart';
 import 'package:Dictionary/profile/bloc/profile_event.dart';
@@ -23,7 +24,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
           return _buildCircularIndicator();
         } else if (state is SuccessProfile) {
           return _buildUserData(state);
-        } else if (state is ErrorProfile) {}
+        } else if (state is ErrorProfile) {
+          return errorView();
+        }
 
         return _buildCircularIndicator();
       },

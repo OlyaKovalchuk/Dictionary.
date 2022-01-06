@@ -45,18 +45,13 @@ void main() async {
   ));
 }
 
-class SplashScreen extends StatefulWidget {
+class SplashScreen extends StatelessWidget {
   final UserRepository _userRepository;
 
   SplashScreen({required UserRepository userRepository})
       : _userRepository = userRepository;
 
-  @override
-  State<SplashScreen> createState() => _SplashScreenState();
-}
 
-class _SplashScreenState extends State<SplashScreen> {
-  @override
   Widget build(BuildContext context) {
     return MaterialApp(
         theme: themeData,
@@ -70,7 +65,7 @@ class _SplashScreenState extends State<SplashScreen> {
         },
         home: SplashScreenView(
             navigateRoute: HomeScreen(
-              userRepository: widget._userRepository,
+              userRepository: _userRepository,
             ),
             duration: 3,
             text: 'Dictionary.',

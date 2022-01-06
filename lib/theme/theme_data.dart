@@ -13,7 +13,6 @@ final TextTheme _textTheme = TextTheme(
   subtitle1: TextStyle(fontSize: 35, color: greyDarkColor),
   // word
   subtitle2: TextStyle(
-    fontFamily: ('Futura'),
     fontSize: 20,
     fontWeight: FontWeight.bold,
     foreground: Paint()
@@ -28,7 +27,6 @@ final TextTheme _textTheme = TextTheme(
   bodyText2:
       TextStyle(color: greyColor, fontSize: 15, fontWeight: FontWeight.bold),
   button: TextStyle(
-      fontFamily: ('Futura'),
       fontSize: 20,
       fontWeight: FontWeight.bold,
       color: Colors.white),
