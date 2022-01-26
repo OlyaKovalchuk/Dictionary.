@@ -6,7 +6,7 @@
 3. Use may search to find new words.
 4. You can create an account;
 5. You can also add a word to bookmarks;
-<img src="https://user-images.githubusercontent.com/82866898/151251131-dd206fb7-9c1b-4449-b167-59b7275de479.png" width="500" height="250">
+<img src="https://user-images.githubusercontent.com/82866898/151251131-dd206fb7-9c1b-4449-b167-59b7275de479.png" width="250" height="500">
 <img src="https://user-images.githubusercontent.com/82866898/151251134-54a4683a-cff9-4a60-9ac3-6b37a64e6ad7.png" width="100" height="100">
 <img src="https://user-images.githubusercontent.com/82866898/151251138-2df89b2f-e6f2-43bf-a048-f1b161706bf7.png" width="100" height="100">
 <img src="https://user-images.githubusercontent.com/82866898/151251140-b3da7617-a350-47ac-93ac-5e8c41be320b.png" width="100" height="100">
