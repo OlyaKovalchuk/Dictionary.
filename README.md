@@ -1,4 +1,4 @@
-# <img src="https://user-images.githubusercontent.com/82866898/151253001-039e25f4-2dc0-4e5c-b494-ee66a1bdf995.png" width="40" height="40"> Discription
+# <img src="https://user-images.githubusercontent.com/82866898/151253001-039e25f4-2dc0-4e5c-b494-ee66a1bdf995.png" width="35" height="35">   Discription
 
 
 1. You can learn new words by swiping the cards. 
