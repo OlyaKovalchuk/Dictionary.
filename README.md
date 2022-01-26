@@ -3,11 +3,10 @@
 
 1. You can learn new words by swiping the cards. 
 2. You can look up meanings and definitions of words by clicking on the card.
-
-3. Use may search to find new words.
-
+3. Use search to find new words.
 4. You can create an account;
 5. You can also add a word to bookmarks;
+
 <p float="left">
 <img src="https://user-images.githubusercontent.com/82866898/151251144-4f98d646-accc-4476-9fbc-b7675a5add05.png" width="250" height="500">
 <img src="https://user-images.githubusercontent.com/82866898/151251131-dd206fb7-9c1b-4449-b167-59b7275de479.png" width="250" height="500">
