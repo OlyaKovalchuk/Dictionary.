@@ -1,10 +1,11 @@
-# Discription
+# [icon_app](https://user-images.githubusercontent.com/82866898/151251841-f6a99091-d013-4b16-b931-ef8175a26870.png) Discription
 
 
 1. You can learn new words by swiping the cards. 
 2. You can look up meanings and definitions of words by clicking on the card.
 3. Use may search to find new words.
-4. You can create an account;
+4. You can create an account;![icon_app](https://user-images.githubusercontent.com/82866898/151251841-f6a99091-d013-4b16-b931-ef8175a26870.png)
+
 5. You can also add a word to bookmarks;
 
 ![alt text](https://user-images.githubusercontent.com/82866898/151251131-dd206fb7-9c1b-4449-b167-59b7275de479.png) ![alt text](https://user-images.githubusercontent.com/82866898/151251134-54a4683a-cff9-4a60-9ac3-6b37a64e6ad7.png)
