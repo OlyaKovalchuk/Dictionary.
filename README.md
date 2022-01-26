@@ -1,8 +1,9 @@
-# <img src="https://user-images.githubusercontent.com/82866898/151252857-4de1d2c4-f570-40a8-8024-126dc9f1de8e.png" width="30" height="30"> Discription
+# <img src="https://user-images.githubusercontent.com/82866898/151253001-039e25f4-2dc0-4e5c-b494-ee66a1bdf995.png" width="30" height="30"> Discription
 
 
 1. You can learn new words by swiping the cards. 
 2. You can look up meanings and definitions of words by clicking on the card.
+
 3. Use may search to find new words.
 
 4. You can create an account;
