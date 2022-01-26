@@ -3,22 +3,24 @@ import 'package:Dictionary/authentication/service/firebase_auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 abstract class ProfileService {
-  Future<UserData?> getUserData() async {}
+  Future<UserData?> getUserData();
 
-  Future singOut() async {}
+  Future<User?> singOut();
 }
 
 class ProfileServiceImpl extends ProfileService {
   FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   late UserRepository _userRepositoryImpl;
 
+  @override
   Future<UserData?> getUserData() async {
     User? user = _firebaseAuth.currentUser;
     return UserData(
         name: user!.displayName!, email: user.email!, photoURL: user.photoURL!);
   }
 
-  Future<User?> signOut() async {
+  @override
+  Future<User?> singOut() async {
     await _userRepositoryImpl.signOut();
   }
 }
