@@ -11,44 +11,41 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class SearchScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocListener<WordSearchBloc, WordSearchState>(
-      listener: (_, state) {
+    return BlocConsumer<WordSearchBloc, WordSearchState>(
+      listener: (context, state) {
         if (state is WordSearchError) {
           return errorOutput(
               error: 'There is no such word in the dictionary',
               context: context);
         }
       },
-      child: BlocBuilder<WordSearchBloc, WordSearchState>(
-        builder: (_, state) {
-          if (state is WordSearchLoading) {
-            return indicatorCircular();
-          }
-          if (state is WordSearchLoaded) {
-            return Column(children: [
-              Padding(
-                padding: EdgeInsets.symmetric(
-                  vertical: 20,
-                ),
-                child: Text(
-                  state.response.word,
-                  style: Theme.of(context).textTheme.subtitle1,
-                  textAlign: TextAlign.center,
-                ),
+      builder: (_, state) {
+        if (state is WordSearchLoading) {
+          return indicatorCircular();
+        }
+        if (state is WordSearchLoaded) {
+          return Column(children: [
+            Padding(
+              padding: EdgeInsets.symmetric(
+                vertical: 20,
               ),
-              Expanded(
-                child:
-                    wordInfo(state.response, greyLightColor.withOpacity(0.3)),
+              child: Text(
+                state.response.word,
+                style: Theme.of(context).textTheme.subtitle1,
+                textAlign: TextAlign.center,
               ),
-            ]);
-          }
-          if (state is WordSearchEmpty) {
-            return emptyView();
-          }
-
+            ),
+            Expanded(
+              child: wordInfo(state.response, greyLightColor.withOpacity(0.3)),
+            ),
+          ]);
+        }
+        if (state is WordSearchEmpty) {
           return emptyView();
-        },
-      ),
+        }
+
+        return emptyView();
+      },
     );
   }
 }

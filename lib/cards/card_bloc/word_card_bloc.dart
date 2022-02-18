@@ -6,16 +6,16 @@ import 'package:Dictionary/cards/repository/word_data.dart';
 import 'package:Dictionary/favorite_words/model/words_model.dart';
 import 'package:bloc/bloc.dart';
 import 'package:Dictionary/favorite_words/service/favorite_words_service.dart';
-import 'package:english_words/english_words.dart';
+import 'package:list_of_words/list_of_words.dart';
 
 class WordCardBloc extends Bloc<WordEvent, WordCardStackState> {
-  final Repository? repository;
+  final Repository repository;
   List<WordCardState> cardStates = [];
   final FavWordsService favWordsService;
 
   List<SearchResponse> favWords = [];
 
-  WordCardBloc({this.repository, required this.favWordsService})
+  WordCardBloc({required this.repository, required this.favWordsService})
       : super(WordCardStackState(wordCardStates: []));
 
   @override
@@ -35,7 +35,7 @@ class WordCardBloc extends Bloc<WordEvent, WordCardStackState> {
   Stream<WordCardStackState> fetchWord() async* {
     try {
       final word = _randomWord();
-      final SearchResponse response = await repository!.search(word);
+      final SearchResponse response = await repository.search(word);
       final favWord = WordData(
           word: response.word, audio: response.phonetics?[0].audio ?? '');
       print(favWord);
@@ -51,7 +51,7 @@ class WordCardBloc extends Bloc<WordEvent, WordCardStackState> {
 
   Stream<WordCardStackState> fetchFavWords(WordData word) async* {
     try {
-      final SearchResponse response = await repository!.search(word.word);
+      final SearchResponse response = await repository.search(word.word);
       final favWord = WordData(
           word: response.word, audio: response.phonetics?[0].audio ?? '');
       print(favWord);
@@ -67,7 +67,8 @@ class WordCardBloc extends Bloc<WordEvent, WordCardStackState> {
   }
 
   _randomWord() {
-    final index = Random().nextInt(nouns.length - 1);
-    return nouns[index];
+    final index = Random().nextInt(english_nouns.length - 1);
+    print(english_nouns[index]);
+    return english_nouns[index];
   }
 }

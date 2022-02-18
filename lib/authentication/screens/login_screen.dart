@@ -28,15 +28,13 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener(
+    return BlocConsumer(
       bloc: _loginBloc,
       listener: (context, LoginState state) {
         if (state.isFailure) {
           return errorOutput(error: state.errorText!, context: context);
         }
       },
-      child: BlocBuilder(
-          bloc: _loginBloc,
           builder: (context, LoginState state) {
             if (state.isSuccess && FirebaseAuth.instance.currentUser != null) {
               return MainScreen();
@@ -127,7 +125,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ],
                   ),
                 ));
-          }),
+          },
     );
   }
 }

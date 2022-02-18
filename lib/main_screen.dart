@@ -21,7 +21,6 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-
   UserRepository? userRepository;
   PageController pageController = PageController(
     keepPage: true,
@@ -31,13 +30,13 @@ class _MainScreenState extends State<MainScreen> {
 
   final Connectivity _connectivity = Connectivity();
   late StreamSubscription<ConnectivityResult> _connectivitySubscription;
+
   @override
   void initState() {
     _connectivitySubscription =
         _connectivity.onConnectivityChanged.listen(_updateConnectionStatus);
     super.initState();
     initConnectivity();
-
   }
 
   @override
@@ -45,14 +44,14 @@ class _MainScreenState extends State<MainScreen> {
     _connectivitySubscription.cancel();
     super.dispose();
   }
+
   Future<void> initConnectivity() async {
     late ConnectivityResult connectivityResult;
     try {
-       connectivityResult = await (Connectivity().checkConnectivity());
+      connectivityResult = await (Connectivity().checkConnectivity());
       if (connectivityResult == ConnectivityResult.none) {
-        errorOutput(error: 'Check your internet connection', context: context) ;
+        errorOutput(error: 'Check your internet connection', context: context);
       }
-
     } on PlatformException catch (e) {
       developer.log("Couldn\'t check connectivity status", error: e);
       return;
@@ -63,7 +62,9 @@ class _MainScreenState extends State<MainScreen> {
 
     return _updateConnectionStatus(connectivityResult);
   }
+
   ConnectivityResult _connectionStatus = ConnectivityResult.none;
+
   Future<void> _updateConnectionStatus(ConnectivityResult result) async {
     setState(() {
       _connectionStatus = result;
@@ -84,7 +85,7 @@ class _MainScreenState extends State<MainScreen> {
     } else if (selectedPage == 1) {
       return buildAppBar(context: context);
     } else if (selectedPage == 2) {
-      return buildAppBar(title: Text('Favorite Words'),context: context);
+      return buildAppBar(title: Text('Favorite Words'), context: context);
     } else if (selectedPage == 3) {
       return buildAppBar(title: textFieldBoard(context), context: context);
     }
@@ -106,6 +107,7 @@ class _MainScreenState extends State<MainScreen> {
           ],
         ),
         extendBody: true,
-        bottomNavigationBar: bottomNavigationBar(selectedPage: selectedPage, onTap: _onItemTapped));
+        bottomNavigationBar: bottomNavigationBar(
+            selectedPage: selectedPage, onTap: _onItemTapped));
   }
 }
