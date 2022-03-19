@@ -1,3 +1,4 @@
+import 'package:Dictionary/cards/model/search_response.dart';
 import 'package:Dictionary/cards/views/empty_view.dart';
 import 'package:Dictionary/cards/views/word_info_view.dart';
 import 'package:Dictionary/cards/widgets/cardDecoration/indicator_decoration.dart';
@@ -24,21 +25,9 @@ class SearchScreen extends StatelessWidget {
           return indicatorCircular();
         }
         if (state is WordSearchLoaded) {
-          return Column(children: [
-            Padding(
-              padding: EdgeInsets.symmetric(
-                vertical: 20,
-              ),
-              child: Text(
-                state.response.word,
-                style: Theme.of(context).textTheme.subtitle1,
-                textAlign: TextAlign.center,
-              ),
-            ),
-            Expanded(
-              child: wordInfo(state.response, greyLightColor.withOpacity(0.3)),
-            ),
-          ]);
+          return WordInfo(
+            response: state.response,
+          );
         }
         if (state is WordSearchEmpty) {
           return emptyView();
@@ -47,5 +36,31 @@ class SearchScreen extends StatelessWidget {
         return emptyView();
       },
     );
+  }
+}
+
+class WordInfo extends StatelessWidget {
+  final SearchResponse response;
+
+  WordInfo({Key? key, required this.response}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(children: [
+      Padding(
+        padding: const EdgeInsets.symmetric(
+          vertical: 20,
+        ),
+        child: Text(
+          response.word,
+          style: Theme.of(context).textTheme.subtitle1,
+          textAlign: TextAlign.center,
+        ),
+      ),
+      Expanded(
+        child: BackCard(
+            response: response, color: greyLightColor.withOpacity(0.3)),
+      ),
+    ]);
   }
 }

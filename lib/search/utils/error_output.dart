@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 
 errorOutput({required String error, required BuildContext context}) {
-  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-width: 300,
+  return ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+    width: 300,
     content: Text(
       error,
       style: TextStyle(color: Theme.of(context).colorScheme.surface),
       softWrap: true,
       textAlign: TextAlign.center,
     ),
-   // margin: EdgeInsets.all(10),
     behavior: SnackBarBehavior.floating,
     shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(20)),

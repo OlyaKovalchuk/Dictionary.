@@ -51,7 +51,6 @@ class SplashScreen extends StatelessWidget {
   SplashScreen({required UserRepository userRepository})
       : _userRepository = userRepository;
 
-
   Widget build(BuildContext context) {
     return MaterialApp(
         theme: themeData,

@@ -2,14 +2,30 @@ import 'package:Dictionary/theme/theme_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
-Widget bottomNavigationBar(
-        {required int selectedPage, required Function(int)? onTap}) =>
-    _containerForNavBar(
-        child: _navigationBar(selectedPage: selectedPage, onTap: onTap));
+class BottomBar extends StatelessWidget {
+  final int selectedPage;
+  final Function(int)? onTap;
 
-Widget _navigationBar(
-        {required int selectedPage, required Function(int)? onTap}) =>
-    SalomonBottomBar(
+  BottomBar({Key? key, required this.selectedPage, required this.onTap})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ContainerNavBar(
+        child: NavigationBar(selectedPage: selectedPage, onTap: onTap));
+  }
+}
+
+class NavigationBar extends StatelessWidget {
+  final int selectedPage;
+  final Function(int)? onTap;
+
+  NavigationBar({Key? key, required this.selectedPage, required this.onTap})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SalomonBottomBar(
       onTap: onTap,
       unselectedItemColor: greyDarkColor,
       selectedItemColor: redColor,
@@ -29,9 +45,18 @@ Widget _navigationBar(
         SalomonBottomBarItem(icon: Icon(Icons.search), title: Text('Search')),
       ],
     );
+  }
+}
 
-Widget _containerForNavBar({required Widget child}) => Container(
-      margin: EdgeInsets.symmetric(vertical: 20, horizontal: 15),
+class ContainerNavBar extends StatelessWidget {
+  final Widget child;
+
+  ContainerNavBar({Key? key, required this.child}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 15),
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(30),
@@ -40,7 +65,9 @@ Widget _containerForNavBar({required Widget child}) => Container(
                 color: Colors.grey.withOpacity(0.3),
                 spreadRadius: 5,
                 blurRadius: 7,
-                offset: Offset(0, 3))
+                offset: const Offset(0, 3))
           ]),
       child: child,
     );
+  }
+}

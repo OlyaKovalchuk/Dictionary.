@@ -107,7 +107,7 @@ class _MainScreenState extends State<MainScreen> {
           ],
         ),
         extendBody: true,
-        bottomNavigationBar: bottomNavigationBar(
-            selectedPage: selectedPage, onTap: _onItemTapped));
+        bottomNavigationBar:
+            BottomBar(selectedPage: selectedPage, onTap: _onItemTapped));
   }
 }

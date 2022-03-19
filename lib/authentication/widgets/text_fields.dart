@@ -1,6 +1,24 @@
 import 'package:Dictionary/theme/theme_colors.dart';
 import 'package:flutter/material.dart';
 
+//TODO reformat code
+// class TextFieldBuilder extends StatelessWidget {
+//   String? errorText;
+//       FocusNode? focusNode;
+//    TextEditingController controller;
+//    TextInputType textInputType;
+//    String hint;
+//   String? validator(String? val){}
+//   onSubmit(String str){}
+//   const TextFieldBuilder({Key? key, this.errorText, this.focusNode, required this.controller, required this.textInputType, required this.hint, required this., }) : super(key: key);
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container();
+//   }
+// }
+//
+
 buildTextField({
   String? errorText,
   FocusNode? focusNode,

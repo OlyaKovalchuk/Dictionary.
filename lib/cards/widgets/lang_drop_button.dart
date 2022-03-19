@@ -1,10 +1,11 @@
-import 'package:Dictionary/cards/card_bloc/word_card_bloc.dart';
+import 'package:Dictionary/cards/bloc/card_bloc.dart';
 import 'package:flutter/material.dart';
 
 class LangDropDownButton extends StatefulWidget {
+  final WordCardBloc wordCardBloc;
 
- final WordCardBloc wordCardBloc;
   LangDropDownButton({required this.wordCardBloc});
+
   @override
   State<LangDropDownButton> createState() => _LangDropDownButtonState();
 }
@@ -32,11 +33,14 @@ class _LangDropDownButtonState extends State<LangDropDownButton> {
 
             print(value);
 
-          //  widget.wordCardBloc.add(WordChangeLang(lang: langes[value]!));
+            //  widget.wordCardBloc.add(WordChangeLang(lang: langes[value]!));
           },
           items: langes.keys.map((lang) {
             return DropdownMenuItem(
-              child: Text(lang, style: TextStyle(fontSize: 16),),
+              child: Text(
+                lang,
+                style: TextStyle(fontSize: 16),
+              ),
               value: lang,
             );
           }).toList()),

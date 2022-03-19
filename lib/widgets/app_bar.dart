@@ -9,11 +9,17 @@ buildAppBar(
   return AppBar(
     automaticallyImplyLeading: false,
     title: title ?? Text('Dictionary.'),
-    flexibleSpace: _gradientLinear(),
+    flexibleSpace: GradientContainer(),
     leading: leading,
     actions: actions,
   );
 }
 
-Container _gradientLinear() =>
-    Container(decoration: BoxDecoration(gradient: gradientColor));
+class GradientContainer extends StatelessWidget {
+  const GradientContainer({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(decoration: BoxDecoration(gradient: gradientColor));
+  }
+}

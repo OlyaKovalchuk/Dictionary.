@@ -1,8 +1,8 @@
 import 'package:Dictionary/search/utils/error_output.dart';
 import 'package:Dictionary/utils/audio_fun.dart';
-import 'package:Dictionary/authentication/widgets/textFields.dart';
-import 'package:Dictionary/cards/card_bloc/word_card_bloc.dart';
-import 'package:Dictionary/cards/card_bloc/word_card_event.dart';
+import 'package:Dictionary/authentication/widgets/text_fields.dart';
+import 'package:Dictionary/cards/bloc/card_bloc.dart';
+import 'package:Dictionary/cards/bloc/card_event.dart';
 import 'package:Dictionary/cards/repository/word_data.dart';
 import 'package:Dictionary/cards/widgets/cards.dart';
 import 'package:Dictionary/cards/views/error_view.dart';
@@ -57,7 +57,10 @@ class _FavoriteWordsScreenState extends State<FavoriteWordsScreen> {
                   alignment: Alignment.center,
                   child: Text(
                     "You don't have favorite words yet!",
-                    style: Theme.of(context).textTheme.bodyText2!.copyWith(fontSize: 15),
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyText2!
+                        .copyWith(fontSize: 15),
                   ),
                 );
               } else {
@@ -70,6 +73,7 @@ class _FavoriteWordsScreenState extends State<FavoriteWordsScreen> {
     );
   }
 
+  // TODO reformat code
   _buildCircularIndicator() => Container(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
@@ -122,8 +126,10 @@ class _FavoriteWordsScreenState extends State<FavoriteWordsScreen> {
             words.remove(words[0]);
             words.add(word);
           }
-          _buildDialog(
-              buildCards(WordSwipeFavWords(words), wordBloc, _controller));
+          _buildDialog(CardsBuilder(
+              event: WordSwipeFavWords(words),
+              wordBloc: wordBloc,
+              controller: _controller));
         },
         child: Text(
           toBeginningOfSentenceCase(

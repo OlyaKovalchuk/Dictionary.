@@ -1,6 +1,6 @@
 import 'dart:math';
-import 'package:Dictionary/cards/card_bloc/word_card_event.dart';
-import 'package:Dictionary/cards/card_bloc/word_card_states.dart';
+import 'package:Dictionary/cards/bloc/card_event.dart';
+import 'package:Dictionary/cards/bloc/card_states.dart';
 import 'package:Dictionary/cards/model/search_response.dart';
 import 'package:Dictionary/cards/repository/word_data.dart';
 import 'package:Dictionary/favorite_words/model/words_model.dart';

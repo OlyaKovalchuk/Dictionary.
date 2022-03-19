@@ -12,6 +12,9 @@ const LinearGradient gradientColor = LinearGradient(
     end: Alignment.bottomCenter,
     colors: [redColor, redLightColor]);
 
+Paint gradientTextColor = Paint()
+  ..shader = gradientColor.createShader(Rect.fromLTWH(0.0, 0.0, 200.0, 70.0));
+
 const colorScheme = ColorScheme(
     background: Colors.white,
     brightness: Brightness.light,

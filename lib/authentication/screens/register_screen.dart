@@ -6,9 +6,8 @@ import 'package:Dictionary/authentication/utils/validators.dart';
 import 'package:Dictionary/authentication/widgets/auth_widgets.dart';
 import 'package:Dictionary/main_screen.dart';
 import 'package:Dictionary/search/utils/error_output.dart';
-import 'package:Dictionary/widgets/app_bar.dart';
-import 'package:Dictionary/authentication/widgets/textFields.dart';
-import 'package:Dictionary/authentication/widgets/titileText.dart';
+import 'package:Dictionary/authentication/widgets/text_fields.dart';
+import 'package:Dictionary/authentication/widgets/title_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -43,24 +42,23 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
         return Scaffold(
           resizeToAvoidBottomInset: false,
-          appBar: buildAppBar(
-              context: context,
-              leading: GestureDetector(
-                  onTap: () => Navigator.pop(context),
-                  child: Icon(
-                    Icons.arrow_back_ios_rounded,
-                    color: Colors.white,
-                  )),
-              actions: null),
+          appBar: AppBar(
+            leading: GestureDetector(
+                onTap: () => Navigator.pop(context),
+                child: Icon(
+                  Icons.arrow_back_ios_rounded,
+                  color: Colors.white,
+                )),
+          ),
           body: Padding(
             padding: const EdgeInsets.symmetric(vertical: 50, horizontal: 20),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                buildTitleText(
-                    text: 'Create a new account',
-                    fontSize: 30,
-                    context: context),
+                TextTitleBuilder(
+                  text: 'Create a new account',
+                  fontSize: 30,
+                ),
                 Form(
                   key: _key,
                   child: Column(
@@ -107,23 +105,23 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
                 Align(
                   alignment: Alignment.bottomCenter,
-                  child: buildAuthButtons(
-                      onTapSign: () {
-                        if (_key.currentState!.validate()) {
-                          _regBloc.add(RegWithCredentialsPressed(
-                              name: _controllerName.text,
-                              email: _controllerEmail.text,
-                              password: _controllerPassword.text));
-                        }
-                      },
-                      onTapSignWithGoogle: () {
-                        _regBloc.add(RegWithGoogle());
-                      },
-                      onTapSignWithFacebook: () {
-                        _regBloc.add(RegWithFacebook());
-                      },
-                      isRegistrationOrLogin: true,
-                      context: context),
+                  child: AuthButtons(
+                    onTapSign: () {
+                      if (_key.currentState!.validate()) {
+                        _regBloc.add(RegWithCredentialsPressed(
+                            name: _controllerName.text,
+                            email: _controllerEmail.text,
+                            password: _controllerPassword.text));
+                      }
+                    },
+                    onTapSignWithGoogle: () {
+                      _regBloc.add(RegWithGoogle());
+                    },
+                    onTapSignWithFacebook: () {
+                      _regBloc.add(RegWithFacebook());
+                    },
+                    isRegistrationOrLogin: true,
+                  ),
                 )
               ],
             ),

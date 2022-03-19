@@ -2,11 +2,16 @@ import 'package:flutter/material.dart';
 
 import '../../theme/theme_colors.dart';
 
-buildGradientButton(
-        {required void onTap()?,
-        required String title,
-        required BuildContext context}) =>
-    GestureDetector(
+class GradientButtonBuilder extends StatelessWidget {
+  final void Function()? onTap;
+  final String title;
+
+  GradientButtonBuilder({Key? key, required this.onTap, required this.title})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
         onTap: onTap,
         child: Container(
           alignment: Alignment.center,
@@ -21,3 +26,5 @@ buildGradientButton(
             style: Theme.of(context).textTheme.button,
           ),
         ));
+  }
+}

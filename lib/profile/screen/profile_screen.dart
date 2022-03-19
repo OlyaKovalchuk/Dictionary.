@@ -50,7 +50,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     BlocProvider.of<ProfileBloc>(context).userData!.photoURL +
                         '?width=9999'),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 50,
               ),
               Text(
@@ -60,9 +60,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     .bodyText2!
                     .copyWith(fontSize: 20, color: greyDarkColor),
               ),
-              Spacer(),
-              buildGradientButton(
-                  context: context,
+              const Spacer(),
+              GradientButtonBuilder(
                   onTap: () async {
                     BlocProvider.of<ProfileBloc>(context).add(SingOut());
                     Navigator.pushAndRemoveUntil(
