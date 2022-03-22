@@ -8,7 +8,7 @@ buildAppBar(
     required BuildContext context}) {
   return AppBar(
     automaticallyImplyLeading: false,
-    title: title ?? Text('Dictionary.'),
+    title: title,
     flexibleSpace: GradientContainer(),
     leading: leading,
     actions: actions,

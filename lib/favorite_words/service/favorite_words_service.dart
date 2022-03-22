@@ -36,7 +36,6 @@ class FavWordsServiceImpl implements FavWordsService {
   Future addToFavWords(WordData word) async {
     try {
       FavoriteWordsData? _favoriteWords = await getFavWords();
-      print(word);
       if (_favoriteWords != null && !_favoriteWords.words.contains(word.word)) {
         _favoriteWords.words.add(word);
         await _fireFavoriteWordsDataRepo.updateFavoriteWords(_favoriteWords);

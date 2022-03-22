@@ -30,10 +30,10 @@ class SearchScreen extends StatelessWidget {
           );
         }
         if (state is WordSearchEmpty) {
-          return emptyView();
+          return EmptyView();
         }
 
-        return emptyView();
+        return EmptyView();
       },
     );
   }

@@ -83,11 +83,11 @@ class _MainScreenState extends State<MainScreen> {
     if (selectedPage == 0) {
       return buildAppBar(title: Text('Profile'), context: context);
     } else if (selectedPage == 1) {
-      return buildAppBar(context: context);
+      return buildAppBar(title: Text('Dictionary.'), context: context);
     } else if (selectedPage == 2) {
       return buildAppBar(title: Text('Favorite Words'), context: context);
     } else if (selectedPage == 3) {
-      return buildAppBar(title: textFieldBoard(context), context: context);
+      return buildAppBar(title: TextFieldBoard(), context: context);
     }
   }
 

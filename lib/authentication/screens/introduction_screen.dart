@@ -15,7 +15,7 @@ class _IntroductionScreenState extends State<IntroductionScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(alignment: Alignment.center, children: [
-        _buildBackgroundImage(),
+        BGImage(),
         Padding(
           padding: const EdgeInsets.only(top: 70.0, bottom: 50),
           child: Column(
@@ -32,14 +32,6 @@ class _IntroductionScreenState extends State<IntroductionScreen> {
       ]),
     );
   }
-
-  // TODO: add constant for images
-  _buildBackgroundImage() => SvgPicture.asset(
-        'assets/images/illustration_sign_up.svg',
-        fit: BoxFit.cover,
-        width: 250,
-        height: 250,
-      );
 }
 
 class HelloText extends StatelessWidget {
@@ -109,6 +101,20 @@ class LogInButton extends StatelessWidget {
                   .copyWith(fontSize: 17)),
         ],
       ),
+    );
+  }
+}
+
+class BGImage extends StatelessWidget {
+  const BGImage({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SvgPicture.asset(
+      'assets/images/illustration_sign_up.svg',
+      fit: BoxFit.cover,
+      width: 250,
+      height: 250,
     );
   }
 }

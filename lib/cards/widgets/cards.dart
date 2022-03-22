@@ -40,7 +40,7 @@ class CardsBuilder extends StatelessWidget {
                 WordCardState wordState = wordStackState.wordCardStates[index];
 
                 if (wordState is Error) {
-                  return errorView();
+                  return ErrorView();
                 }
                 if (wordState is Loading) {
                   return LoadingView();
@@ -50,7 +50,7 @@ class CardsBuilder extends StatelessWidget {
                       response: wordState.word,
                       isFavorite: wordState.isFavorited);
                 }
-                return emptyView();
+                return EmptyView();
               });
         });
   }

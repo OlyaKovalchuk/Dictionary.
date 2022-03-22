@@ -8,6 +8,7 @@ import 'package:Dictionary/main_screen.dart';
 import 'package:Dictionary/search/utils/error_output.dart';
 import 'package:Dictionary/authentication/widgets/text_fields.dart';
 import 'package:Dictionary/authentication/widgets/title_text.dart';
+import 'package:Dictionary/widgets/app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -42,7 +43,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
         return Scaffold(
           resizeToAvoidBottomInset: false,
-          appBar: AppBar(
+          appBar: buildAppBar(
+            context: context,
             leading: GestureDetector(
                 onTap: () => Navigator.pop(context),
                 child: Icon(
@@ -63,7 +65,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   key: _key,
                   child: Column(
                     children: [
-                      buildTextField(
+                      TextFieldBuilder(
                         controller: _controllerName,
                         textInputType: TextInputType.text,
                         hint: 'Name',
@@ -75,7 +77,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       SizedBox(
                         height: 15,
                       ),
-                      buildTextField(
+                      TextFieldBuilder(
                         focusNode: _focusNode,
                         controller: _controllerPassword,
                         textInputType: TextInputType.visiblePassword,
@@ -90,7 +92,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       SizedBox(
                         height: 15,
                       ),
-                      buildTextField(
+                      TextFieldBuilder(
                         controller: _controllerEmail,
                         textInputType: TextInputType.emailAddress,
                         hint: 'Email',

@@ -3,8 +3,6 @@ import 'package:Dictionary/cards/model/search_response.dart';
 import 'package:http/http.dart';
 
 class Repository {
-  Repository();
-
   search(String word) async {
     try {
       var url =

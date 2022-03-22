@@ -37,10 +37,8 @@ class FireUsersDataRepoImpl implements FireUsersDataRepo {
   setUser(UserData userData) async {
     print(userData);
     try {
-      // yes
       await _usersCollection.doc(userData.uid).set(userData.onlyTextMap());
 
-      // Prevent errors on large or corrupted data
       await _usersCollection.doc(userData.uid).update(userData.toMap());
     } catch (e) {
       print(e);

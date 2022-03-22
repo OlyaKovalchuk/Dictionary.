@@ -16,16 +16,16 @@ Paint gradientTextColor = Paint()
   ..shader = gradientColor.createShader(Rect.fromLTWH(0.0, 0.0, 200.0, 70.0));
 
 const colorScheme = ColorScheme(
-    background: Colors.white,
+    background: greyToWhite,
     brightness: Brightness.light,
-    error: Colors.red,
+    error: redColor,
     secondary: redLightColor,
     secondaryVariant: redLightColor,
     primary: redColor,
     primaryVariant: redLightColor,
-    surface: Colors.white,
-    onSurface: Colors.grey,
+    surface: greyToWhite,
+    onSurface: greyColor,
     onSecondary: redLightColor,
     onPrimary: redColor,
     onBackground: redColor,
-    onError: Colors.white);
+    onError: redLightColor);

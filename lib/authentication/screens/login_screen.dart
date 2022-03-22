@@ -1,3 +1,4 @@
+import 'package:Dictionary/widgets/app_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -40,7 +41,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
         return Scaffold(
             resizeToAvoidBottomInset: false,
-            appBar: AppBar(
+            appBar: buildAppBar(
+              context: context,
               leading: GestureDetector(
                   onTap: () => Navigator.pushAndRemoveUntil(
                       context,
@@ -103,7 +105,7 @@ class EmailAndPasswordForm extends StatelessWidget {
       key: globalKey,
       child: Column(
         children: [
-          buildTextField(
+          TextFieldBuilder(
             focusNode: _focusNode,
             controller: controllerEmail,
             textInputType: TextInputType.emailAddress,
@@ -117,7 +119,7 @@ class EmailAndPasswordForm extends StatelessWidget {
           const SizedBox(
             height: 15,
           ),
-          buildTextField(
+          TextFieldBuilder(
               validator: (password) => Validators.validPassword(password),
               controller: controllerPassword,
               textInputType: TextInputType.visiblePassword,

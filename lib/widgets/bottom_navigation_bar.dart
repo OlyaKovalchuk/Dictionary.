@@ -6,7 +6,7 @@ class BottomBar extends StatelessWidget {
   final int selectedPage;
   final Function(int)? onTap;
 
-  BottomBar({Key? key, required this.selectedPage, required this.onTap})
+  const BottomBar({Key? key, required this.selectedPage, required this.onTap})
       : super(key: key);
 
   @override
@@ -20,7 +20,8 @@ class NavigationBar extends StatelessWidget {
   final int selectedPage;
   final Function(int)? onTap;
 
-  NavigationBar({Key? key, required this.selectedPage, required this.onTap})
+  const NavigationBar(
+      {Key? key, required this.selectedPage, required this.onTap})
       : super(key: key);
 
   @override
@@ -51,7 +52,7 @@ class NavigationBar extends StatelessWidget {
 class ContainerNavBar extends StatelessWidget {
   final Widget child;
 
-  ContainerNavBar({Key? key, required this.child}) : super(key: key);
+  const ContainerNavBar({Key? key, required this.child}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
