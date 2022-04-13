@@ -15,9 +15,7 @@ final TextTheme _textTheme = TextTheme(
   subtitle2: TextStyle(
     fontSize: 20,
     fontWeight: FontWeight.bold,
-    foreground: Paint()
-      ..shader =
-          gradientColor.createShader(Rect.fromLTWH(0.0, 0.0, 200.0, 70.0)),
+    foreground: gradientTextColor,
   ),
   bodyText1: TextStyle(
       fontFamily: 'Roboto',
@@ -26,10 +24,8 @@ final TextTheme _textTheme = TextTheme(
       fontWeight: FontWeight.normal),
   bodyText2:
       TextStyle(color: greyColor, fontSize: 15, fontWeight: FontWeight.bold),
-  button: TextStyle(
-      fontSize: 20,
-      fontWeight: FontWeight.bold,
-      color: Colors.white),
+  button:
+      TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
 );
 
 const AppBarTheme _appBarTheme = AppBarTheme(

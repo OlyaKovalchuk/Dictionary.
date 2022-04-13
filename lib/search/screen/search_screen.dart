@@ -1,6 +1,7 @@
+import 'package:Dictionary/cards/model/search_response.dart';
 import 'package:Dictionary/cards/views/empty_view.dart';
 import 'package:Dictionary/cards/views/word_info_view.dart';
-import 'package:Dictionary/cards/widgets/cardDecoration/indicator_decoration.dart';
+import 'package:Dictionary/cards/widgets/card_decoration/indicator_decoration.dart';
 import 'package:Dictionary/search/bloc/word_search_bloc.dart';
 import 'package:Dictionary/search/bloc/word_search_states.dart';
 import 'package:Dictionary/search/utils/error_output.dart';
@@ -11,44 +12,55 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class SearchScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocListener<WordSearchBloc, WordSearchState>(
-      listener: (_, state) {
+    return BlocConsumer<WordSearchBloc, WordSearchState>(
+      listener: (context, state) {
         if (state is WordSearchError) {
           return errorOutput(
               error: 'There is no such word in the dictionary',
               context: context);
         }
       },
-      child: BlocBuilder<WordSearchBloc, WordSearchState>(
-        builder: (_, state) {
-          if (state is WordSearchLoading) {
-            return indicatorCircular();
-          }
-          if (state is WordSearchLoaded) {
-            return Column(children: [
-              Padding(
-                padding: EdgeInsets.symmetric(
-                  vertical: 20,
-                ),
-                child: Text(
-                  state.response.word,
-                  style: Theme.of(context).textTheme.subtitle1,
-                  textAlign: TextAlign.center,
-                ),
-              ),
-              Expanded(
-                child:
-                    wordInfo(state.response, greyLightColor.withOpacity(0.3)),
-              ),
-            ]);
-          }
-          if (state is WordSearchEmpty) {
-            return emptyView();
-          }
+      builder: (_, state) {
+        if (state is WordSearchLoading) {
+          return IndicatorCircular();
+        }
+        if (state is WordSearchLoaded) {
+          return WordInfo(
+            response: state.response,
+          );
+        }
+        if (state is WordSearchEmpty) {
+          return EmptyView();
+        }
 
-          return emptyView();
-        },
-      ),
+        return EmptyView();
+      },
     );
+  }
+}
+
+class WordInfo extends StatelessWidget {
+  final SearchResponse response;
+
+  WordInfo({Key? key, required this.response}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(children: [
+      Padding(
+        padding: const EdgeInsets.symmetric(
+          vertical: 20,
+        ),
+        child: Text(
+          response.word,
+          style: Theme.of(context).textTheme.subtitle1,
+          textAlign: TextAlign.center,
+        ),
+      ),
+      Expanded(
+        child: BackCard(
+            response: response, color: greyLightColor.withOpacity(0.3)),
+      ),
+    ]);
   }
 }

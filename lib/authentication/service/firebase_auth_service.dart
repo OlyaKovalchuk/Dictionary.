@@ -7,16 +7,16 @@ import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 abstract class UserRepository {
-  Future signInWithCredentials(String email, String password);
+  Future<void> signInWithCredentials(String email, String password);
 
-  singUp(
+  Future<void> singUp(
       {required String email, required String name, required String password});
 
   Future<User?> signInWithGoogle();
 
   Future<User?> signInWithFacebook();
 
-  Future signOut();
+  Future<void> signOut();
 
   Future<bool> isSignedIn();
 
@@ -30,7 +30,7 @@ class UserRepositoryImpl implements UserRepository {
 
   FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
-  Future signInWithCredentials(String email, String password) async {
+  Future<void> signInWithCredentials(String email, String password) async {
     UserCredential userCredential = await _firebaseAuth
         .signInWithEmailAndPassword(email: email, password: password);
     print(userCredential);
@@ -73,8 +73,6 @@ class UserRepositoryImpl implements UserRepository {
         _user = _userCredential.user;
         _createNewUser(_user);
       } catch (e) {
-        print(e);
-
         return Future.error(e);
       }
     }
@@ -96,7 +94,7 @@ class UserRepositoryImpl implements UserRepository {
     return _user;
   }
 
-  Future signOut() async {
+  Future<void> signOut() async {
     await Future.wait([
       _firebaseAuth.signOut(),
       googleSignIn.signOut(),

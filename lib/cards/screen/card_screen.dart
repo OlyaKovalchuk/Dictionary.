@@ -1,5 +1,5 @@
-import 'package:Dictionary/cards/card_bloc/word_card_event.dart';
-import 'package:Dictionary/cards/card_bloc/word_card_bloc.dart';
+import 'package:Dictionary/cards/bloc/card_event.dart';
+import 'package:Dictionary/cards/bloc/card_bloc.dart';
 import 'package:Dictionary/cards/widgets/cards.dart';
 import 'package:Dictionary/favorite_words/service/favorite_words_service.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +28,8 @@ class _CardScreenState extends State<CardScreen> {
     return Scaffold(
       body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 30),
-          child: buildCards(WordSwipe(), wordBloc, _controller)),
+          child: CardsBuilder(
+              event: WordSwipe(), wordBloc: wordBloc, controller: _controller)),
     );
   }
 }

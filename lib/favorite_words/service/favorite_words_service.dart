@@ -8,9 +8,9 @@ abstract class FavWordsService {
 
   Future<bool> isFavWord(WordData word);
 
-  Future addToFavWords(WordData word);
+  Future<void> addToFavWords(WordData word);
 
-  Future deleteToFavWords(WordData word);
+  Future<void> deleteToFavWords(WordData word);
 }
 
 class FavWordsServiceImpl implements FavWordsService {
@@ -23,6 +23,7 @@ class FavWordsServiceImpl implements FavWordsService {
           .getUsersFavWords(firebaseAuth.currentUser!.uid);
     } catch (e) {
       print('Get User: $e');
+      throw Exception(e);
     }
   }
 
@@ -33,10 +34,9 @@ class FavWordsServiceImpl implements FavWordsService {
   }
 
   @override
-  Future addToFavWords(WordData word) async {
+  Future<void> addToFavWords(WordData word) async {
     try {
       FavoriteWordsData? _favoriteWords = await getFavWords();
-      print(word);
       if (_favoriteWords != null && !_favoriteWords.words.contains(word.word)) {
         _favoriteWords.words.add(word);
         await _fireFavoriteWordsDataRepo.updateFavoriteWords(_favoriteWords);
@@ -45,11 +45,12 @@ class FavWordsServiceImpl implements FavWordsService {
       }
     } catch (e) {
       print('Update: $e');
+      throw Exception(e);
     }
   }
 
   @override
-  Future deleteToFavWords(WordData word) async {
+  Future<void> deleteToFavWords(WordData word) async {
     try {
       FavoriteWordsData? _favoriteWords = await getFavWords();
       if (_favoriteWords != null && _favoriteWords.words.contains(word)) {
@@ -60,6 +61,7 @@ class FavWordsServiceImpl implements FavWordsService {
       }
     } catch (e) {
       print('Delete: $e');
+      throw Exception(e);
     }
   }
 }

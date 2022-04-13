@@ -2,35 +2,54 @@ import 'package:Dictionary/cards/model/search_response.dart';
 import 'package:Dictionary/theme/theme_colors.dart';
 import 'package:flutter/material.dart';
 
-Widget wordInfo(SearchResponse response, [Color? color]) => ListView.builder(
-    scrollDirection: Axis.vertical,
-    shrinkWrap: true,
-    itemCount: response.meanings.length,
-    itemBuilder: (BuildContext context, int index) => ListBody(
-          children: [
-            Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    height: 10,
-                  ),
-                  titleWord(
-                      response.meanings[index].partOfSpeech, context, color),
-                ]),
-            SizedBox(
-              height: 10,
-            ),
-            Padding(
-              padding: EdgeInsets.only(left: 20, right: 20),
-              child: Text(response.meanings[index].definitions[0].definition,
-                  style: Theme.of(context).textTheme.bodyText1),
-            )
-          ],
-        ));
+class BackCard extends StatelessWidget {
+  final SearchResponse response;
+  final Color? color;
 
-Widget titleWord(String partOfSpeech, BuildContext context, [Color? color]) =>
-    Container(
+  BackCard({Key? key, required this.response, this.color}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+        scrollDirection: Axis.vertical,
+        shrinkWrap: true,
+        itemCount: response.meanings.length,
+        itemBuilder: (BuildContext context, int index) => ListBody(
+              children: [
+                Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        height: 10,
+                      ),
+                      TitleWord(color,
+                          partOfSpeech: response.meanings[index].partOfSpeech),
+                    ]),
+                SizedBox(
+                  height: 10,
+                ),
+                Padding(
+                  padding: EdgeInsets.only(left: 20, right: 20),
+                  child: Text(
+                      response.meanings[index].definitions[0].definition,
+                      style: Theme.of(context).textTheme.bodyText1),
+                )
+              ],
+            ));
+  }
+}
+
+class TitleWord extends StatelessWidget {
+  final String partOfSpeech;
+  final Color? color;
+
+  TitleWord(this.color, {Key? key, required this.partOfSpeech})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
         alignment: Alignment.centerLeft,
         height: 30,
         width: double.infinity,
@@ -41,3 +60,5 @@ Widget titleWord(String partOfSpeech, BuildContext context, [Color? color]) =>
               textAlign: TextAlign.left,
               style: Theme.of(context).textTheme.subtitle2),
         ));
+  }
+}

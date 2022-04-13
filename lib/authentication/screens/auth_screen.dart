@@ -20,12 +20,10 @@ class HomeScreen extends StatelessWidget {
       bloc: AuthBloc(userRepository: _userRepository)..add(AuthStarted()),
       builder: (context, state) {
         if (state is AuthFailed) {
-          print('failed');
           return IntroductionScreen();
         }
 
         if (state is AuthOnSuccess) {
-          print('success');
           return MainScreen();
         }
 

@@ -46,12 +46,13 @@ class UserData {
   }
 
   factory UserData.fromMap(Map<String, dynamic> map) {
+    String urlPhoto =
+        'https://firebasestorage.googleapis.com/v0/b/point-citi.appspot.com/o/avatars%2Fempty_logo.svg?alt=media&token=c21ab355-6c25-4109-adc7-c0769926eac2';
     return UserData(
       uid: map['uid'],
       name: map['displayName'],
       email: map['email'],
-      photoURL: map['photoURL'] ??
-          'https://firebasestorage.googleapis.com/v0/b/point-citi.appspot.com/o/avatars%2Fempty_logo.svg?alt=media&token=c21ab355-6c25-4109-adc7-c0769926eac2',
+      photoURL: map['photoURL'] ?? urlPhoto,
     );
   }
 

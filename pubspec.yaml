@@ -29,12 +29,18 @@ dependencies:
   cloud_firestore: ^3.1.0
 
   #card
+  favorite_button: ^0.0.4
+  list_of_words: ^0.0.1
   flip_card: ^0.5.0
-  english_words: ^4.0.0
   just_audio: ^0.9.17
   swipable_stack: ^0.7.1
 
   #decoration
+  animations: ^2.0.1
+  salomon_bottom_bar: ^3.1.0
+  splash_screen_view: ^3.0.0
+  intl: ^0.17.0
+  cupertino_icons: ^1.0.1
   google_fonts: ^2.1.0
   flutter_svg: ^0.23.0+1
 
@@ -43,6 +49,7 @@ dependencies:
   equatable: ^2.0.3
 
   #api
+  connectivity_plus: ^2.2.0
   http: ^0.13.3
 
 
@@ -51,13 +58,11 @@ dependencies:
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-  animations: ^2.0.1
-  cupertino_icons: ^1.0.1
-  connectivity_plus: ^2.2.0
-  favorite_button: ^0.0.4
-  intl: ^0.17.0
-  salomon_bottom_bar: ^3.1.0
-  splash_screen_view: ^3.0.0
+
+
+
+
+
 
 
 dev_dependencies:
@@ -92,7 +97,6 @@ flutter:
     - assets/images/illustration_sign_up.svg
     - assets/icons/icon_google.png
     - assets/icons/icon_facebook.svg
-  #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

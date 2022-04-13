@@ -13,27 +13,29 @@ class FavoriteWordsButton extends StatelessWidget {
 
   FavoriteWordsButton({required this.word, required this.isFavorited});
 
- final FavWordsBloc _favWordsBloc = FavWordsBloc(FavWordsServiceImpl());
+  final FavWordsBloc _favWordsBloc = FavWordsBloc(FavWordsServiceImpl());
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder(
-        bloc: _favWordsBloc..add(InitialEvent()),
-        builder: (context, state) {
-          return FavoriteButton(
-              isFavorite: isFavorited,
-              iconSize: 30,
-              iconDisabledColor: redColor,
-              iconColor: redColor,
-              valueChanged: (_isFavorite) {
-                if (_isFavorite) {
-                  _favWordsBloc.add(AddToFavWordsEvent(word: word));
-                  _favWordsBloc.favWords!.add(word);
-                } else {
-                  _favWordsBloc.add(DeleteFavWordsEvent(word: word));
-                  _favWordsBloc.favWords!.remove(word);
-                }
-              });
-        });
+    return Align(
+        alignment: Alignment.centerRight,
+        child: BlocBuilder(
+            bloc: _favWordsBloc..add(InitialEvent()),
+            builder: (context, state) {
+              return FavoriteButton(
+                  isFavorite: isFavorited,
+                  iconSize: 30,
+                  iconDisabledColor: redColor,
+                  iconColor: redColor,
+                  valueChanged: (_isFavorite) {
+                    if (_isFavorite) {
+                      _favWordsBloc.add(AddToFavWordsEvent(word: word));
+                      _favWordsBloc.favWords!.add(word);
+                    } else {
+                      _favWordsBloc.add(DeleteFavWordsEvent(word: word));
+                      _favWordsBloc.favWords!.remove(word);
+                    }
+                  });
+            }));
   }
 }

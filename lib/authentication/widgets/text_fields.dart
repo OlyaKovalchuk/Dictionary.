@@ -1,16 +1,29 @@
 import 'package:Dictionary/theme/theme_colors.dart';
 import 'package:flutter/material.dart';
 
-buildTextField({
-  String? errorText,
-  FocusNode? focusNode,
-  required TextEditingController controller,
-  required TextInputType textInputType,
-  required String hint,
-  String? validator(String? val)?,
-  onSubmit(String str)?,
-}) =>
-    TextFormField(
+class TextFieldBuilder extends StatelessWidget {
+  final String? errorText;
+  final FocusNode? focusNode;
+  final TextEditingController controller;
+  final TextInputType textInputType;
+  final String hint;
+  final String? Function(String? val) validator;
+  final Function(String str)? onSubmit;
+
+  TextFieldBuilder(
+      {Key? key,
+      this.errorText,
+      this.focusNode,
+      required this.controller,
+      required this.textInputType,
+      required this.hint,
+      required this.validator,
+      this.onSubmit})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
       autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: validator,
       focusNode: focusNode,
@@ -25,8 +38,11 @@ buildTextField({
       keyboardType: textInputType,
       controller: controller,
     );
+  }
+}
 
-_inputDecoration({required String? errorText, required String hint}) =>
+InputDecoration _inputDecoration(
+        {required String? errorText, required String hint}) =>
     InputDecoration(
         focusedBorder: _outlineInputDecor(redColor),
         enabledBorder: _outlineInputDecor(greyLightColor),

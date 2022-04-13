@@ -1,3 +1,10 @@
 import 'package:flutter/material.dart';
 
-Widget emptyView() => Container();
+class EmptyView extends StatelessWidget {
+  const EmptyView({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
+}

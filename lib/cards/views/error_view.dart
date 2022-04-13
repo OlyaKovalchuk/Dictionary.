@@ -1,7 +1,12 @@
 import 'package:flutter/cupertino.dart';
 
-errorView() {
-  return Center(
-    child: Text('Oops. Something went wrong!  :('),
-  );
+class ErrorView extends StatelessWidget {
+  const ErrorView({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Text('Oops... Something went wrong!  :('),
+    );
+  }
 }

@@ -6,9 +6,9 @@ import 'package:Dictionary/authentication/utils/validators.dart';
 import 'package:Dictionary/authentication/widgets/auth_widgets.dart';
 import 'package:Dictionary/main_screen.dart';
 import 'package:Dictionary/search/utils/error_output.dart';
+import 'package:Dictionary/authentication/widgets/text_fields.dart';
+import 'package:Dictionary/authentication/widgets/title_text.dart';
 import 'package:Dictionary/widgets/app_bar.dart';
-import 'package:Dictionary/authentication/widgets/textFields.dart';
-import 'package:Dictionary/authentication/widgets/titileText.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -29,111 +29,106 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener(
+    return BlocConsumer(
       bloc: _regBloc,
       listener: (context, RegState state) {
         if (state.isFailure) {
           return errorOutput(error: state.errorText!, context: context);
         }
       },
-      child: BlocBuilder<RegBloc, RegState>(
-        bloc: _regBloc,
-        builder: (context, state) {
-          if (state.isSuccess) {
-            return MainScreen();
-          }
+      builder: (context, RegState state) {
+        if (state.isSuccess) {
+          return MainScreen();
+        }
 
-          return Scaffold(
-            resizeToAvoidBottomInset: false,
-            appBar: buildAppBar(
-                context: context,
-                leading: GestureDetector(
-                    onTap: () => Navigator.pop(context),
-                    child: Icon(
-                      Icons.arrow_back_ios_rounded,
-                      color: Colors.white,
-                    )),
-                actions: null),
-            body: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 50, horizontal: 20),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  buildTitleText(
-                      text: 'Create a new account',
-                      fontSize: 30,
-                      context: context),
-                  Form(
-                    key: _key,
-                    child: Column(
-                      children: [
-                        buildTextField(
-                          controller: _controllerName,
-                          textInputType: TextInputType.text,
-                          hint: 'Name',
-                          onSubmit: (name) {
-                            _focusNode.requestFocus();
-                          },
-                          validator: (String? name) =>
-                              Validators.validName(name),
-                        ),
-                        SizedBox(
-                          height: 15,
-                        ),
-                        buildTextField(
-                          focusNode: _focusNode,
-                          controller: _controllerPassword,
-                          textInputType: TextInputType.visiblePassword,
-                          hint: 'Password',
-                          onSubmit: (password) {
-                            _focusNode.requestFocus();
-                            _focusNode.nextFocus();
-                          },
-                          validator: (String? password) =>
-                              Validators.validPassword(password),
-                        ),
-                        SizedBox(
-                          height: 15,
-                        ),
-                        buildTextField(
-                          controller: _controllerEmail,
-                          textInputType: TextInputType.emailAddress,
-                          hint: 'Email',
-                          onSubmit: (email) {
-                            _focusNode.consumeKeyboardToken();
-                          },
-                          validator: (String? email) =>
-                              Validators.validEmail(email),
-                        ),
-                      ],
-                    ),
+        return Scaffold(
+          resizeToAvoidBottomInset: false,
+          appBar: AppBarBuilder(
+            leading: GestureDetector(
+                onTap: () => Navigator.pop(context),
+                child: Icon(
+                  Icons.arrow_back_ios_rounded,
+                  color: Colors.white,
+                )),
+          ),
+          body: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 50, horizontal: 20),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                TextTitleBuilder(
+                  text: 'Create a new account',
+                  fontSize: 30,
+                ),
+                Form(
+                  key: _key,
+                  child: Column(
+                    children: [
+                      TextFieldBuilder(
+                        controller: _controllerName,
+                        textInputType: TextInputType.text,
+                        hint: 'Name',
+                        onSubmit: (name) {
+                          _focusNode.requestFocus();
+                        },
+                        validator: (String? name) => Validators.validName(name),
+                      ),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      TextFieldBuilder(
+                        focusNode: _focusNode,
+                        controller: _controllerPassword,
+                        textInputType: TextInputType.visiblePassword,
+                        hint: 'Password',
+                        onSubmit: (password) {
+                          _focusNode.requestFocus();
+                          _focusNode.nextFocus();
+                        },
+                        validator: (String? password) =>
+                            Validators.validPassword(password),
+                      ),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      TextFieldBuilder(
+                        controller: _controllerEmail,
+                        textInputType: TextInputType.emailAddress,
+                        hint: 'Email',
+                        onSubmit: (email) {
+                          _focusNode.consumeKeyboardToken();
+                        },
+                        validator: (String? email) =>
+                            Validators.validEmail(email),
+                      ),
+                    ],
                   ),
-                  Align(
-                    alignment: Alignment.bottomCenter,
-                    child: buildAuthButtons(
-                        onTapSign: () {
-                          if (_key.currentState!.validate()) {
-                            _regBloc.add(RegWithCredentialsPressed(
-                                name: _controllerName.text,
-                                email: _controllerEmail.text,
-                                password: _controllerPassword.text));
-                          }
-                        },
-                        onTapSignWithGoogle: () {
-                          _regBloc.add(RegWithGoogle());
-                        },
-                        onTapSignWithFacebook: () {
-                          _regBloc.add(RegWithFacebook());
-                        },
-                        isRegistrationOrLogin: true,
-                        context: context),
-                  )
-                ],
-              ),
+                ),
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: AuthButtons(
+                    onTapSign: () {
+                      if (_key.currentState!.validate()) {
+                        _regBloc.add(RegWithCredentialsPressed(
+                            name: _controllerName.text,
+                            email: _controllerEmail.text,
+                            password: _controllerPassword.text));
+                      }
+                    },
+                    onTapSignWithGoogle: () {
+                      _regBloc.add(RegWithGoogle());
+                    },
+                    onTapSignWithFacebook: () {
+                      _regBloc.add(RegWithFacebook());
+                    },
+                    isRegistrationOrLogin: true,
+                  ),
+                )
+              ],
             ),
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 }

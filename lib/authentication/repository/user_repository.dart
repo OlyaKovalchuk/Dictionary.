@@ -7,7 +7,7 @@ abstract class FireUsersDataRepo {
 
   Future<UserData?> getUser(String uid);
 
-  setUser(UserData userData);
+  Future<void> setUser(UserData userData);
 }
 
 class FireUsersDataRepoImpl implements FireUsersDataRepo {
@@ -34,16 +34,14 @@ class FireUsersDataRepoImpl implements FireUsersDataRepo {
     }
   }
 
-  setUser(UserData userData) async {
+ Future<void> setUser(UserData userData) async {
     print(userData);
     try {
-      // yes
       await _usersCollection.doc(userData.uid).set(userData.onlyTextMap());
 
-      // Prevent errors on large or corrupted data
       await _usersCollection.doc(userData.uid).update(userData.toMap());
     } catch (e) {
-      print(e);
+      throw Exception(e);
     }
   }
 
