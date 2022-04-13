@@ -19,7 +19,7 @@ class FireUsersDataRepoFake implements FireUsersDataRepo {
 
 
   @override
-  setUser(UserData userData) {
+  setUser(UserData userData) async {
     if (shouldSetUserFail) {
       throw Exception("fake exception");
     }

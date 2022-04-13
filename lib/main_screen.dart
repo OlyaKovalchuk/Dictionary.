@@ -1,17 +1,17 @@
 import 'dart:async';
 import 'dart:developer' as developer;
-import 'package:Dictionary/authentication/service/firebase_auth_service.dart';
-import 'package:Dictionary/cards/screen/card_screen.dart';
-import 'package:Dictionary/favorite_words/screen/favorite_words_screen.dart';
-import 'package:Dictionary/profile/screen/profile_screen.dart';
-import 'package:Dictionary/search/screen/app_bar_search.dart';
-import 'package:Dictionary/search/screen/search_screen.dart';
-import 'package:Dictionary/search/utils/error_output.dart';
-import 'package:Dictionary/widgets/app_bar.dart';
-import 'package:Dictionary/widgets/bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/services.dart';
+import 'authentication/service/firebase_auth_service.dart';
+import 'cards/screen/card_screen.dart';
+import 'favorite_words/screen/favorite_words_screen.dart';
+import 'profile/screen/profile_screen.dart';
+import 'search/widgets/app_bar_search.dart';
+import 'search/screen/search_screen.dart';
+import 'search/utils/error_output.dart';
+import 'widgets/app_bar.dart';
+import 'widgets/bottom_navigation_bar.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -81,13 +81,13 @@ class _MainScreenState extends State<MainScreen> {
 
   getAppbar() {
     if (selectedPage == 0) {
-      return buildAppBar(title: Text('Profile'), context: context);
+      return AppBarBuilder(title: Text('Profile'));
     } else if (selectedPage == 1) {
-      return buildAppBar(title: Text('Dictionary.'), context: context);
+      return AppBarBuilder(title: Text('Dictionary.'));
     } else if (selectedPage == 2) {
-      return buildAppBar(title: Text('Favorite Words'), context: context);
+      return AppBarBuilder(title: Text('Favorite Words'));
     } else if (selectedPage == 3) {
-      return buildAppBar(title: TextFieldBoard(), context: context);
+      return AppBarBuilder(title: TextFieldBoard());
     }
   }
 

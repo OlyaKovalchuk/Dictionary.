@@ -5,7 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 abstract class ProfileService {
   Future<UserData?> getUserData();
 
-  Future<User?> singOut();
+  Future<void> singOut();
 }
 
 class ProfileServiceImpl extends ProfileService {
@@ -20,7 +20,11 @@ class ProfileServiceImpl extends ProfileService {
   }
 
   @override
-  Future<User?> singOut() async {
+  Future<void> singOut() async {
+    try{
     await _userRepositoryImpl.signOut();
-  }
+  }catch(e){
+      throw Exception(e);
+    }
+    }
 }

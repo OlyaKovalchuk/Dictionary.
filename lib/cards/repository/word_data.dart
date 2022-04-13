@@ -12,7 +12,7 @@ class Repository {
       SearchResponse searchResponse = SearchResponse.fromJson(body[0]);
       return searchResponse;
     } catch (e) {
-      print(e);
+      throw Exception(e);
     }
   }
 }

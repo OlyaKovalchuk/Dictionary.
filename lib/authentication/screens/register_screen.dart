@@ -43,8 +43,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
         return Scaffold(
           resizeToAvoidBottomInset: false,
-          appBar: buildAppBar(
-            context: context,
+          appBar: AppBarBuilder(
             leading: GestureDetector(
                 onTap: () => Navigator.pop(context),
                 child: Icon(

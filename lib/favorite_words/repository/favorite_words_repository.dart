@@ -3,9 +3,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 abstract class FireFavoriteWordsDataRepo {
-  setFavoriteWord(FavoriteWordsData words);
+  Future<void> setFavoriteWord(FavoriteWordsData words);
+
+  Future<void> updateFavoriteWords(FavoriteWordsData favoriteWords);
 
   Future<FavoriteWordsData?> getUsersFavWords(String uid);
+
+  Future<void> deleteFavoriteWord(FavoriteWordsData words);
 }
 
 class FireFavWordsRepoImpl implements FireFavoriteWordsDataRepo {
@@ -14,21 +18,24 @@ class FireFavWordsRepoImpl implements FireFavoriteWordsDataRepo {
 
   FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
-  setFavoriteWord(FavoriteWordsData words) async {
+  @override
+  Future<void> setFavoriteWord(FavoriteWordsData words) async {
     try {
       await _favoriteWordsCollection.doc(words.uid).set(words.onlyTextMap());
       await _favoriteWordsCollection.doc(words.uid).set(words.toMap());
     } catch (e) {
-      print(e);
+      throw Exception(e);
     }
   }
 
-  updateFavoriteWords(FavoriteWordsData favoriteWords) async {
+  @override
+  Future<void> updateFavoriteWords(FavoriteWordsData favoriteWords) async {
     await _favoriteWordsCollection
         .doc(_firebaseAuth.currentUser!.uid)
         .update(favoriteWords.toMap());
   }
 
+  @override
   Future<FavoriteWordsData?> getUsersFavWords(String uid) async {
     DocumentSnapshot documentSnapshot =
         await _favoriteWordsCollection.doc(uid).get();
@@ -40,11 +47,14 @@ class FireFavWordsRepoImpl implements FireFavoriteWordsDataRepo {
     }
   }
 
-  deleteFavoriteWord(FavoriteWordsData words) async {
+  @override
+  Future<void> deleteFavoriteWord(FavoriteWordsData words) async {
     try {
       await _favoriteWordsCollection
           .doc(_firebaseAuth.currentUser!.uid)
           .delete();
-    } catch (e) {}
+    } catch (e) {
+      throw Exception(e);
+    }
   }
 }

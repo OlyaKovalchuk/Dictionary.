@@ -1,7 +1,7 @@
 import 'package:Dictionary/cards/model/search_response.dart';
 import 'package:Dictionary/cards/views/empty_view.dart';
 import 'package:Dictionary/cards/views/word_info_view.dart';
-import 'package:Dictionary/cards/widgets/cardDecoration/indicator_decoration.dart';
+import 'package:Dictionary/cards/widgets/card_decoration/indicator_decoration.dart';
 import 'package:Dictionary/search/bloc/word_search_bloc.dart';
 import 'package:Dictionary/search/bloc/word_search_states.dart';
 import 'package:Dictionary/search/utils/error_output.dart';
@@ -22,7 +22,7 @@ class SearchScreen extends StatelessWidget {
       },
       builder: (_, state) {
         if (state is WordSearchLoading) {
-          return indicatorCircular();
+          return IndicatorCircular();
         }
         if (state is WordSearchLoaded) {
           return WordInfo(

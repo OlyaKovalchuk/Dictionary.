@@ -1,7 +1,7 @@
 import 'package:Dictionary/authentication/service/firebase_auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-class UserRepositoryFake  implements UserRepository {
+class UserRepositoryFake implements UserRepository {
   bool shouldSignUpFail = false;
 
   @override
@@ -17,7 +17,7 @@ class UserRepositoryFake  implements UserRepository {
   }
 
   @override
-  Future signInWithCredentials(String email, String password) {
+  Future<void> signInWithCredentials(String email, String password) {
     // TODO: implement signInWithCredentials
     throw UnimplementedError();
   }
@@ -35,15 +35,16 @@ class UserRepositoryFake  implements UserRepository {
   }
 
   @override
-  Future signOut() {
+  Future<void> signOut() {
     // TODO: implement signOut
     throw UnimplementedError();
   }
 
   @override
-  singUp({required String email,required String name,required String password} ){
+  Future<void> singUp(
+      {required String email, required String name, required String password}) async {
     if (shouldSignUpFail) {
-      return Future.error(Exception("fake exception"));
+      Future.error(Exception("fake exception"));
     }
   }
 }

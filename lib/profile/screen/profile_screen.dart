@@ -1,7 +1,7 @@
 import 'package:Dictionary/authentication/model/user_data_model.dart';
 import 'package:Dictionary/authentication/screens/login_screen.dart';
 import 'package:Dictionary/cards/views/error_view.dart';
-import 'package:Dictionary/cards/widgets/cardDecoration/indicator_decoration.dart';
+import 'package:Dictionary/cards/widgets/card_decoration/indicator_decoration.dart';
 import 'package:Dictionary/profile/bloc/profile_bloc.dart';
 import 'package:Dictionary/profile/bloc/profile_event.dart';
 import 'package:Dictionary/profile/bloc/profile_state.dart';
@@ -22,14 +22,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
       bloc: BlocProvider.of<ProfileBloc>(context)..add(GetUser()),
       builder: (context, state) {
         if (state is LoadingProfile) {
-          return buildCircularIndicator();
+          return IndicatorCircular();
         } else if (state is SuccessProfile) {
           return UserInfoBuilder();
         } else if (state is ErrorProfile) {
           return ErrorView();
         }
 
-        return buildCircularIndicator();
+        return IndicatorCircular();
       },
     );
   }

@@ -41,8 +41,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
         return Scaffold(
             resizeToAvoidBottomInset: false,
-            appBar: buildAppBar(
-              context: context,
+            appBar: AppBarBuilder(
               leading: GestureDetector(
                   onTap: () => Navigator.pushAndRemoveUntil(
                       context,

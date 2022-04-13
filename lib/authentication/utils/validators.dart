@@ -16,6 +16,7 @@ class Validators {
     } else if (!isValidEmail(email!)) {
       return 'Please enter your email correctly';
     }
+    return null;
   }
 
   static bool isValidPassword(String password) {
@@ -32,11 +33,13 @@ class Validators {
         }
       }
     }
+    return null;
   }
 
   static String? validName(String? name) {
     if (name == '') {
       return 'Name is required';
     }
+    return null;
   }
 }
